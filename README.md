@@ -42,9 +42,10 @@ persistent identifier (DOI).
 
 APA reference:
 
-> Akuffo, K.O., Agbeshie, G.K., Zauner, J., Spitschan, M. (2025).
-> Personal light exposure dataset for Kumasi, Ghana \[Dataset\]. v1.0.0
-> doi: (to be added after archiving)
+> Akuffo, K. O., Agbeshie, G. K., Zauner, J., & Spitschan, M. (2025).
+> Personal light exposure dataset for Kumasi, Ghana (Version 1.0.0)
+> \[Data set\].
+> <https://github.com/MeLiDosProject/AkuffoEtAl_Dataset_2025>
 
 ## Summary of the dataset
 
