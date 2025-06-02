@@ -11,11 +11,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-<img src="images/logo.png" width="200"/>
-<img src="images/logo_with_text-01.png" width="300" align = "right"/>
+![](images/logo.png){width=40%}
+![](images/logo_with_text-01.png){width=40%}
 
-
-<img src="images/logo_banner.png"/>
+![](images/logo_banner.png)
 
 ### Personal light exposure dataset for Kumasi, Ghana; collected by Kwame Nkrumah University of Science and Technology (KNUST) following the protocol of Guidolin et al. 2024 (MeLiDos field study)
 

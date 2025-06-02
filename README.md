@@ -1,10 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="images/logo.png" width="200"/>
-<img src="images/logo_with_text-01.png" width="300" align = "right"/>
+<img src="images/logo.png" style="width:40.0%" />
+<img src="images/logo_with_text-01.png" style="width:40.0%" />
 
-<img src="images/logo_banner.png"/>
+![](images/logo_banner.png)
 
 ### Personal light exposure dataset for Kumasi, Ghana; collected by Kwame Nkrumah University of Science and Technology (KNUST) following the protocol of Guidolin et al. 2024 (MeLiDos field study)
 
