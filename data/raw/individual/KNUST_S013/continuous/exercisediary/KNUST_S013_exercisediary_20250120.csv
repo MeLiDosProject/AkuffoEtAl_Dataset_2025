@@ -1,0 +1,9 @@
+record_id,redcap_repeat_instrument,redcap_repeat_instance,form_1_complete,instructions,intensity,location,type,commute,sedentary,light_glasses,startdate_3,enddate_3
+13,,,2,,,,,,,,,
+13,exercise_diary,1,,1,4,,,20,3,,"2025-01-13 23:11:58","2025-01-13 23:13:29"
+13,exercise_diary,2,,1,4,,,120,530,,"2025-01-14 22:20:15","2025-01-14 22:21:23"
+13,exercise_diary,3,,1,4,,,55,720,,"2025-01-15 23:28:16","2025-01-15 23:30:19"
+13,exercise_diary,4,,1,3,1,"walking ",50,660,1,"2025-01-16 23:26:28","2025-01-16 23:27:08"
+13,exercise_diary,5,,1,3,1,"walking ",66,660,1,"2025-01-17 22:40:49","2025-01-17 22:42:17"
+13,exercise_diary,6,,1,3,1,"walking ",210,420,1,"2025-01-18 23:45:49","2025-01-18 23:47:05"
+13,exercise_diary,7,,1,3,1,"walking ",150,720,1,"2025-01-19 23:28:36","2025-01-19 23:30:35"
