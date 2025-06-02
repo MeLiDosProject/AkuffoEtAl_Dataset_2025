@@ -1,0 +1,2 @@
+preprocessing notes for file KNUST_S001_sleepdiary_20241014.csv
+Name | Date | Description | Rational
