@@ -37,6 +37,13 @@ authors:
       for Biological Cybernetics; TUM Institute for Advanced
       Study (TUM-IAS)
     orcid: 'https://orcid.org/0000-0002-8572-9268'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.15576732
+    description: Zenodo archive (V1.0.0)
+  - type: doi
+    value: 10.5281/zenodo.15576731
+    description: Zenodo Archive (latest version)
 repository-code: 'https://github.com/MeLiDosProject/AkuffoEtAl_Dataset_2025'
 url: 'https://www.melidos.eu'
 abstract: >-
