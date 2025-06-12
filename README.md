@@ -12,7 +12,19 @@
 
 <!-- badges: start -->
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15576731.svg)](https://doi.org/10.5281/zenodo.15576731)
 <!-- badges: end -->
+
+<figure>
+<img src="output/figures/Figure_1.png"
+alt="Overview of light exposure data. (A) location of data collection. (B) collection periods for participants, (C) photoperiods, and (D) double plot of median, interquartile range (50%), 75%, and 95% ribbons of light exposure across all participants. Shaded areas indicate nighttime from civil dusk to civil dawn." />
+<figcaption aria-hidden="true">Overview of light exposure data. (A)
+location of data collection. (B) collection periods for participants,
+(C) photoperiods, and (D) double plot of median, interquartile range
+(50%), 75%, and 95% ribbons of light exposure across all participants.
+Shaded areas indicate nighttime from civil dusk to civil
+dawn.</figcaption>
+</figure>
 
 ### About this repository
 
