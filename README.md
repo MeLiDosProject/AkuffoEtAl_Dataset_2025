@@ -8,7 +8,7 @@
 
 ### Personal light exposure dataset for Kumasi, Ghana; collected by Kwame Nkrumah University of Science and Technology (KNUST) following the protocol of Guidolin et al. 2024 (MeLiDos field study)
 
-**Version v1.0.0**
+**Version v1.0.1**
 
 <!-- badges: start -->
 
@@ -110,7 +110,7 @@ The following files are included with this Dataset:
         metadata/
 
 - `LICENSE`: Licensing terms. This dataset is published with a
-  permissive CC0-1.0 license
+  permissive CC-BY-4.0 license
 
 All data are anonymous.
 
