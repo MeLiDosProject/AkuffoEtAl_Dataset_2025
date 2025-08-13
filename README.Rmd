@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 ### Personal light exposure dataset for Kumasi, Ghana; collected by Kwame Nkrumah University of Science and Technology (KNUST) following the protocol of Guidolin et al. 2024 (MeLiDos field study)
 
-**Version v1.0.0**
+**Version v1.0.1**
 
 <!-- badges: start -->
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15576731.svg)](https://doi.org/10.5281/zenodo.15576731)
@@ -36,7 +36,7 @@ This repository is transitioning towards a [FAIR](https://www.go-fair.org/fair-p
 
 APA reference:
 
-> Akuffo, K. O., Agbeshie, G. K., Zauner, J., & Spitschan, M. (2025). Personal light exposure dataset for Kumasi, Ghana (Version 1.0.0) [Data set]. URL: https://github.com/MeLiDosProject/AkuffoEtAl_Dataset_2025. DOI: doi.org/10.5281/zenodo.15576731
+> Akuffo, K. O., Agbeshie, G. K., Zauner, J., & Spitschan, M. (2025). Personal light exposure dataset for Kumasi, Ghana (Version 1.0.1) [Data set]. URL: https://github.com/MeLiDosProject/AkuffoEtAl_Dataset_2025. DOI: doi.org/10.5281/zenodo.15576731
 
 ## Summary of the dataset
 | Dataset name | KNUST |
@@ -83,7 +83,8 @@ The following files are included with this Dataset:
     metadata/
 ```
 
-- `LICENSE`: Licensing terms. This dataset is published with a permissive CC0-1.0 license
+- `LICENSE`: Licensing terms. This dataset is published with a
+  permissive CC-BY-4.0 license
 
 All data are anonymous.
 
