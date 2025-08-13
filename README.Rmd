@@ -51,7 +51,9 @@ APA reference:
 
 The following files are included with this Dataset:
 
-- `data/MetadataDescriptor.xlsx`: Preliminary Metadata prior to conversion to JSON
+- `data/Metadata_MeLiDos_KNUST.xlsx`: Preliminary Metadata prior to conversion to JSON
+
+- `data/Study_dates_MeLiDos_KNUST.xlsx`: Recruitment dates to clean light exposure recordings
 
 - `data`: Folder with measurement and project data in the following structure:
 ```         
