@@ -17,6 +17,7 @@ This is a work-in-progress descriptive analysis of the `AkuffoEtAl2025` dataset.
 library(LightLogR)
 library(glue)
 library(tidyverse)
+library(here)
 library(gt)
 library(cowplot)
 library(legendry)
@@ -25,7 +26,9 @@ library(rnaturalearthdata)
 library(sf)
 library(patchwork)
 
-source("https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/overview_plot.R")
+source(
+  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/overview_plot.R"
+)
 ```
 
 # Overview
@@ -46,20 +49,20 @@ coordinates <- c(6.6750074282377385, -1.572643823555129)
 pattern <- "[A-Z]+_S[0-9]{3}"
 
 country_colors <- c(
-  Sweden     = "#88CCEE",  # Sky blue
-  Spain      = "#CC6677",  # Coral red
-  Germany    = "#DDCC77",  # Mustard yellow
-  Netherlands= "#117733",  # Dark green
-  Turkey     = "#332288",  # Indigo
-  Ghana      = "#AA4499",  # Purple-pink
-  Costa_Rica = "#44AA99"   # Teal
+  Sweden = "#88CCEE", # Sky blue
+  Spain = "#CC6677", # Coral red
+  Germany = "#DDCC77", # Mustard yellow
+  Netherlands = "#117733", # Dark green
+  Turkey = "#332288", # Indigo
+  Ghana = "#AA4499", # Purple-pink
+  Costa_Rica = "#44AA99" # Teal
 )
 
 ```
 
 ```{r}
 #path to participants
-path_part1 <- "../data/raw/individual"
+path_part1 <- here("data/raw/individual")
 #path to actlumus data sans wearing position
 path_part2 <- "/continuous/actlumus_"
 #wearing position
@@ -87,14 +90,15 @@ data |> has_irregulars()
 data |> gg_gaps(group.by.days = TRUE, show.irregulars = TRUE, full.days = FALSE)
 ```
 
-Apparently, `KNUST_S003`, `KNUST_S004`, and `KNUST_S005` suffer from some kind of defect, where the data become irregular and show values around 10^4 lx, even at night. We first bin the irregular data into the next regular interval, and then convert implicit to explicit days.
+Apparently, `KNUST_S003`, `KNUST_S004`, and `KNUST_S005` suffer from some kind of defect, where the data become irregular and show values around 10^4 lx, even at night. We first bin the irregular data into the next regular interval, and then convert implicit to explicit days. We will further remove unreasonably high values above 100.000 lx melanopic EDI
 
 ```{r}
 #| fig-height: 15
 #| fig-width: 5
-data_cleaned <- 
-data |> 
+data_cleaned <-
+  data |>
   aggregate_Datetime() |> #remove irregular data
+  filter(MEDI <= 10^5) |> #remove high values
   gap_handler(full.days = TRUE) #remove implicit gaps
 
 data_cleaned |> has_gaps() #no more implicit gaps
@@ -104,17 +108,19 @@ data_cleaned |> gap_table()
 
 # Dealing with measurement spikes
 
-Measurement spikes seem to happen at random during certain periods of time. We can capture those by treating them as clusters of at maximum 2 epochs length. The next step visualizes this approach for `KNUST_S005`.
+Measurement spikes seem to happen at random during certain periods of time. We can capture those by treating them as clusters of at maximum 2 epochs length. The next step visualizes this approach for `KNUST_S005`. 
 
 ```{r}
 #| fig-height: 12
 #| fig-width: 8
-data_cleaned |> 
-  filter(Id == "KNUST_S005") |> 
-  add_clusters(MEDI > 2000 & MEDI < 30000, 
-                   cluster.duration = "20 secs", 
-                   duration.type = "max") |>  
-  gg_day(geom = "line") |> 
+data_cleaned |>
+  filter(Id == "KNUST_S005") |>
+  add_clusters(
+    MEDI > 2000 & MEDI < 30000,
+    cluster.duration = "20 secs",
+    duration.type = "max"
+  ) |>
+  gg_day(geom = "line") |>
   gg_photoperiod(coordinates) +
   geom_point(data = \(x) filter(x, !is.na(state)), col = "red") +
   labs(title = "Identification of sudden measurement spikes (red dots)")
@@ -123,16 +129,18 @@ data_cleaned |>
 We assess how many there are across the participants:
 
 ```{r}
-data_cleaned |> 
-  extract_clusters(MEDI > 2000 & MEDI < 30000, 
-                   cluster.duration = "20 secs", 
-                   duration.type = "max",
-                   add.label = TRUE) |> 
-  group_by(label, Id) |> 
-  summarize_numeric() |> 
-  select(Id, label, episodes) |> 
-  group_by(label) |> 
-  gt() |> 
+data_cleaned |>
+  extract_clusters(
+    MEDI > 2000 & MEDI < 30000,
+    cluster.duration = "20 secs",
+    duration.type = "max",
+    add.label = TRUE
+  ) |>
+  group_by(label, Id) |>
+  summarize_numeric() |>
+  select(Id, label, episodes) |>
+  group_by(label) |>
+  gt() |>
   tab_header("Measurement spikes")
 ```
 
@@ -144,14 +152,15 @@ Spikes are detected for every Id. We will not remove the data, but rather replac
 #| warning: false
 data_cleaned <-
   data_cleaned |>
-  add_clusters(MEDI > 2000 & MEDI < 30000,
-               cluster.duration = "20 secs",
-               duration.type = "max") |>
-  mutate(MEDI =
-           ifelse(!is.na(state), lag(MEDI, 2), MEDI))
+  add_clusters(
+    MEDI > 2000 & MEDI < 30000,
+    cluster.duration = "20 secs",
+    duration.type = "max"
+  ) |>
+  mutate(MEDI = ifelse(!is.na(state), lag(MEDI, 2), MEDI))
 
-data_cleaned |> 
-  filter(Id %in% c("KNUST_S003", "KNUST_S004", "KNUST_S005")) |> 
+data_cleaned |>
+  filter(Id %in% c("KNUST_S003", "KNUST_S004", "KNUST_S005")) |>
   gg_days()
 ```
 
@@ -164,15 +173,399 @@ These data now look sensible enough for further visualization and processing.
 ```{r}
 #| warning: false
 #| message: false
-#| fig-height: 8
-#| fig-width: 10
 
-data_cleaned |> 
-  mutate(Id = Id |> fct_relabel(\(x) str_remove(x, "KNUST_"))) |> 
-grand_overview(coordinates, "Kumasi", "Ghana", country_colors, photoperiod_sequence = 0.1)
+data_cleaned |>
+  mutate(Id = Id |> fct_relabel(\(x) str_remove(x, "KNUST_"))) |>
+  grand_overview(
+    coordinates,
+    "Kumasi",
+    "Ghana",
+    country_colors,
+    photoperiod_sequence = 0.1
+  )
 
-ggsave("../output/figures/Figure_1.png", width = 17, height = 10, scale = 2, units = "cm")
+ggsave(
+  here("output/figures/Figure_1.png"),
+  width = 17,
+  height = 10,
+  scale = 2,
+  units = "cm"
+)
+ggsave(
+  here("output/figures/Figure_1.jpeg"),
+  width = 17,
+  height = 10,
+  scale = 2,
+  units = "cm"
+)
 ```
 
+## Stats
 
+### Summary table
 
+```{r}
+
+#number of participants
+n_part <-
+  data_cleaned |>
+  group_by(Id) |>
+  n_groups()
+
+# percent missingness/irregular
+
+p_missing <-
+  data_cleaned |>
+  gap_handler(full.days = TRUE) |>
+  durations(MEDI, show.missing = TRUE) |>
+  ungroup() |>
+  mutate(
+    missingness = missing / total
+  ) |>
+  summarize(
+    type = "Overview",
+    name = "Missing/Irregular",
+    missing = sum(missing, na.rm = TRUE),
+    total = sum(total, na.rm = TRUE),
+    min = min(missingness, na.rm = TRUE),
+    max = max(missingness, na.rm = TRUE),
+    mean = missing / total,
+    sd = NA
+  ) |>
+  select(type, name, mean, sd, min, max)
+
+# number of participant-days
+
+data_part_days <-
+  data_cleaned |>
+  group_by(Id) |>
+  add_Date_col(.Date, group.by = TRUE)
+
+n_part_days <-
+  data_part_days |>
+  n_groups()
+
+# number of participant-days with a coverage of at least 80%
+
+data_part_days_suff <-
+  data_part_days |>
+  remove_partial_data(MEDI, threshold.missing = 0.2, handle.gaps = TRUE)
+
+n_part_days_suff <-
+  data_part_days_suff |>
+  n_groups()
+
+# location and time zone
+
+lat_string <-
+  paste0(
+    abs(round(coordinates[1], 1)),
+    "°",
+    ifelse(sign(coordinates[1]) == 1, "N", "S")
+  )
+
+lon_string <-
+  paste0(
+    abs(round(coordinates[2], 1)),
+    "°",
+    ifelse(sign(coordinates[1]) == 1, "E", "W")
+  )
+
+coordinates_string <-
+  paste(lat_string, lon_string, sep = ", ")
+
+location_string <-
+  paste0("Kumasi", ", ", "Ghana", " (", coordinates_string, "), TZ: ", tz)
+
+# average photoperiod
+
+photoperiod_data <-
+  data_cleaned |>
+  add_photoperiod(coordinates) |>
+  ungroup() |>
+  summarize(
+    type = "Overview",
+    name = "Photoperiod",
+    mean = mean(photoperiod, na.rm = TRUE),
+    sd = NA,
+    min = min(photoperiod, na.rm = TRUE),
+    max = max(photoperiod, na.rm = TRUE)
+  ) |>
+  mutate(across(c(mean, min, max, sd), as.numeric))
+
+# metrics
+
+metrics_daily <-
+  data_part_days_suff |>
+  summarize(
+    dose(MEDI, Datetime, na.rm = TRUE, as.df = TRUE),
+    duration_above_threshold(
+      MEDI,
+      Datetime,
+      "above",
+      250,
+      na.rm = TRUE,
+      as.df = TRUE
+    ),
+    duration_above_threshold(
+      MEDI,
+      Datetime,
+      threshold = c(1, 10),
+      na.rm = TRUE,
+      as.df = TRUE
+    ),
+    duration_above_threshold(
+      MEDI,
+      Datetime,
+      "below",
+      1,
+      na.rm = TRUE,
+      as.df = TRUE
+    ),
+    period_above_threshold(
+      MEDI,
+      Datetime,
+      "above",
+      250,
+      na.rm = TRUE,
+      as.df = TRUE
+    ),
+    duration_above_threshold(
+      MEDI,
+      Datetime,
+      "above",
+      1000,
+      na.rm = TRUE,
+      as.df = TRUE
+    ),
+    timing_above_threshold(
+      MEDI,
+      Datetime,
+      "above",
+      250,
+      na.rm = TRUE,
+      as.df = TRUE
+    ),
+    bright_dark_period(
+      log_zero_inflated(MEDI),
+      Datetime,
+      "brightest",
+      "10 hours",
+      na.rm = TRUE,
+      as.df = TRUE
+    ),
+    bright_dark_period(
+      log_zero_inflated(MEDI),
+      Datetime,
+      "darkest",
+      "5 hours",
+      loop = TRUE,
+      na.rm = TRUE,
+      as.df = TRUE
+    ),
+    .groups = "drop"
+  ) |>
+  select(matches("dose|duration|period|timing|mean|midpoint")) |>
+  Datetime2Time() |>
+  mutate(across(c(brightest_10h_mean, darkest_5h_mean), exp_zero_inflated))
+
+metrics_daily <-
+  metrics_daily |>
+  mutate(across(everything(), as.numeric)) |>
+  pivot_longer(everything()) |>
+  group_by(name) |>
+  summarize(
+    type = "Metrics",
+    across(
+      value,
+      list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE),
+        min = \(x) min(x, na.rm = TRUE),
+        max = \(x) max(x, na.rm = TRUE)
+      ),
+      .names = "{.fn}"
+    )
+  )
+
+metrics_overall <-
+  data_part_days_suff |>
+  group_by(Id) |>
+  summarize(
+    interdaily_stability(MEDI, Datetime, na.rm = TRUE, as.df = TRUE),
+    intradaily_variability(MEDI, Datetime, na.rm = TRUE, as.df = TRUE),
+    .groups = "drop"
+  ) |>
+  select(-Id) |>
+  pivot_longer(everything()) |>
+  group_by(name) |>
+  summarize(
+    type = "Metrics",
+    across(
+      value,
+      list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE),
+        min = \(x) min(x, na.rm = TRUE),
+        max = \(x) max(x, na.rm = TRUE)
+      ),
+      .names = "{.fn}"
+    )
+  )
+
+# combining all the data
+
+labels_vec <- c(
+  NA,
+  NA,
+  NA,
+  NA,
+  NA,
+  dose = md("D (lx·h)"),
+  dur_above250 = md("TAT<sub>250</sub>"),
+  dur_1_10 = md("TWT<sub>1–10</sub>"),
+  dur_below1 = md("TBT<sub>1</sub>"),
+  period_above250 = md("PAT<sub>250</sub>"),
+  dur_above1000 = md("TAT<sub>1000</sub>"),
+  first_above250 = md("FLiT<sub>250</sub>"),
+  mean_above250 = md("MLiT<sub>250</sub>"),
+  last_above250 = md("LLiT<sub>250</sub>"),
+  bright10_mean = md("M10<sub>mean</sub> (lx)"),
+  bright10_mid = md("M10<sub>midpoint</sub>"),
+  dark5_mean = md("L5<sub>mean</sub> (lx)"),
+  dark5_mid = md("L5<sub>midpoint</sub>"),
+  IS = md("IS"),
+  IV = md("IV")
+)
+
+table_summary_overall <-
+  tibble(
+    type = "Overview",
+    name = c(
+      "Participants",
+      "Participant-days",
+      "Days ≥80% complete"
+    ),
+    mean = c(n_part, n_part_days, n_part_days_suff),
+    sd = NA,
+    min = NA,
+    max = NA
+  ) |>
+  add_row(
+    p_missing
+  ) |>
+  add_row(
+    photoperiod_data
+  )
+
+table_summary_data <-
+  table_summary_overall |>
+  add_row(
+    metrics_daily
+  ) |>
+  add_row(
+    metrics_overall
+  ) |>
+  add_column(
+    row = c(
+      1,
+      2,
+      3,
+      4,
+      5,
+      15,
+      16,
+      17,
+      18,
+      6,
+      11,
+      7,
+      9,
+      8,
+      12,
+      14,
+      13,
+      10,
+      19,
+      20
+    )
+  ) |>
+  group_by(type) |>
+  arrange(row) |>
+  select(-row) |>
+  add_column(
+    symbol = labels_vec
+  )
+
+```
+
+```{r}
+style_time <- function(x, format = "%H:%M") {
+  x %>% hms::as_hms() %>% as.POSIXlt() %>% format(format)
+}
+
+table_summary <-
+  table_summary_data |>
+  gt(rowname_col = "name") |>
+  fmt_integer(rows = c(1, 2, 3, 6)) |>
+  fmt_percent(rows = 4) |>
+  fmt_duration(
+    rows = 5,
+    input_units = "hours",
+    duration_style = "narrow",
+    max_output_units = 2
+  ) |>
+  fmt_duration(rows = c(7:11), input_units = "seconds", max_output_units = 2) |>
+  fmt(
+    columns = 3:6,
+    rows = c(12:14, 16, 18),
+    fns = style_time
+  ) |>
+  fmt_number(rows = 19:20, decimals = 3) |>
+  fmt_number(rows = c(15, 17), decimals = 1) |>
+  fmt_markdown(columns = symbol) |>
+  cols_merge(
+    columns = 3:6,
+    pattern = "<strong>{1}</strong><< ±{2}>> <<({3} - {4})>>"
+  ) |>
+  sub_missing(columns = "symbol", missing_text = "") |>
+  cols_label(mean = "", symbol = "") |>
+  fmt(columns = name, fns = \(x) {
+    x |>
+      str_to_sentence() |>
+      str_replace_all("_", " ") |>
+      str_replace("0$", "0 lx") |>
+      str_replace("1$", "1 lx")
+  }) |>
+  tab_header(
+    "Summary table",
+    subtitle = location_string
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = list(
+      cells_column_labels(columns = everything()),
+      cells_row_groups()
+    )
+  ) |>
+  tab_style(
+    style = cell_text(align = "left"),
+    locations = list(
+      cells_body(columns = 3)
+    )
+  ) |>
+  tab_footnote(md(
+    "values show: **mean** ±sd (min - max) and are all based on measurements of melanopic EDI (lx)"
+  )) |>
+  tab_footnote(
+    md(
+      "Values were log 10 transformed prior to averaging, with an offset of 0.1, and backtransformed afterwards"
+    ),
+    locations = cells_stub(rows = c(15, 17))
+  ) |>
+  cols_move_to_start(symbol)
+
+gtsave(table_summary, here("output/tables/table_summary.png"))
+gtsave(table_summary, here("output/tables/table_summary.docx"))
+
+```

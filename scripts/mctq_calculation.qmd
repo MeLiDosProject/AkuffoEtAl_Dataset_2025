@@ -1,0 +1,127 @@
+---
+title: "MCTQ Data"
+format: 
+  html:
+    self-contained: true
+    code-tools: true 
+    
+---
+
+## Preface
+
+This is the preliminary analysis of Chronotype data for the MeLiDos KNUST dataset
+
+## Setup
+
+```{r}
+library(tidyverse)
+library(mctq)
+library(gt)
+library(here)
+library(cowplot)
+```
+
+## Import data
+
+```{r}
+path <- here("data/raw/group/chronotype/KNUST_S001_S015_mctq_20250303.csv")
+lookup <- here("data/raw/group/chronotype/KNUST_S001_S015_mctq_20250303_lookup.csv")
+
+data <- read_csv(path)
+lookup <- read_csv(lookup)
+```
+
+## Basic cleaning
+
+```{r}
+data <- data %>% 
+  left_join(lookup, by = join_by(record_id)) %>% 
+  relocate(ID, .before = 1)
+
+data <- 
+data %>% 
+  rename_with(~str_remove(., "mctq_")) %>%
+  filter(complete == 2) %>% 
+  mutate(across(contains("fall_sleep"), ~as.duration(.x*60)))
+```
+
+2 participants provided an unlikely bedtime before noon (and have not indicated shiftwork) - these participants will be treated as if their bedtime is 12 hours later (problem with am/pm)
+
+```{r}
+Id_to_shift <- c("KNUST_S001", "KNUST_S013")
+
+data <-
+  data %>% 
+  mutate(across(contains(c("ready_sleep_", "bedtime")), 
+                \(x) case_when(
+                  ID %in% Id_to_shift ~ (x + hms::hms(hours = 12)) %>% hms::as_hms(),
+                  .default = x))
+         )
+```
+
+Furthermore, some participants indicated that they are ready to sleep before going to bed. In the way the questionnaire is analysed, this has to be after they go to bed. Thus we will take the later time in both cases (i.e., if bedtime is later then ready to sleep, we will use this).
+
+```{r}
+
+data <-
+  data %>%
+ pivot_longer(
+    cols = contains(c("ready_sleep_", "bedtime")),
+    names_to = c(".value", "context"),
+    names_pattern = "^(bedtime|ready_sleep)_(.*)$"
+  ) %>%
+  mutate(
+    ready_sleep = pmax(bedtime, ready_sleep),
+    nr_workdays = ifelse(is.na(nr_workdays), 5, nr_workdays)
+  ) %>%
+  pivot_wider(names_from = context, values_from = c(bedtime, ready_sleep))
+```
+
+> Note: participants that indicated no number of regular work days, but that still provided numbers for work- and free days will be calculated as 5 work days and 2 free days.
+
+```{r}
+
+data <- 
+data %>% 
+mutate(
+    so_w = so(ready_sleep_work, fall_sleep_work),
+    so_f = so(ready_sleep_free, fall_sleep_free),
+    sd_w = sdu(so_w, wake_time_work),
+    sd_f = sdu(so_f, wake_time_free),
+    msw = msl(so_w, sd_w),
+    msf = msl(so_f, sd_f),
+    sd_week = sd_week(sd_w, sd_f, nr_workdays),
+    msf_sc = msf_sc(msf, sd_w, sd_f, sd_week, alarm_f = rep(FALSE, n())),
+    sjl = sjl(msw, msf, abs = FALSE),
+  .before = 2
+    )
+  
+```
+> Note: Participants who indicated they use an alarm clock on free days (alarm_free) cannot be used for MCTQ calculation. In this overview, this behavior is overwritten by setting the alarm_f parameter to FALSE. For formal analysis, these must be removed.
+
+## Show results
+
+```{r}
+data %>% 
+  select(ID, msf_sc, sjl) %>% 
+  gt() %>% 
+  fmt(msf_sc, fns = 
+        \(x) x %>% as.POSIXlt() %>% round_date("minute") %>% format("%H:%M")
+      ) %>% 
+  cols_label(ID = "Record ID", msf_sc = md("Midsleep on free days,<br>sleep corrected"), sjl = "Social Jetlag")
+
+data %>% 
+  ggplot(aes(x = msf_sc)) + 
+  geom_histogram(binwidth = 60*30, aes(fill = as.logical(!alarm_free))) + 
+  scale_x_time() +
+  theme_cowplot() +
+  labs(x = "Midsleep on free days, sleep corrected", fill = "No alarm on\nfree days")
+
+data %>% 
+  ggplot(aes(x = sjl)) + 
+  geom_histogram(binwidth = 60*30) + 
+  scale_x_time() +
+  theme_cowplot() +
+  labs(x = "Social Jetlag")
+```
+

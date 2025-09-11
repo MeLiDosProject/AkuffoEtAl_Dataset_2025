@@ -3131,18 +3131,18 @@ vertical-align: -.125em;
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> <span class="st">&quot;[A-Z]+_S[0-9]{3}&quot;</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>country_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sweden     =</span> <span class="st">&quot;#88CCEE&quot;</span>,  <span class="co"># Sky blue</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Spain      =</span> <span class="st">&quot;#CC6677&quot;</span>,  <span class="co"># Coral red</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">Germany    =</span> <span class="st">&quot;#DDCC77&quot;</span>,  <span class="co"># Mustard yellow</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">Netherlands=</span> <span class="st">&quot;#117733&quot;</span>,  <span class="co"># Dark green</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">Turkey     =</span> <span class="st">&quot;#332288&quot;</span>,  <span class="co"># Indigo</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">Ghana      =</span> <span class="st">&quot;#AA4499&quot;</span>,  <span class="co"># Purple-pink</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">Costa_Rica =</span> <span class="st">&quot;#44AA99&quot;</span>   <span class="co"># Teal</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sweden =</span> <span class="st">&quot;#88CCEE&quot;</span>, <span class="co"># Sky blue</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Spain =</span> <span class="st">&quot;#CC6677&quot;</span>, <span class="co"># Coral red</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">Germany =</span> <span class="st">&quot;#DDCC77&quot;</span>, <span class="co"># Mustard yellow</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">Netherlands =</span> <span class="st">&quot;#117733&quot;</span>, <span class="co"># Dark green</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">Turkey =</span> <span class="st">&quot;#332288&quot;</span>, <span class="co"># Indigo</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">Ghana =</span> <span class="st">&quot;#AA4499&quot;</span>, <span class="co"># Purple-pink</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">Costa_Rica =</span> <span class="st">&quot;#44AA99&quot;</span> <span class="co"># Teal</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#path to participants</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>path_part1 <span class="ot">&lt;-</span> <span class="st">&quot;../data/raw/individual&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>path_part1 <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data/raw/individual&quot;</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#path to actlumus data sans wearing position</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>path_part2 <span class="ot">&lt;-</span> <span class="st">&quot;/continuous/actlumus_&quot;</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#wearing position</span></span>
@@ -3216,8 +3216,8 @@ Observation intervals:
 </div>
 <p>Apparently, <code>KNUST_S003</code>, <code>KNUST_S004</code>, and <code>KNUST_S005</code> suffer from some kind of defect, where the data become irregular and show values around 10^4 lx, even at night. We first bin the irregular data into the next regular interval, and then convert implicit to explicit days.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aggregate_Datetime</span>() <span class="sc">|&gt;</span> <span class="co">#remove irregular data</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gap_handler</span>(<span class="at">full.days =</span> <span class="cn">TRUE</span>) <span class="co">#remove implicit gaps</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
@@ -3231,20 +3231,20 @@ Observation intervals:
 </div>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> <span class="fu">gap_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="renmxxtoax" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#renmxxtoax table {
+<div id="wjltxnqwcw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wjltxnqwcw table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#renmxxtoax thead, #renmxxtoax tbody, #renmxxtoax tfoot, #renmxxtoax tr, #renmxxtoax td, #renmxxtoax th {
+#wjltxnqwcw thead, #wjltxnqwcw tbody, #wjltxnqwcw tfoot, #wjltxnqwcw tr, #wjltxnqwcw td, #wjltxnqwcw th {
 border-style: none;
 }
-#renmxxtoax p {
+#wjltxnqwcw p {
 margin: 0;
 padding: 0;
 }
-#renmxxtoax .gt_table {
+#wjltxnqwcw .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -3269,11 +3269,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#renmxxtoax .gt_caption {
+#wjltxnqwcw .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#renmxxtoax .gt_title {
+#wjltxnqwcw .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -3284,7 +3284,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#renmxxtoax .gt_subtitle {
+#wjltxnqwcw .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -3295,7 +3295,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#renmxxtoax .gt_heading {
+#wjltxnqwcw .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -3306,12 +3306,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#renmxxtoax .gt_bottom_border {
+#wjltxnqwcw .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#renmxxtoax .gt_col_headings {
+#wjltxnqwcw .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3325,7 +3325,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#renmxxtoax .gt_col_heading {
+#wjltxnqwcw .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3344,7 +3344,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#renmxxtoax .gt_column_spanner_outer {
+#wjltxnqwcw .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3355,13 +3355,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#renmxxtoax .gt_column_spanner_outer:first-child {
+#wjltxnqwcw .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#renmxxtoax .gt_column_spanner_outer:last-child {
+#wjltxnqwcw .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#renmxxtoax .gt_column_spanner {
+#wjltxnqwcw .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -3372,10 +3372,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#renmxxtoax .gt_spanner_row {
+#wjltxnqwcw .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#renmxxtoax .gt_group_heading {
+#wjltxnqwcw .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3400,7 +3400,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#renmxxtoax .gt_empty_group_heading {
+#wjltxnqwcw .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -3414,13 +3414,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#renmxxtoax .gt_from_md > :first-child {
+#wjltxnqwcw .gt_from_md > :first-child {
 margin-top: 0;
 }
-#renmxxtoax .gt_from_md > :last-child {
+#wjltxnqwcw .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#renmxxtoax .gt_row {
+#wjltxnqwcw .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3438,7 +3438,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#renmxxtoax .gt_stub {
+#wjltxnqwcw .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3450,7 +3450,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#renmxxtoax .gt_stub_row_group {
+#wjltxnqwcw .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3463,13 +3463,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#renmxxtoax .gt_row_group_first td {
+#wjltxnqwcw .gt_row_group_first td {
 border-top-width: 2px;
 }
-#renmxxtoax .gt_row_group_first th {
+#wjltxnqwcw .gt_row_group_first th {
 border-top-width: 2px;
 }
-#renmxxtoax .gt_summary_row {
+#wjltxnqwcw .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3478,14 +3478,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#renmxxtoax .gt_first_summary_row {
+#wjltxnqwcw .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#renmxxtoax .gt_first_summary_row.thick {
+#wjltxnqwcw .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#renmxxtoax .gt_last_summary_row {
+#wjltxnqwcw .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3494,7 +3494,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#renmxxtoax .gt_grand_summary_row {
+#wjltxnqwcw .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3503,7 +3503,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#renmxxtoax .gt_first_grand_summary_row {
+#wjltxnqwcw .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3512,7 +3512,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#renmxxtoax .gt_last_grand_summary_row_top {
+#wjltxnqwcw .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3521,10 +3521,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#renmxxtoax .gt_striped {
+#wjltxnqwcw .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#renmxxtoax .gt_table_body {
+#wjltxnqwcw .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3532,7 +3532,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#renmxxtoax .gt_footnotes {
+#wjltxnqwcw .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3545,7 +3545,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#renmxxtoax .gt_footnote {
+#wjltxnqwcw .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -3553,7 +3553,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#renmxxtoax .gt_sourcenotes {
+#wjltxnqwcw .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3566,64 +3566,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#renmxxtoax .gt_sourcenote {
+#wjltxnqwcw .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#renmxxtoax .gt_left {
+#wjltxnqwcw .gt_left {
 text-align: left;
 }
-#renmxxtoax .gt_center {
+#wjltxnqwcw .gt_center {
 text-align: center;
 }
-#renmxxtoax .gt_right {
+#wjltxnqwcw .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#renmxxtoax .gt_font_normal {
+#wjltxnqwcw .gt_font_normal {
 font-weight: normal;
 }
-#renmxxtoax .gt_font_bold {
+#wjltxnqwcw .gt_font_bold {
 font-weight: bold;
 }
-#renmxxtoax .gt_font_italic {
+#wjltxnqwcw .gt_font_italic {
 font-style: italic;
 }
-#renmxxtoax .gt_super {
+#wjltxnqwcw .gt_super {
 font-size: 65%;
 }
-#renmxxtoax .gt_footnote_marks {
+#wjltxnqwcw .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#renmxxtoax .gt_asterisk {
+#wjltxnqwcw .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#renmxxtoax .gt_indent_1 {
+#wjltxnqwcw .gt_indent_1 {
 text-indent: 5px;
 }
-#renmxxtoax .gt_indent_2 {
+#wjltxnqwcw .gt_indent_2 {
 text-indent: 10px;
 }
-#renmxxtoax .gt_indent_3 {
+#wjltxnqwcw .gt_indent_3 {
 text-indent: 15px;
 }
-#renmxxtoax .gt_indent_4 {
+#wjltxnqwcw .gt_indent_4 {
 text-indent: 20px;
 }
-#renmxxtoax .gt_indent_5 {
+#wjltxnqwcw .gt_indent_5 {
 text-indent: 25px;
 }
-#renmxxtoax .katex-display {
+#wjltxnqwcw .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#renmxxtoax div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#wjltxnqwcw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -4134,15 +4134,17 @@ Explicit
 <h1>Dealing with measurement spikes</h1>
 <p>Measurement spikes seem to happen at random during certain periods of time. We can capture those by treating them as clusters of at maximum 2 epochs length. The next step visualizes this approach for <code>KNUST_S005</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Id <span class="sc">==</span> <span class="st">&quot;KNUST_S005&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_clusters</span>(MEDI <span class="sc">&gt;</span> <span class="dv">2000</span> <span class="sc">&amp;</span> MEDI <span class="sc">&lt;</span> <span class="dv">30000</span>, </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">cluster.duration =</span> <span class="st">&quot;20 secs&quot;</span>, </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">duration.type =</span> <span class="st">&quot;max&quot;</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_day</span>(<span class="at">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_photoperiod</span>(coordinates) <span class="sc">+</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> \(x) <span class="fu">filter</span>(x, <span class="sc">!</span><span class="fu">is.na</span>(state)), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Identification of sudden measurement spikes (red dots)&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Id <span class="sc">==</span> <span class="st">&quot;KNUST_S005&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_clusters</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    MEDI <span class="sc">&gt;</span> <span class="dv">2000</span> <span class="sc">&amp;</span> MEDI <span class="sc">&lt;</span> <span class="dv">30000</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster.duration =</span> <span class="st">&quot;20 secs&quot;</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">duration.type =</span> <span class="st">&quot;max&quot;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_day</span>(<span class="at">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_photoperiod</span>(coordinates) <span class="sc">+</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> \(x) <span class="fu">filter</span>(x, <span class="sc">!</span><span class="fu">is.na</span>(state)), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Identification of sudden measurement spikes (red dots)&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 8911 rows containing missing values or values outside the scale range
 (`geom_line()`).</code></pre>
@@ -4157,32 +4159,34 @@ Explicit
 </div>
 <p>We assess how many there are across the participants:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_clusters</span>(MEDI <span class="sc">&gt;</span> <span class="dv">2000</span> <span class="sc">&amp;</span> MEDI <span class="sc">&lt;</span> <span class="dv">30000</span>, </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">cluster.duration =</span> <span class="st">&quot;20 secs&quot;</span>, </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">duration.type =</span> <span class="st">&quot;max&quot;</span>,</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">add.label =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(label, Id) <span class="sc">|&gt;</span> </span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_numeric</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Id, label, episodes) <span class="sc">|&gt;</span> </span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(label) <span class="sc">|&gt;</span> </span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="st">&quot;Measurement spikes&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_clusters</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    MEDI <span class="sc">&gt;</span> <span class="dv">2000</span> <span class="sc">&amp;</span> MEDI <span class="sc">&lt;</span> <span class="dv">30000</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster.duration =</span> <span class="st">&quot;20 secs&quot;</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">duration.type =</span> <span class="st">&quot;max&quot;</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">add.label =</span> <span class="cn">TRUE</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(label, Id) <span class="sc">|&gt;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_numeric</span>() <span class="sc">|&gt;</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Id, label, episodes) <span class="sc">|&gt;</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(label) <span class="sc">|&gt;</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="st">&quot;Measurement spikes&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="gmggjahqzl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gmggjahqzl table {
+<div id="ribfyircba" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ribfyircba table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#gmggjahqzl thead, #gmggjahqzl tbody, #gmggjahqzl tfoot, #gmggjahqzl tr, #gmggjahqzl td, #gmggjahqzl th {
+#ribfyircba thead, #ribfyircba tbody, #ribfyircba tfoot, #ribfyircba tr, #ribfyircba td, #ribfyircba th {
 border-style: none;
 }
-#gmggjahqzl p {
+#ribfyircba p {
 margin: 0;
 padding: 0;
 }
-#gmggjahqzl .gt_table {
+#ribfyircba .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -4207,11 +4211,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#gmggjahqzl .gt_caption {
+#ribfyircba .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#gmggjahqzl .gt_title {
+#ribfyircba .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -4222,7 +4226,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#gmggjahqzl .gt_subtitle {
+#ribfyircba .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -4233,7 +4237,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#gmggjahqzl .gt_heading {
+#ribfyircba .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -4244,12 +4248,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#gmggjahqzl .gt_bottom_border {
+#ribfyircba .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#gmggjahqzl .gt_col_headings {
+#ribfyircba .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -4263,7 +4267,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#gmggjahqzl .gt_col_heading {
+#ribfyircba .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4282,7 +4286,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#gmggjahqzl .gt_column_spanner_outer {
+#ribfyircba .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4293,13 +4297,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#gmggjahqzl .gt_column_spanner_outer:first-child {
+#ribfyircba .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#gmggjahqzl .gt_column_spanner_outer:last-child {
+#ribfyircba .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#gmggjahqzl .gt_column_spanner {
+#ribfyircba .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -4310,10 +4314,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#gmggjahqzl .gt_spanner_row {
+#ribfyircba .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#gmggjahqzl .gt_group_heading {
+#ribfyircba .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4338,7 +4342,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#gmggjahqzl .gt_empty_group_heading {
+#ribfyircba .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -4352,13 +4356,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#gmggjahqzl .gt_from_md > :first-child {
+#ribfyircba .gt_from_md > :first-child {
 margin-top: 0;
 }
-#gmggjahqzl .gt_from_md > :last-child {
+#ribfyircba .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#gmggjahqzl .gt_row {
+#ribfyircba .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4376,7 +4380,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#gmggjahqzl .gt_stub {
+#ribfyircba .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4388,7 +4392,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#gmggjahqzl .gt_stub_row_group {
+#ribfyircba .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4401,13 +4405,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#gmggjahqzl .gt_row_group_first td {
+#ribfyircba .gt_row_group_first td {
 border-top-width: 2px;
 }
-#gmggjahqzl .gt_row_group_first th {
+#ribfyircba .gt_row_group_first th {
 border-top-width: 2px;
 }
-#gmggjahqzl .gt_summary_row {
+#ribfyircba .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -4416,14 +4420,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#gmggjahqzl .gt_first_summary_row {
+#ribfyircba .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#gmggjahqzl .gt_first_summary_row.thick {
+#ribfyircba .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#gmggjahqzl .gt_last_summary_row {
+#ribfyircba .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4432,7 +4436,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#gmggjahqzl .gt_grand_summary_row {
+#ribfyircba .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -4441,7 +4445,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#gmggjahqzl .gt_first_grand_summary_row {
+#ribfyircba .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4450,7 +4454,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#gmggjahqzl .gt_last_grand_summary_row_top {
+#ribfyircba .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4459,10 +4463,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#gmggjahqzl .gt_striped {
+#ribfyircba .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#gmggjahqzl .gt_table_body {
+#ribfyircba .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -4470,7 +4474,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#gmggjahqzl .gt_footnotes {
+#ribfyircba .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -4483,7 +4487,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#gmggjahqzl .gt_footnote {
+#ribfyircba .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -4491,7 +4495,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#gmggjahqzl .gt_sourcenotes {
+#ribfyircba .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -4504,64 +4508,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#gmggjahqzl .gt_sourcenote {
+#ribfyircba .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#gmggjahqzl .gt_left {
+#ribfyircba .gt_left {
 text-align: left;
 }
-#gmggjahqzl .gt_center {
+#ribfyircba .gt_center {
 text-align: center;
 }
-#gmggjahqzl .gt_right {
+#ribfyircba .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#gmggjahqzl .gt_font_normal {
+#ribfyircba .gt_font_normal {
 font-weight: normal;
 }
-#gmggjahqzl .gt_font_bold {
+#ribfyircba .gt_font_bold {
 font-weight: bold;
 }
-#gmggjahqzl .gt_font_italic {
+#ribfyircba .gt_font_italic {
 font-style: italic;
 }
-#gmggjahqzl .gt_super {
+#ribfyircba .gt_super {
 font-size: 65%;
 }
-#gmggjahqzl .gt_footnote_marks {
+#ribfyircba .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#gmggjahqzl .gt_asterisk {
+#ribfyircba .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#gmggjahqzl .gt_indent_1 {
+#ribfyircba .gt_indent_1 {
 text-indent: 5px;
 }
-#gmggjahqzl .gt_indent_2 {
+#ribfyircba .gt_indent_2 {
 text-indent: 10px;
 }
-#gmggjahqzl .gt_indent_3 {
+#ribfyircba .gt_indent_3 {
 text-indent: 15px;
 }
-#gmggjahqzl .gt_indent_4 {
+#ribfyircba .gt_indent_4 {
 text-indent: 20px;
 }
-#gmggjahqzl .gt_indent_5 {
+#ribfyircba .gt_indent_5 {
 text-indent: 25px;
 }
-#gmggjahqzl .katex-display {
+#ribfyircba .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#gmggjahqzl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ribfyircba div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -4650,15 +4654,16 @@ height: 0px !important;
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  data_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_clusters</span>(MEDI <span class="sc">&gt;</span> <span class="dv">2000</span> <span class="sc">&amp;</span> MEDI <span class="sc">&lt;</span> <span class="dv">30000</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">cluster.duration =</span> <span class="st">&quot;20 secs&quot;</span>,</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">duration.type =</span> <span class="st">&quot;max&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MEDI =</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>           <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(state), <span class="fu">lag</span>(MEDI, <span class="dv">2</span>), MEDI))</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;KNUST_S003&quot;</span>, <span class="st">&quot;KNUST_S004&quot;</span>, <span class="st">&quot;KNUST_S005&quot;</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_days</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_clusters</span>(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    MEDI <span class="sc">&gt;</span> <span class="dv">2000</span> <span class="sc">&amp;</span> MEDI <span class="sc">&lt;</span> <span class="dv">30000</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster.duration =</span> <span class="st">&quot;20 secs&quot;</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">duration.type =</span> <span class="st">&quot;max&quot;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MEDI =</span> <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(state), <span class="fu">lag</span>(MEDI, <span class="dv">2</span>), MEDI))</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;KNUST_S003&quot;</span>, <span class="st">&quot;KNUST_S004&quot;</span>, <span class="st">&quot;KNUST_S005&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_days</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -4673,9 +4678,15 @@ height: 0px !important;
 <section id="overview-1" class="level3">
 <h3 class="anchored" data-anchor-id="overview-1">Overview</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Id =</span> Id <span class="sc">|&gt;</span> <span class="fu">fct_relabel</span>(\(x) <span class="fu">str_remove</span>(x, <span class="st">&quot;KNUST_&quot;</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grand_overview</span>(coordinates, <span class="st">&quot;Kumasi&quot;</span>, <span class="st">&quot;Ghana&quot;</span>, country_colors, <span class="at">photoperiod_sequence =</span> <span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Id =</span> Id <span class="sc">|&gt;</span> <span class="fu">fct_relabel</span>(\(x) <span class="fu">str_remove</span>(x, <span class="st">&quot;KNUST_&quot;</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grand_overview</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    coordinates,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Kumasi&quot;</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Ghana&quot;</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    country_colors,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">photoperiod_sequence =</span> <span class="fl">0.1</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -4683,7 +4694,33 @@ height: 0px !important;
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;../output/figures/Figure_1.png&quot;</span>, <span class="at">width =</span> <span class="dv">17</span>, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">scale =</span> <span class="dv">2</span>, <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;output/figures/Figure_1.png&quot;</span>),</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">17</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">10</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">scale =</span> <span class="dv">2</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">units =</span> <span class="st">&quot;cm&quot;</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;output/figures/Figure_1.jpeg&quot;</span>),</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">17</span>,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">10</span>,</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">scale =</span> <span class="dv">2</span>,</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">units =</span> <span class="st">&quot;cm&quot;</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="stats" class="level2">
+<h2 class="anchored" data-anchor-id="stats">Stats</h2>
+<section id="summary-table" class="level3">
+<h3 class="anchored" data-anchor-id="summary-table">Summary table</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#number of participants</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>n_part <span class="ot">&lt;-</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Id) <span class="sc">|&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">n_groups</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <!-- -->
 
@@ -5161,183 +5198,222 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class>
-<div class="sourceCode" id="cb22" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Descriptive analysis&quot;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> &quot;Johannes Zauner&quot;</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">    self-contained: true</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preface</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>This is a work-in-progress descriptive analysis of the <span class="in">`AkuffoEtAl2025`</span> dataset.</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(LightLogR)</span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(legendry)</span>
-<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearth)</span>
-<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearthdata)</span>
-<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/overview_plot.R&quot;</span>)</span>
-<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a><span class="fu"># Overview</span></span>
-<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data import: wearable data</span></span>
-<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>The first step is the import of wearable data from the <span class="in">`head`</span> position (mounted on glasses).</span>
-<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: &quot;general information&quot;</span></span>
-<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a><span class="co">#time zone of Kumasi</span></span>
-<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a>tz <span class="ot">=</span> <span class="st">&quot;Africa/Accra&quot;</span></span>
-<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a><span class="co">#coordinates for Kumasi</span></span>
-<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>coordinates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">6.6750074282377385</span>, <span class="sc">-</span><span class="fl">1.572643823555129</span>)</span>
-<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a><span class="co">#regex to extract participant Id and wearing position</span></span>
-<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a><span class="co"># pattern &lt;- &quot;[A-Z]+_S[0-9]{3}_[hcw]&quot;</span></span>
-<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a><span class="co">#regex to extract participant Id</span></span>
-<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> <span class="st">&quot;[A-Z]+_S[0-9]{3}&quot;</span></span>
-<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a>country_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sweden     =</span> <span class="st">&quot;#88CCEE&quot;</span>,  <span class="co"># Sky blue</span></span>
-<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">Spain      =</span> <span class="st">&quot;#CC6677&quot;</span>,  <span class="co"># Coral red</span></span>
-<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">Germany    =</span> <span class="st">&quot;#DDCC77&quot;</span>,  <span class="co"># Mustard yellow</span></span>
-<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">Netherlands=</span> <span class="st">&quot;#117733&quot;</span>,  <span class="co"># Dark green</span></span>
-<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">Turkey     =</span> <span class="st">&quot;#332288&quot;</span>,  <span class="co"># Indigo</span></span>
-<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a>  <span class="at">Ghana      =</span> <span class="st">&quot;#AA4499&quot;</span>,  <span class="co"># Purple-pink</span></span>
-<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">Costa_Rica =</span> <span class="st">&quot;#44AA99&quot;</span>   <span class="co"># Teal</span></span>
-<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a><span class="co">#path to participants</span></span>
-<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a>path_part1 <span class="ot">&lt;-</span> <span class="st">&quot;../data/raw/individual&quot;</span></span>
-<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a><span class="co">#path to actlumus data sans wearing position</span></span>
-<span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a>path_part2 <span class="ot">&lt;-</span> <span class="st">&quot;/continuous/actlumus_&quot;</span></span>
-<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a><span class="co">#wearing position</span></span>
-<span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a>wearing_position <span class="ot">&lt;-</span> <span class="st">&quot;head&quot;</span></span>
-<span id="cb22-73"><a href="#cb22-73" aria-hidden="true" tabindex="-1"></a><span class="co">#getting all subfolders</span></span>
-<span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a>folders <span class="ot">&lt;-</span> <span class="fu">dir</span>(path_part1)</span>
-<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a><span class="co">#creating complete folder names</span></span>
-<span id="cb22-76"><a href="#cb22-76" aria-hidden="true" tabindex="-1"></a>paths <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">&quot;{path_part1}/{folders}{path_part2}{wearing_position}&quot;</span>)</span>
-<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a><span class="co">#collecting file names</span></span>
-<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(paths, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> files[<span class="fu">str_detect</span>(files, <span class="st">&quot;Report&quot;</span>, <span class="at">negate =</span> <span class="cn">TRUE</span>)]</span>
-<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> import<span class="sc">$</span><span class="fu">ActLumus</span>(files, tz, <span class="at">auto.id =</span> pattern)</span>
-<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## Regularizing data</span></span>
-<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 15</span></span>
-<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5</span></span>
-<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> <span class="fu">has_gaps</span>()</span>
-<span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> <span class="fu">has_irregulars</span>()</span>
-<span id="cb22-97"><a href="#cb22-97" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> <span class="fu">gg_gaps</span>(<span class="at">group.by.days =</span> <span class="cn">TRUE</span>, <span class="at">show.irregulars =</span> <span class="cn">TRUE</span>, <span class="at">full.days =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb22-98"><a href="#cb22-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-99"><a href="#cb22-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-100"><a href="#cb22-100" aria-hidden="true" tabindex="-1"></a>Apparently, <span class="in">`KNUST_S003`</span>, <span class="in">`KNUST_S004`</span>, and <span class="in">`KNUST_S005`</span> suffer from some kind of defect, where the data become irregular and show values around 10^4 lx, even at night. We first bin the irregular data into the next regular interval, and then convert implicit to explicit days.</span>
-<span id="cb22-101"><a href="#cb22-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-104"><a href="#cb22-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-105"><a href="#cb22-105" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 15</span></span>
-<span id="cb22-106"><a href="#cb22-106" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5</span></span>
-<span id="cb22-107"><a href="#cb22-107" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span> </span>
-<span id="cb22-108"><a href="#cb22-108" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
-<span id="cb22-109"><a href="#cb22-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aggregate_Datetime</span>() <span class="sc">|&gt;</span> <span class="co">#remove irregular data</span></span>
-<span id="cb22-110"><a href="#cb22-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gap_handler</span>(<span class="at">full.days =</span> <span class="cn">TRUE</span>) <span class="co">#remove implicit gaps</span></span>
-<span id="cb22-111"><a href="#cb22-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-112"><a href="#cb22-112" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> <span class="fu">has_gaps</span>() <span class="co">#no more implicit gaps</span></span>
-<span id="cb22-113"><a href="#cb22-113" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> <span class="fu">has_irregulars</span>() <span class="co">#no more irregular data</span></span>
-<span id="cb22-114"><a href="#cb22-114" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> <span class="fu">gap_table</span>()</span>
-<span id="cb22-115"><a href="#cb22-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-116"><a href="#cb22-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-117"><a href="#cb22-117" aria-hidden="true" tabindex="-1"></a><span class="fu"># Dealing with measurement spikes</span></span>
-<span id="cb22-118"><a href="#cb22-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-119"><a href="#cb22-119" aria-hidden="true" tabindex="-1"></a>Measurement spikes seem to happen at random during certain periods of time. We can capture those by treating them as clusters of at maximum 2 epochs length. The next step visualizes this approach for <span class="in">`KNUST_S005`</span>.</span>
-<span id="cb22-120"><a href="#cb22-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-123"><a href="#cb22-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-124"><a href="#cb22-124" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 12</span></span>
-<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
-<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Id <span class="sc">==</span> <span class="st">&quot;KNUST_S005&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_clusters</span>(MEDI <span class="sc">&gt;</span> <span class="dv">2000</span> <span class="sc">&amp;</span> MEDI <span class="sc">&lt;</span> <span class="dv">30000</span>, </span>
-<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a>                   <span class="at">cluster.duration =</span> <span class="st">&quot;20 secs&quot;</span>, </span>
-<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a>                   <span class="at">duration.type =</span> <span class="st">&quot;max&quot;</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_day</span>(<span class="at">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_photoperiod</span>(coordinates) <span class="sc">+</span></span>
-<span id="cb22-133"><a href="#cb22-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> \(x) <span class="fu">filter</span>(x, <span class="sc">!</span><span class="fu">is.na</span>(state)), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb22-134"><a href="#cb22-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Identification of sudden measurement spikes (red dots)&quot;</span>)</span>
-<span id="cb22-135"><a href="#cb22-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a>We assess how many there are across the participants:</span>
-<span id="cb22-138"><a href="#cb22-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_clusters</span>(MEDI <span class="sc">&gt;</span> <span class="dv">2000</span> <span class="sc">&amp;</span> MEDI <span class="sc">&lt;</span> <span class="dv">30000</span>, </span>
-<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a>                   <span class="at">cluster.duration =</span> <span class="st">&quot;20 secs&quot;</span>, </span>
-<span id="cb22-145"><a href="#cb22-145" aria-hidden="true" tabindex="-1"></a>                   <span class="at">duration.type =</span> <span class="st">&quot;max&quot;</span>,</span>
-<span id="cb22-146"><a href="#cb22-146" aria-hidden="true" tabindex="-1"></a>                   <span class="at">add.label =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb22-147"><a href="#cb22-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(label, Id) <span class="sc">|&gt;</span> </span>
-<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_numeric</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb22-149"><a href="#cb22-149" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Id, label, episodes) <span class="sc">|&gt;</span> </span>
-<span id="cb22-150"><a href="#cb22-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(label) <span class="sc">|&gt;</span> </span>
-<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="st">&quot;Measurement spikes&quot;</span>)</span>
-<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a>Spikes are detected for every Id. We will not remove the data, but rather replace them with the value 2 intervals prior. This ensures plausible values for that time and avoids that a spike is copied over.</span>
-<span id="cb22-156"><a href="#cb22-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-160"><a href="#cb22-160" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb22-161"><a href="#cb22-161" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
-<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb22-163"><a href="#cb22-163" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span></span>
-<span id="cb22-164"><a href="#cb22-164" aria-hidden="true" tabindex="-1"></a>  data_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb22-165"><a href="#cb22-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_clusters</span>(MEDI <span class="sc">&gt;</span> <span class="dv">2000</span> <span class="sc">&amp;</span> MEDI <span class="sc">&lt;</span> <span class="dv">30000</span>,</span>
-<span id="cb22-166"><a href="#cb22-166" aria-hidden="true" tabindex="-1"></a>               <span class="at">cluster.duration =</span> <span class="st">&quot;20 secs&quot;</span>,</span>
-<span id="cb22-167"><a href="#cb22-167" aria-hidden="true" tabindex="-1"></a>               <span class="at">duration.type =</span> <span class="st">&quot;max&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-168"><a href="#cb22-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MEDI =</span></span>
-<span id="cb22-169"><a href="#cb22-169" aria-hidden="true" tabindex="-1"></a>           <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(state), <span class="fu">lag</span>(MEDI, <span class="dv">2</span>), MEDI))</span>
-<span id="cb22-170"><a href="#cb22-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-171"><a href="#cb22-171" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;KNUST_S003&quot;</span>, <span class="st">&quot;KNUST_S004&quot;</span>, <span class="st">&quot;KNUST_S005&quot;</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_days</span>()</span>
-<span id="cb22-174"><a href="#cb22-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-175"><a href="#cb22-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-176"><a href="#cb22-176" aria-hidden="true" tabindex="-1"></a>These data now look sensible enough for further visualization and processing.</span>
-<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualization</span></span>
-<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a><span class="fu">### Overview</span></span>
-<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
-<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
-<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Id =</span> Id <span class="sc">|&gt;</span> <span class="fu">fct_relabel</span>(\(x) <span class="fu">str_remove</span>(x, <span class="st">&quot;KNUST_&quot;</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a><span class="fu">grand_overview</span>(coordinates, <span class="st">&quot;Kumasi&quot;</span>, <span class="st">&quot;Ghana&quot;</span>, country_colors, <span class="at">photoperiod_sequence =</span> <span class="fl">0.1</span>)</span>
-<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;../output/figures/Figure_1.png&quot;</span>, <span class="at">width =</span> <span class="dv">17</span>, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">scale =</span> <span class="dv">2</span>, <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>)</span>
-<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode" id="cb23" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Descriptive analysis&quot;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> &quot;Johannes Zauner&quot;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">    self-contained: true</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preface</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>This is a work-in-progress descriptive analysis of the <span class="in">`AkuffoEtAl2025`</span> dataset.</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(LightLogR)</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(legendry)</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearth)</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearthdata)</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/overview_plot.R&quot;</span></span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a><span class="fu"># Overview</span></span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data import: wearable data</span></span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>The first step is the import of wearable data from the <span class="in">`head`</span> position (mounted on glasses).</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: &quot;general information&quot;</span></span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a><span class="co">#time zone of Kumasi</span></span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>tz <span class="ot">=</span> <span class="st">&quot;Africa/Accra&quot;</span></span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a><span class="co">#coordinates for Kumasi</span></span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>coordinates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">6.6750074282377385</span>, <span class="sc">-</span><span class="fl">1.572643823555129</span>)</span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a><span class="co">#regex to extract participant Id and wearing position</span></span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a><span class="co"># pattern &lt;- &quot;[A-Z]+_S[0-9]{3}_[hcw]&quot;</span></span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a><span class="co">#regex to extract participant Id</span></span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> <span class="st">&quot;[A-Z]+_S[0-9]{3}&quot;</span></span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a>country_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sweden =</span> <span class="st">&quot;#88CCEE&quot;</span>, <span class="co"># Sky blue</span></span>
+<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">Spain =</span> <span class="st">&quot;#CC6677&quot;</span>, <span class="co"># Coral red</span></span>
+<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a>  <span class="at">Germany =</span> <span class="st">&quot;#DDCC77&quot;</span>, <span class="co"># Mustard yellow</span></span>
+<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">Netherlands =</span> <span class="st">&quot;#117733&quot;</span>, <span class="co"># Dark green</span></span>
+<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a>  <span class="at">Turkey =</span> <span class="st">&quot;#332288&quot;</span>, <span class="co"># Indigo</span></span>
+<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a>  <span class="at">Ghana =</span> <span class="st">&quot;#AA4499&quot;</span>, <span class="co"># Purple-pink</span></span>
+<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a>  <span class="at">Costa_Rica =</span> <span class="st">&quot;#44AA99&quot;</span> <span class="co"># Teal</span></span>
+<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-66"><a href="#cb23-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-69"><a href="#cb23-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-70"><a href="#cb23-70" aria-hidden="true" tabindex="-1"></a><span class="co">#path to participants</span></span>
+<span id="cb23-71"><a href="#cb23-71" aria-hidden="true" tabindex="-1"></a>path_part1 <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data/raw/individual&quot;</span>)</span>
+<span id="cb23-72"><a href="#cb23-72" aria-hidden="true" tabindex="-1"></a><span class="co">#path to actlumus data sans wearing position</span></span>
+<span id="cb23-73"><a href="#cb23-73" aria-hidden="true" tabindex="-1"></a>path_part2 <span class="ot">&lt;-</span> <span class="st">&quot;/continuous/actlumus_&quot;</span></span>
+<span id="cb23-74"><a href="#cb23-74" aria-hidden="true" tabindex="-1"></a><span class="co">#wearing position</span></span>
+<span id="cb23-75"><a href="#cb23-75" aria-hidden="true" tabindex="-1"></a>wearing_position <span class="ot">&lt;-</span> <span class="st">&quot;head&quot;</span></span>
+<span id="cb23-76"><a href="#cb23-76" aria-hidden="true" tabindex="-1"></a><span class="co">#getting all subfolders</span></span>
+<span id="cb23-77"><a href="#cb23-77" aria-hidden="true" tabindex="-1"></a>folders <span class="ot">&lt;-</span> <span class="fu">dir</span>(path_part1)</span>
+<span id="cb23-78"><a href="#cb23-78" aria-hidden="true" tabindex="-1"></a><span class="co">#creating complete folder names</span></span>
+<span id="cb23-79"><a href="#cb23-79" aria-hidden="true" tabindex="-1"></a>paths <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">&quot;{path_part1}/{folders}{path_part2}{wearing_position}&quot;</span>)</span>
+<span id="cb23-80"><a href="#cb23-80" aria-hidden="true" tabindex="-1"></a><span class="co">#collecting file names</span></span>
+<span id="cb23-81"><a href="#cb23-81" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(paths, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-82"><a href="#cb23-82" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> files[<span class="fu">str_detect</span>(files, <span class="st">&quot;Report&quot;</span>, <span class="at">negate =</span> <span class="cn">TRUE</span>)]</span>
+<span id="cb23-83"><a href="#cb23-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-84"><a href="#cb23-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-87"><a href="#cb23-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-88"><a href="#cb23-88" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> import<span class="sc">$</span><span class="fu">ActLumus</span>(files, tz, <span class="at">auto.id =</span> pattern)</span>
+<span id="cb23-89"><a href="#cb23-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-90"><a href="#cb23-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-91"><a href="#cb23-91" aria-hidden="true" tabindex="-1"></a><span class="fu">## Regularizing data</span></span>
+<span id="cb23-92"><a href="#cb23-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-95"><a href="#cb23-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-96"><a href="#cb23-96" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 15</span></span>
+<span id="cb23-97"><a href="#cb23-97" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5</span></span>
+<span id="cb23-98"><a href="#cb23-98" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> <span class="fu">has_gaps</span>()</span>
+<span id="cb23-99"><a href="#cb23-99" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> <span class="fu">has_irregulars</span>()</span>
+<span id="cb23-100"><a href="#cb23-100" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> <span class="fu">gg_gaps</span>(<span class="at">group.by.days =</span> <span class="cn">TRUE</span>, <span class="at">show.irregulars =</span> <span class="cn">TRUE</span>, <span class="at">full.days =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb23-101"><a href="#cb23-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-102"><a href="#cb23-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-103"><a href="#cb23-103" aria-hidden="true" tabindex="-1"></a>Apparently, <span class="in">`KNUST_S003`</span>, <span class="in">`KNUST_S004`</span>, and <span class="in">`KNUST_S005`</span> suffer from some kind of defect, where the data become irregular and show values around 10^4 lx, even at night. We first bin the irregular data into the next regular interval, and then convert implicit to explicit days.</span>
+<span id="cb23-104"><a href="#cb23-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-107"><a href="#cb23-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-108"><a href="#cb23-108" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 15</span></span>
+<span id="cb23-109"><a href="#cb23-109" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5</span></span>
+<span id="cb23-110"><a href="#cb23-110" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span></span>
+<span id="cb23-111"><a href="#cb23-111" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
+<span id="cb23-112"><a href="#cb23-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aggregate_Datetime</span>() <span class="sc">|&gt;</span> <span class="co">#remove irregular data</span></span>
+<span id="cb23-113"><a href="#cb23-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gap_handler</span>(<span class="at">full.days =</span> <span class="cn">TRUE</span>) <span class="co">#remove implicit gaps</span></span>
+<span id="cb23-114"><a href="#cb23-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-115"><a href="#cb23-115" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> <span class="fu">has_gaps</span>() <span class="co">#no more implicit gaps</span></span>
+<span id="cb23-116"><a href="#cb23-116" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> <span class="fu">has_irregulars</span>() <span class="co">#no more irregular data</span></span>
+<span id="cb23-117"><a href="#cb23-117" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span> <span class="fu">gap_table</span>()</span>
+<span id="cb23-118"><a href="#cb23-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-119"><a href="#cb23-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-120"><a href="#cb23-120" aria-hidden="true" tabindex="-1"></a><span class="fu"># Dealing with measurement spikes</span></span>
+<span id="cb23-121"><a href="#cb23-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-122"><a href="#cb23-122" aria-hidden="true" tabindex="-1"></a>Measurement spikes seem to happen at random during certain periods of time. We can capture those by treating them as clusters of at maximum 2 epochs length. The next step visualizes this approach for <span class="in">`KNUST_S005`</span>.</span>
+<span id="cb23-123"><a href="#cb23-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-126"><a href="#cb23-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-127"><a href="#cb23-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 12</span></span>
+<span id="cb23-128"><a href="#cb23-128" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb23-129"><a href="#cb23-129" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb23-130"><a href="#cb23-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Id <span class="sc">==</span> <span class="st">&quot;KNUST_S005&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-131"><a href="#cb23-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_clusters</span>(</span>
+<span id="cb23-132"><a href="#cb23-132" aria-hidden="true" tabindex="-1"></a>    MEDI <span class="sc">&gt;</span> <span class="dv">2000</span> <span class="sc">&amp;</span> MEDI <span class="sc">&lt;</span> <span class="dv">30000</span>,</span>
+<span id="cb23-133"><a href="#cb23-133" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster.duration =</span> <span class="st">&quot;20 secs&quot;</span>,</span>
+<span id="cb23-134"><a href="#cb23-134" aria-hidden="true" tabindex="-1"></a>    <span class="at">duration.type =</span> <span class="st">&quot;max&quot;</span></span>
+<span id="cb23-135"><a href="#cb23-135" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb23-136"><a href="#cb23-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_day</span>(<span class="at">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-137"><a href="#cb23-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_photoperiod</span>(coordinates) <span class="sc">+</span></span>
+<span id="cb23-138"><a href="#cb23-138" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> \(x) <span class="fu">filter</span>(x, <span class="sc">!</span><span class="fu">is.na</span>(state)), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb23-139"><a href="#cb23-139" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Identification of sudden measurement spikes (red dots)&quot;</span>)</span>
+<span id="cb23-140"><a href="#cb23-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-141"><a href="#cb23-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-142"><a href="#cb23-142" aria-hidden="true" tabindex="-1"></a>We assess how many there are across the participants:</span>
+<span id="cb23-143"><a href="#cb23-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-146"><a href="#cb23-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-147"><a href="#cb23-147" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb23-148"><a href="#cb23-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_clusters</span>(</span>
+<span id="cb23-149"><a href="#cb23-149" aria-hidden="true" tabindex="-1"></a>    MEDI <span class="sc">&gt;</span> <span class="dv">2000</span> <span class="sc">&amp;</span> MEDI <span class="sc">&lt;</span> <span class="dv">30000</span>,</span>
+<span id="cb23-150"><a href="#cb23-150" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster.duration =</span> <span class="st">&quot;20 secs&quot;</span>,</span>
+<span id="cb23-151"><a href="#cb23-151" aria-hidden="true" tabindex="-1"></a>    <span class="at">duration.type =</span> <span class="st">&quot;max&quot;</span>,</span>
+<span id="cb23-152"><a href="#cb23-152" aria-hidden="true" tabindex="-1"></a>    <span class="at">add.label =</span> <span class="cn">TRUE</span></span>
+<span id="cb23-153"><a href="#cb23-153" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb23-154"><a href="#cb23-154" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(label, Id) <span class="sc">|&gt;</span></span>
+<span id="cb23-155"><a href="#cb23-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_numeric</span>() <span class="sc">|&gt;</span></span>
+<span id="cb23-156"><a href="#cb23-156" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Id, label, episodes) <span class="sc">|&gt;</span></span>
+<span id="cb23-157"><a href="#cb23-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(label) <span class="sc">|&gt;</span></span>
+<span id="cb23-158"><a href="#cb23-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb23-159"><a href="#cb23-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="st">&quot;Measurement spikes&quot;</span>)</span>
+<span id="cb23-160"><a href="#cb23-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-161"><a href="#cb23-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-162"><a href="#cb23-162" aria-hidden="true" tabindex="-1"></a>Spikes are detected for every Id. We will not remove the data, but rather replace them with the value 2 intervals prior. This ensures plausible values for that time and avoids that a spike is copied over.</span>
+<span id="cb23-163"><a href="#cb23-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-166"><a href="#cb23-166" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-167"><a href="#cb23-167" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb23-168"><a href="#cb23-168" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb23-169"><a href="#cb23-169" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb23-170"><a href="#cb23-170" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span></span>
+<span id="cb23-171"><a href="#cb23-171" aria-hidden="true" tabindex="-1"></a>  data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb23-172"><a href="#cb23-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_clusters</span>(</span>
+<span id="cb23-173"><a href="#cb23-173" aria-hidden="true" tabindex="-1"></a>    MEDI <span class="sc">&gt;</span> <span class="dv">2000</span> <span class="sc">&amp;</span> MEDI <span class="sc">&lt;</span> <span class="dv">30000</span>,</span>
+<span id="cb23-174"><a href="#cb23-174" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster.duration =</span> <span class="st">&quot;20 secs&quot;</span>,</span>
+<span id="cb23-175"><a href="#cb23-175" aria-hidden="true" tabindex="-1"></a>    <span class="at">duration.type =</span> <span class="st">&quot;max&quot;</span></span>
+<span id="cb23-176"><a href="#cb23-176" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb23-177"><a href="#cb23-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MEDI =</span> <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(state), <span class="fu">lag</span>(MEDI, <span class="dv">2</span>), MEDI))</span>
+<span id="cb23-178"><a href="#cb23-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-179"><a href="#cb23-179" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb23-180"><a href="#cb23-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;KNUST_S003&quot;</span>, <span class="st">&quot;KNUST_S004&quot;</span>, <span class="st">&quot;KNUST_S005&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb23-181"><a href="#cb23-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_days</span>()</span>
+<span id="cb23-182"><a href="#cb23-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-183"><a href="#cb23-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-184"><a href="#cb23-184" aria-hidden="true" tabindex="-1"></a>These data now look sensible enough for further visualization and processing.</span>
+<span id="cb23-185"><a href="#cb23-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-186"><a href="#cb23-186" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualization</span></span>
+<span id="cb23-187"><a href="#cb23-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-188"><a href="#cb23-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### Overview</span></span>
+<span id="cb23-189"><a href="#cb23-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-192"><a href="#cb23-192" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-193"><a href="#cb23-193" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb23-194"><a href="#cb23-194" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb23-195"><a href="#cb23-195" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
+<span id="cb23-196"><a href="#cb23-196" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb23-197"><a href="#cb23-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-198"><a href="#cb23-198" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb23-199"><a href="#cb23-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Id =</span> Id <span class="sc">|&gt;</span> <span class="fu">fct_relabel</span>(\(x) <span class="fu">str_remove</span>(x, <span class="st">&quot;KNUST_&quot;</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb23-200"><a href="#cb23-200" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grand_overview</span>(</span>
+<span id="cb23-201"><a href="#cb23-201" aria-hidden="true" tabindex="-1"></a>    coordinates,</span>
+<span id="cb23-202"><a href="#cb23-202" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Kumasi&quot;</span>,</span>
+<span id="cb23-203"><a href="#cb23-203" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Ghana&quot;</span>,</span>
+<span id="cb23-204"><a href="#cb23-204" aria-hidden="true" tabindex="-1"></a>    country_colors,</span>
+<span id="cb23-205"><a href="#cb23-205" aria-hidden="true" tabindex="-1"></a>    <span class="at">photoperiod_sequence =</span> <span class="fl">0.1</span></span>
+<span id="cb23-206"><a href="#cb23-206" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-207"><a href="#cb23-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-208"><a href="#cb23-208" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb23-209"><a href="#cb23-209" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;output/figures/Figure_1.png&quot;</span>),</span>
+<span id="cb23-210"><a href="#cb23-210" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">17</span>,</span>
+<span id="cb23-211"><a href="#cb23-211" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">10</span>,</span>
+<span id="cb23-212"><a href="#cb23-212" aria-hidden="true" tabindex="-1"></a>  <span class="at">scale =</span> <span class="dv">2</span>,</span>
+<span id="cb23-213"><a href="#cb23-213" aria-hidden="true" tabindex="-1"></a>  <span class="at">units =</span> <span class="st">&quot;cm&quot;</span></span>
+<span id="cb23-214"><a href="#cb23-214" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-215"><a href="#cb23-215" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb23-216"><a href="#cb23-216" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;output/figures/Figure_1.jpeg&quot;</span>),</span>
+<span id="cb23-217"><a href="#cb23-217" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">17</span>,</span>
+<span id="cb23-218"><a href="#cb23-218" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">10</span>,</span>
+<span id="cb23-219"><a href="#cb23-219" aria-hidden="true" tabindex="-1"></a>  <span class="at">scale =</span> <span class="dv">2</span>,</span>
+<span id="cb23-220"><a href="#cb23-220" aria-hidden="true" tabindex="-1"></a>  <span class="at">units =</span> <span class="st">&quot;cm&quot;</span></span>
+<span id="cb23-221"><a href="#cb23-221" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-222"><a href="#cb23-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-223"><a href="#cb23-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-224"><a href="#cb23-224" aria-hidden="true" tabindex="-1"></a><span class="fu">## Stats</span></span>
+<span id="cb23-225"><a href="#cb23-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-226"><a href="#cb23-226" aria-hidden="true" tabindex="-1"></a><span class="fu">### Summary table</span></span>
+<span id="cb23-227"><a href="#cb23-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-230"><a href="#cb23-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-231"><a href="#cb23-231" aria-hidden="true" tabindex="-1"></a><span class="co">#number of participants</span></span>
+<span id="cb23-232"><a href="#cb23-232" aria-hidden="true" tabindex="-1"></a>n_part <span class="ot">&lt;-</span></span>
+<span id="cb23-233"><a href="#cb23-233" aria-hidden="true" tabindex="-1"></a>  data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb23-234"><a href="#cb23-234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Id) <span class="sc">|&gt;</span></span>
+<span id="cb23-235"><a href="#cb23-235" aria-hidden="true" tabindex="-1"></a>  <span class="fu">n_groups</span>()</span>
+<span id="cb23-236"><a href="#cb23-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-237"><a href="#cb23-237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-238"><a href="#cb23-238" aria-hidden="true" tabindex="-1"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
