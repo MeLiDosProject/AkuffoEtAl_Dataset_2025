@@ -169,6 +169,65 @@ data_cleaned |>
 
 These data now look sensible enough for further visualization and processing.
 
+## Single out extreme patterns
+
+```{r}
+#| fig-width: 18
+#| fig-height: 35
+data_2min <- 
+data_cleaned |> 
+  select(Id, Datetime, MEDI) |> 
+  aggregate_Datetime("5 mins", numeric.handler = \(x) mean(x, na.rm = TRUE)) |> 
+  remove_partial_data(
+    MEDI, by.date = TRUE,
+  ) |> 
+  mutate(.Date = (date(Datetime) - min(date(Datetime)) + 1))
+  
+dose_data <- 
+data_2min |> 
+  add_Date_col(group.by = TRUE) |> 
+  summarize(
+    dose(
+      MEDI,
+      Datetime,
+      na.rm = TRUE,
+      as.df = TRUE
+    ),
+    .groups = "drop"
+  )
+
+dose_data |> 
+  ungroup() |> 
+  filter(dose == max(dose) | dose == min(dose))
+
+data_2min |> 
+  gg_day(facetting = FALSE, 
+         group = factor(.Date),
+         geom = "line", 
+         aes_col = factor(.Date)) +
+  facet_wrap(~Id, ncol = 2)
+
+data_2min |>
+  # filter(Id %in% c("UCR_S007", "UCR_S001")) |>
+  filter(Id %in% c("KNUST_S007")) |>
+  # filter(date(Datetime) %in% c("2025-07-01", "2025-07-05")) |>
+  add_Date_col(group.by = TRUE) |>
+  gg_doubleplot(aes_col = factor(.Date), aes_fill = factor(.Date)) +
+  guides(fill = "none", color = "none")
+
+```
+
+## Exporting hourly values
+
+```{r}
+data_export <- 
+data_cleaned |> 
+  aggregate_Datetime("1 minute", numeric.handler = \(x) mean(x, na.rm = TRUE)) |> 
+  remove_partial_data(MEDI, threshold.missing = "3 hours", by.date = TRUE)
+
+save(data_export, file = "../data/gh_1minute.RData")
+```
+
 ## Visualization
 
 ### Overview
