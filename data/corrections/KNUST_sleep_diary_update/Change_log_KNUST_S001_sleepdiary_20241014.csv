@@ -1,0 +1,12 @@
+Date,File,Modality,Row(s),Column(s),Original content,New content,rationale
+10/22/2025,KNUST_S001_sleepdiary_20241014,sleepdiary,3,bedtime,10/7/2024 20:10,10/7/2024  20:02:00 AM,"implausible value, change to sleep"
+10/22/2025,KNUST_S001_sleepdiary_20241014,sleepdiary,3,sleep,10/7/2024 8:02,10/7/2024 20:10,"implausible value, change to bedtime; am/pm error"
+10/22/2025,KNUST_S001_sleepdiary_20241014,sleepdiary,3,offset,10/8/2024 6:06,10/8/2024 6:02,"implausible value, change to out_ofbed"
+10/22/2025,KNUST_S001_sleepdiary_20241014,sleepdiary,3,out_ofbed,10/7/2024 6:02,10/8/2024 6:06,"implausible value, change to offset; date error"
+10/22/2025,KNUST_S001_sleepdiary_20241014,sleepdiary,4,bedtime,10/8/2024 19:30,10/8/2024 19:20,"implausible value, change to sleep"
+10/22/2025,KNUST_S001_sleepdiary_20241014,sleepdiary,4,sleep,10/8/2024 19:20,10/8/2024 19:30,"implausible value, change to bedtime"
+10/22/2025,KNUST_S001_sleepdiary_20241014,sleepdiary,5,bedtime,10/9/2024 19:30,10/9/2024 19:00,"implausible value, change to sleep"
+10/22/2025,KNUST_S001_sleepdiary_20241014,sleepdiary,5,sleep,10/9/2024 19:00,10/9/2024 19:30,"implausible value, change to bedtime"
+10/22/2025,KNUST_S001_sleepdiary_20241014,sleepdiary,6,bedtime,10/10/2024 20:00,10/10/2024 19:52,"implausible value, change to sleep"
+10/22/2025,KNUST_S001_sleepdiary_20241014,sleepdiary,6,sleep,10/10/2024 19:52,10/10/2024 20:00,"implausible value, change to bedtime"
+10/22/2025,KNUST_S001_sleepdiary_20241014,sleepdiary,8,bedtime,10/12/2024 8:08,10/12/2024  20:08:00 PM,am/pm error

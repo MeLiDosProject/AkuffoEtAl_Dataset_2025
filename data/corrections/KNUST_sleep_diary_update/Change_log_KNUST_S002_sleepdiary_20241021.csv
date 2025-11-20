@@ -1,0 +1,5 @@
+Date,File,Modality,Row(s),Column(s),Original content,New content,rationale
+10/22/2025,KNUST_S002_sleepdiary_20241021,sleepdiary,3,bedtime,10/14/2024 23:00,10/14/2024 22:45,"implausible value, changed to sleep"
+10/22/2025,KNUST_S002_sleepdiary_20241021,sleepdiary,3,sleep,10/14/2024 22:45,10/14/2024 23:00,"implausible value, changed to bedtime"
+10/22/2025,KNUST_S002_sleepdiary_20241021,sleepdiary,4,bedtime,10/15/2024 9:25,10/15/2024  21:25:00 PM,am/pm error
+10/22/2025,KNUST_S002_sleepdiary_20241021,sleepdiary,4,sleep,10/15/2024 10:14,10/15/2024  22:14:00 PM,am/pm error
