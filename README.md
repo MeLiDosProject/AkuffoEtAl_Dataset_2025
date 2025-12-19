@@ -117,6 +117,26 @@ The following files are included with this Dataset:
 
 All data are anonymous.
 
+# Descriptive statistics
+
+## Light
+
+<figure>
+<img src="output/tables/table_summary.png"
+alt="Summary table of personal light exposure" />
+<figcaption aria-hidden="true">Summary table of personal light
+exposure</figcaption>
+</figure>
+
+## Sleep
+
+<figure>
+<img src="output/tables/table_sleepdiary.png"
+alt="Summary table of the morning sleep diary" />
+<figcaption aria-hidden="true">Summary table of the morning sleep
+diary</figcaption>
+</figure>
+
 # Folder structure
 
 ## Group
