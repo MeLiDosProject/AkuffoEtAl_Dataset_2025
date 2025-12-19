@@ -1,0 +1,158 @@
+---
+title: "Import sleep diaries"
+author: "Johannes Zauner"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+---
+
+## Preface
+
+This document imports the `sleepdiaries` and shows descriptive statistics for the site.
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+library(LightLogR)
+library(glue)
+library(readxl)
+library(gt)
+library(gtsummary)
+source("https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/labeling.R")
+source("https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/radio_factors.R")
+source("https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/time_summaries.R")
+```
+
+Collect the necessary external information
+
+```{r}
+codebook <- 
+  read_csv(
+  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/codebook/MeLiDosMorningSleepDiaries_DataDictionary_2024-10-16.csv", show_col_types = FALSE
+  )
+#clean up labels
+codebook <-
+  codebook |> 
+    mutate(
+      `Field Label` = 
+        `Field Label` |> 
+        str_remove_all("<div class=\"rich-text-field-label\">|<p>|<em>|</em>|</p>|</div>")
+    )
+```
+
+
+## Collect files
+
+The following files contain sleep-diary information.
+
+```{r}
+#path to participants
+path_part1 <- "../data/raw/individual"
+#path to questionnaire
+path_part2 <- "/continuous/sleepdiary"
+#getting all subfolders
+folders <- dir(path_part1)
+#creating complete folder names
+paths <- glue("{path_part1}/{folders}{path_part2}")
+#collecting file names
+files <- list.files(paths, full.names = TRUE)
+```
+
+## Import files
+
+```{r}
+sleepdiary <- 
+  read_csv(files, show_col_types = FALSE) |> drop_na(redcap_repeat_instance)
+lookup_id <- 
+  read_csv("../data/raw/lookup.csv", show_col_types = FALSE)
+sleepdiary <- 
+sleepdiary |> 
+  mutate(record_id = lookup_id$ID[record_id])
+```
+
+### Check column types
+
+```{r}
+should_POSIXct <- c("bedtime", "sleep", "offset", "out_ofbed")
+should_numeric <- c("sleepdelay", "awakenings", "awake_duration", "sleepquality", "daytype2")
+should_character <- c("record_id", "comments")
+
+stopifnot(
+  "all of should_POSIXct need to be part of the dataset and of type POSIXct" =
+  should_POSIXct %in% (sleepdiary |> select(where(is.POSIXct)) |> names()),
+  "all of should_numeric need to be part of the dataset and of type numeric" =
+  should_numeric %in% (sleepdiary |> select(where(is.numeric)) |> names()),
+  "all of should_character need to be part of the dataset and of type character" =
+  should_character %in% (sleepdiary |> select(where(is.character)) |> names())
+  )
+```
+
+### Select relevant variables &nonempty rows
+
+```{r}
+sleepdiary <- 
+sleepdiary |> 
+  select(all_of(c(should_character, should_POSIXct, should_numeric)))
+```
+
+
+### Label variables
+
+```{r}
+sleepdiary <-
+sleepdiary |> 
+  add_radio_factors(codebook, 
+                    var_col = `Variable / Field Name`, 
+                    type_col = `Field Type`,
+                    levels_col = `Choices, Calculations, OR Slider Labels`
+                    ) |> 
+  add_col_labels(codebook, var_col = `Variable / Field Name`, label_col = `Field Label`)
+```
+
+### Calculate sleep and sleepduration
+
+```{r}
+sleepdiary <- 
+sleepdiary |> 
+  rename(wake = offset, sleepprep = sleep) |> 
+  mutate(sleep = sleepprep + dminutes(sleepdelay),
+         sleep_duration = wake - sleep
+  )
+
+attr(sleepdiary$sleep, "label") <- "Sleep onset (calculated)"
+attr(sleepdiary$sleep_duration, "label") <- "Sleep duration (calculated)"
+
+```
+
+## Summarize diary results
+
+```{r}
+table_sleep <- 
+sleepdiary |> 
+  tbl_summary(include = -c(comments, record_id),
+              statistic = list(all_continuous() ~ "{median} ({p25}, {p75})", 
+                               all_categorical() ~ "{n} ({p}%)",
+                               c(bedtime, sleep, sleepprep)  ~ "{time_median} ({nighttime_p25}, {nighttime_p75})",
+                               c(wake, out_ofbed)  ~ "{time_median} ({daytime_p25}, {daytime_p75})"
+                               ),
+              type = awakenings ~ "continuous",
+              missing_text = "missing") |> 
+  add_n() |> 
+  bold_labels() |> 
+  modify_header(label = "**Morning sleep diary**") |> 
+  modify_footnote_header("Nighttime variables center on midnight, daytime variables on noon; median for time is based on circular time", columns = stat_0, replace = FALSE)
+
+table_sleep
+
+gtsave(table_sleep |> as_gt(), filename = "../output/tables/table_sleepdiary.png")
+```
+
+### Export
+
+```{r}
+save(sleepdiary, file = "../data/imported/continuous/sleepdiaries.RData")
+```
+
