@@ -1,0 +1,251 @@
+---
+title: "Import light"
+author: "Johannes Zauner"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+---
+
+# Preface
+
+This is a work-in-progress descriptive analysis of the `DidikogluEtAl2025` dataset.
+
+```{r}
+#| label: setup
+#| include: false
+library(LightLogR)
+library(glue)
+library(tidyverse)
+library(gt)
+library(readxl)
+library(cowplot)
+library(legendry)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(sf)
+library(patchwork)
+library(rlang)
+library(here)
+
+remote <- 
+  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/"
+
+c(
+  "filefinder",
+  "general_parameters",
+  "overview_plot"
+) |> walk(\(x) source(paste0(remote, x, ".R")))
+
+site <- "KNUST"
+```
+
+# Overview
+
+## Data import: wearable data
+
+The first step is the import of wearable data from the `head` position (mounted on glasses).
+
+```{r}
+#| label: "general information"
+#regex to extract participant Id and wearing position
+# pattern <- "[A-Z]+_S[0-9]{3}_[hcw]"
+#regex to extract participant Id
+pattern <- "[A-Z]+_S[0-9]{3}"
+```
+
+```{r}
+files <- filefinder("actlumus_head", continuous = TRUE, negate = "Report")
+```
+
+```{r}
+data <- import$ActLumus(files, tzs[site], auto.id = pattern)
+```
+
+## Regularizing data
+
+In the first step, we will trim the data by the study time.
+
+```{r}
+path_study_dates <- paste0("../data/Study_dates_MeLiDos_", site, ".xlsx")
+
+#import table with study times
+Study_dates <- read_excel(path_study_dates)
+#gather the important information
+Study_dates <-
+  Study_dates |> 
+    rename(Id = subjectID_device, start = datetime_trial_start, end = datetime_trial_end) |> 
+    select(Id, start, end) |> 
+    mutate(across(c(start, end), \(x) force_tz(x, tzs[site])),
+           trial = TRUE) |> 
+    filter(str_detect(Id, "_h$")) |>
+    mutate(Id = str_remove(Id, "_h$")) |> 
+  group_by(Id)
+
+#add the trim information to the dataset and filter by it
+data <- 
+  data |> 
+  add_states(Study_dates) |> 
+  dplyr::filter(trial) |> 
+  select(-trial)
+
+data |> gg_overview()
+```
+
+## Regularizing data
+
+```{r}
+#| fig-height: 15
+#| fig-width: 5
+data |> has_gaps()
+data |> has_irregulars()
+data |> gg_gaps(group.by.days = TRUE, show.irregulars = TRUE, full.days = FALSE)
+```
+
+Apparently, `KNUST_S003`, `KNUST_S004`, and `KNUST_S005` suffer from some kind of defect, where the data become irregular and show values around 10^4 lx, even at night. We first bin the irregular data into the next regular interval, and then convert implicit to explicit days. We will further remove unreasonably high values above 100.000 lx melanopic EDI
+
+```{r}
+#| fig-height: 15
+#| fig-width: 5
+data_cleaned <-
+  data |>
+  aggregate_Datetime() |> #remove irregular data
+  filter(MEDI <= 10^5) |> #remove high values
+  gap_handler(full.days = TRUE) #remove implicit gaps
+
+data_cleaned |> has_gaps() #no more implicit gaps
+data_cleaned |> has_irregulars() #no more irregular data
+data_cleaned |> gap_table()
+```
+
+# Dealing with measurement spikes
+
+Measurement spikes seem to happen at random during certain periods of time. We can capture those by treating them as clusters of at maximum 2 epochs length. The next step visualizes this approach for `KNUST_S005`. 
+
+```{r}
+#| fig-height: 12
+#| fig-width: 8
+data_cleaned |>
+  filter(Id == "KNUST_S005") |>
+  add_clusters(
+    MEDI > 2000 & MEDI < 30000,
+    cluster.duration = "20 secs",
+    duration.type = "max"
+  ) |>
+  gg_day(geom = "line") |>
+  gg_photoperiod(coordinates[[site]]) +
+  geom_point(data = \(x) filter(x, !is.na(state)), col = "red") +
+  labs(title = "Identification of sudden measurement spikes (red dots)")
+```
+
+We assess how many there are across the participants:
+
+```{r}
+data_cleaned |>
+  extract_clusters(
+    MEDI > 2000 & MEDI < 30000,
+    cluster.duration = "20 secs",
+    duration.type = "max",
+    add.label = TRUE
+  ) |>
+  group_by(label, Id) |>
+  summarize_numeric() |>
+  select(Id, label, episodes) |>
+  group_by(label) |>
+  gt() |>
+  tab_header("Measurement spikes")
+```
+
+Spikes are detected for every Id. We will not remove the data, but rather replace them with the value 2 intervals prior. This ensures plausible values for that time and avoids that a spike is copied over.
+
+```{r}
+#| fig-height: 6
+#| fig-width: 12
+#| warning: false
+data_cleaned <-
+  data_cleaned |>
+  add_clusters(
+    MEDI > 2000 & MEDI < 30000,
+    cluster.duration = "20 secs",
+    duration.type = "max"
+  ) |>
+  mutate(MEDI = ifelse(!is.na(state), lag(MEDI, 2), MEDI))
+
+data_cleaned |>
+  filter(Id %in% c("KNUST_S003", "KNUST_S004", "KNUST_S005")) |>
+  gg_days()
+```
+
+These data now look sensible enough for further visualization and processing.
+
+```{r}
+#| fig-height: 15
+#| fig-width: 5
+data_cleaned <- 
+data |> 
+  cut_Datetime("10 secs", New.colname = Datetime) |> #remove irregular data
+  gap_handler(full.days = TRUE) #remove implicit gaps
+
+data_cleaned |> has_gaps() #no more implicit gaps
+data_cleaned |> has_irregulars() #no more irregular data
+data_cleaned |> gap_table(MEDI) |> cols_hide(ends_with("_n"))
+```
+
+## Exporting values
+
+```{r}
+light_1min <- 
+data_cleaned |> 
+  aggregate_Datetime("1 minute", numeric.handler = \(x) mean(x, na.rm = TRUE)) |> 
+  remove_partial_data(MEDI, threshold.missing = "3 hours", by.date = TRUE)
+
+light <- data_cleaned
+
+save(light_1min, file = "../data/imported/light/light_1minute.RData")
+save(light, file = "../data/imported/light/light.RData")
+```
+
+## Visualization
+
+```{r}
+#| warning: false
+#| message: false
+#| fig-height: 8
+#| fig-width: 12
+
+prefix <- paste0(site, "_")
+
+data_cleaned |> 
+  mutate(Id = Id |> fct_relabel(\(x) str_remove(x, prefix))) |> 
+grand_overview(coordinates[[site]], cities[[site]], countries[[site]], 
+               country_colors[[site]])
+
+ggsave("../output/figures/Figure_1.png", width = 17, height = 10, scale = 2, units = "cm")
+ggsave("../output/figures/Figure_1.jpeg", width = 17, height = 10, scale = 2, units = "cm")
+```
+
+## Stats
+
+### Summary table
+
+```{r}
+#| message: false
+#| warning: false
+
+table_summary <-
+summary_table(
+  data_cleaned, 
+  coordinates = coordinates[[site]], 
+  location = cities[[site]], 
+  site = countries[[site]], 
+  color = country_colors[[site]],
+  histograms = TRUE
+)
+
+table_summary
+
+gtsave(table_summary, here("output/tables/table_summary.png"), vwidth = 850, expand = 30)
+gtsave(table_summary, here("output/tables/table_summary.pdf"))
+gtsave(table_summary |> cols_hide(c(plot)), here("output/tables/table_summary.docx"))
+```
+

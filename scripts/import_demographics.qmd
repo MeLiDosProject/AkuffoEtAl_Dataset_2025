@@ -1,15 +1,17 @@
 ---
-title: "Import sleep diaries"
+title: "Import demographics"
 author: "Johannes Zauner"
 format: 
   html:
     self-contained: true
     code-tools: true
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## Preface
 
-This document imports the `sleepdiaries` and shows descriptive statistics for the site.
+This document imports the `demographics` and shows descriptive statistics for the site.
 
 ## Setup
 
@@ -27,7 +29,6 @@ remote <-
 
 c("labeling",
   "radio_factors",
-  "time_summaries",
   "prepare_codebook",
   "filefinder",
   "general_parameters",
@@ -40,26 +41,29 @@ c("labeling",
 
 ```{r}
 #collect codebook
-codebook <- prepare_codebook("MeLiDosMorningSleepDiaries_DataDictionary_2024-10-16.csv")
+codebook <- 
+  prepare_codebook("MeLiDosScreeningQuestionnaire_DataDictionary_2024-10-16.csv",
+                   c("online_screening_consent_form", "your_demographics")) |> 
+  filter(!`Variable / Field Name` %in% c("email", "email_2"))
 #collect files
-files <- filefinder("sleepdiary", continuous = TRUE)
+files <- filefinder("demographics",individual = FALSE, negate = "lookup")
 #import files
-data <- read_csv(files, show_col_types = FALSE) |> drop_na(redcap_repeat_instance)
+data <- 
+  read_csv(files, show_col_types = FALSE) |> 
+  drop_na(redcap_repeat_instance) |> 
+  mutate(native_language = as.logical(native_language))
 #check column types
 coltype_check <- coltype_checker(codebook, data)
 coltype_check$details |> gt()
-#collect relevant columns: POSIXct, Date & numeric
+#collect relevant columns
 relevant_columns <- 
   coltype_check$details |> 
-  filter(expected %in% c("POSIXct", "numeric", "Date")) |> 
-  pull(col) |> 
-  setdiff(c("status", "scheduledate"))
-#add specific character columns
-relevant_columns <- c("record_id", relevant_columns, "comments")
+  pull(col)
 #select relevant columns
 data <- data |> select(any_of(relevant_columns))
 data <- 
-  data |> mutate(record_id = sprintf("KNUST_S%03d", record_id))
+  data |> 
+  mutate(record_id = sprintf("KNUST_S%03d", record_id))
 #label variables
 data <-
 data |> 
@@ -69,36 +73,28 @@ data |>
                     levels_col = `Choices, Calculations, OR Slider Labels`
                     ) |> 
   add_col_labels(codebook, var_col = `Variable / Field Name`, label_col = `Field Label`)
-```
-
-## Calculate sleep and sleepduration
-
-```{r}
+#reorder variables
 data <- 
-data |> 
-  rename(wake = offset, sleepprep = sleep) |> 
-  mutate(sleep = sleepprep + dminutes(sleepdelay),
-         sleep_duration = wake - sleep
-  )
-
-attr(data$sleep, "label") <- "Sleep onset (calculated)"
-attr(data$sleep_duration, "label") <- "Sleep duration (calculated)"
+  data |> 
+  dplyr::relocate(native_language, .before = language_specification) |> 
+  relocate(record_id) |> 
+  select(-consent)
 ```
 
 ## Summarize results
 
 ```{r}
-table_sleepdiary(data)
+table_demographics(data)
 
-gtsave(table_sleepdiary(data) |> as_gt(), filename = "../output/tables/table_sleepdiary.png", vwidth = 800)
+gtsave(table_demographics(data) |> as_gt(), filename = "../output/tables/table_demographics.png", vwidth = 800)
 ```
 
 ### Export
 
 ```{r}
 data <- data |> rename(Id = record_id)
-sleepdiary <- data
-path <- "../data/imported/continuous/"
+demographics <- data
+path <- "../data/imported/"
 if(!dir.exists(path)) dir.create(path, recursive = TRUE)
-save(sleepdiary, file = "../data/imported/continuous/sleepdiaries.RData")
+save(demographics, file = "../data/imported/continuous/demographics.RData")
 ```

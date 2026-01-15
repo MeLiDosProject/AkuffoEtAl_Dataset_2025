@@ -60,6 +60,35 @@ APA reference:
 > <https://github.com/MeLiDosProject/AkuffoEtAl_Dataset_2025>. DOI:
 > doi.org/10.5281/zenodo.15576731
 
+## Descriptive statistics
+
+### Demographics
+
+<figure>
+<img src="output/tables/table_demographics.png"
+alt="Summary table of participant demographics" />
+<figcaption aria-hidden="true">Summary table of participant
+demographics</figcaption>
+</figure>
+
+### Light
+
+<figure>
+<img src="output/tables/table_summary.png"
+alt="Summary table of personal light exposure (eye-level data)" />
+<figcaption aria-hidden="true">Summary table of personal light exposure
+(eye-level data)</figcaption>
+</figure>
+
+### Sleep
+
+<figure>
+<img src="output/tables/table_sleepdiary.png"
+alt="Summary table of the morning sleep diary" />
+<figcaption aria-hidden="true">Summary table of the morning sleep
+diary</figcaption>
+</figure>
+
 ## Summary of the dataset
 
 | Dataset name | KNUST |
@@ -116,26 +145,6 @@ The following files are included with this Dataset:
   permissive CC-BY-4.0 license
 
 All data are anonymous.
-
-# Descriptive statistics
-
-## Light
-
-<figure>
-<img src="output/tables/table_summary.png"
-alt="Summary table of personal light exposure" />
-<figcaption aria-hidden="true">Summary table of personal light
-exposure</figcaption>
-</figure>
-
-## Sleep
-
-<figure>
-<img src="output/tables/table_sleepdiary.png"
-alt="Summary table of the morning sleep diary" />
-<figcaption aria-hidden="true">Summary table of the morning sleep
-diary</figcaption>
-</figure>
 
 # Folder structure
 

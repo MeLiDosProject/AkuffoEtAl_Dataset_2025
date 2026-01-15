@@ -8,7 +8,7 @@
 
 <meta name="author" content="Johannes Zauner">
 
-<title>Import sleep diaries</title>
+<title>Import demographics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -2208,7 +2208,7 @@ vertical-align: -.125em;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Import sleep diaries</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Import demographics</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -2233,7 +2233,7 @@ vertical-align: -.125em;
 
 <section id="preface" class="level2">
 <h2 class="anchored" data-anchor-id="preface">Preface</h2>
-<p>This document imports the <code>sleepdiaries</code> and shows descriptive statistics for the site.</p>
+<p>This document imports the <code>demographics</code> and shows descriptive statistics for the site.</p>
 </section>
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
@@ -2253,42 +2253,47 @@ vertical-align: -.125em;
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;labeling&quot;</span>,</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;radio_factors&quot;</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;time_summaries&quot;</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;prepare_codebook&quot;</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;filefinder&quot;</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;general_parameters&quot;</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;coltype_checker&quot;</span>,</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tables&quot;</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">walk</span>(\(x) <span class="fu">source</span>(<span class="fu">paste0</span>(remote, x, <span class="st">&quot;.R&quot;</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;prepare_codebook&quot;</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;filefinder&quot;</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;general_parameters&quot;</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;coltype_checker&quot;</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tables&quot;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">walk</span>(\(x) <span class="fu">source</span>(<span class="fu">paste0</span>(remote, x, <span class="st">&quot;.R&quot;</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="preparation" class="level2">
 <h2 class="anchored" data-anchor-id="preparation">Preparation</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#collect codebook</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>codebook <span class="ot">&lt;-</span> <span class="fu">prepare_codebook</span>(<span class="st">&quot;MeLiDosMorningSleepDiaries_DataDictionary_2024-10-16.csv&quot;</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#collect files</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">filefinder</span>(<span class="st">&quot;sleepdiary&quot;</span>, <span class="at">continuous =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#import files</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(files, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(redcap_repeat_instance)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#check column types</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>coltype_check <span class="ot">&lt;-</span> <span class="fu">coltype_checker</span>(codebook, data)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> <span class="fu">gt</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>codebook <span class="ot">&lt;-</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prepare_codebook</span>(<span class="st">&quot;MeLiDosScreeningQuestionnaire_DataDictionary_2024-10-16.csv&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">c</span>(<span class="st">&quot;online_screening_consent_form&quot;</span>, <span class="st">&quot;your_demographics&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;email&quot;</span>, <span class="st">&quot;email_2&quot;</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#collect files</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">filefinder</span>(<span class="st">&quot;demographics&quot;</span>,<span class="at">individual =</span> <span class="cn">FALSE</span>, <span class="at">negate =</span> <span class="st">&quot;lookup&quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#import files</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(files, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(redcap_repeat_instance) <span class="sc">|&gt;</span> </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">native_language =</span> <span class="fu">as.logical</span>(native_language))</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#check column types</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>coltype_check <span class="ot">&lt;-</span> <span class="fu">coltype_checker</span>(codebook, data)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> <span class="fu">gt</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="unmpiuzpen" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#unmpiuzpen table {
+<div id="oosjcuwwiw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oosjcuwwiw table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#unmpiuzpen thead, #unmpiuzpen tbody, #unmpiuzpen tfoot, #unmpiuzpen tr, #unmpiuzpen td, #unmpiuzpen th {
+#oosjcuwwiw thead, #oosjcuwwiw tbody, #oosjcuwwiw tfoot, #oosjcuwwiw tr, #oosjcuwwiw td, #oosjcuwwiw th {
 border-style: none;
 }
-#unmpiuzpen p {
+#oosjcuwwiw p {
 margin: 0;
 padding: 0;
 }
-#unmpiuzpen .gt_table {
+#oosjcuwwiw .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -2313,11 +2318,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#unmpiuzpen .gt_caption {
+#oosjcuwwiw .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#unmpiuzpen .gt_title {
+#oosjcuwwiw .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -2328,7 +2333,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#unmpiuzpen .gt_subtitle {
+#oosjcuwwiw .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -2339,7 +2344,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#unmpiuzpen .gt_heading {
+#oosjcuwwiw .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -2350,12 +2355,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#unmpiuzpen .gt_bottom_border {
+#oosjcuwwiw .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#unmpiuzpen .gt_col_headings {
+#oosjcuwwiw .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2369,7 +2374,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#unmpiuzpen .gt_col_heading {
+#oosjcuwwiw .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2388,7 +2393,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#unmpiuzpen .gt_column_spanner_outer {
+#oosjcuwwiw .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2399,13 +2404,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#unmpiuzpen .gt_column_spanner_outer:first-child {
+#oosjcuwwiw .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#unmpiuzpen .gt_column_spanner_outer:last-child {
+#oosjcuwwiw .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#unmpiuzpen .gt_column_spanner {
+#oosjcuwwiw .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -2416,10 +2421,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#unmpiuzpen .gt_spanner_row {
+#oosjcuwwiw .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#unmpiuzpen .gt_group_heading {
+#oosjcuwwiw .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2444,7 +2449,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#unmpiuzpen .gt_empty_group_heading {
+#oosjcuwwiw .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -2458,13 +2463,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#unmpiuzpen .gt_from_md > :first-child {
+#oosjcuwwiw .gt_from_md > :first-child {
 margin-top: 0;
 }
-#unmpiuzpen .gt_from_md > :last-child {
+#oosjcuwwiw .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#unmpiuzpen .gt_row {
+#oosjcuwwiw .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2482,7 +2487,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#unmpiuzpen .gt_stub {
+#oosjcuwwiw .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2494,7 +2499,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#unmpiuzpen .gt_stub_row_group {
+#oosjcuwwiw .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2507,13 +2512,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#unmpiuzpen .gt_row_group_first td {
+#oosjcuwwiw .gt_row_group_first td {
 border-top-width: 2px;
 }
-#unmpiuzpen .gt_row_group_first th {
+#oosjcuwwiw .gt_row_group_first th {
 border-top-width: 2px;
 }
-#unmpiuzpen .gt_summary_row {
+#oosjcuwwiw .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2522,14 +2527,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#unmpiuzpen .gt_first_summary_row {
+#oosjcuwwiw .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#unmpiuzpen .gt_first_summary_row.thick {
+#oosjcuwwiw .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#unmpiuzpen .gt_last_summary_row {
+#oosjcuwwiw .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2538,7 +2543,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#unmpiuzpen .gt_grand_summary_row {
+#oosjcuwwiw .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2547,7 +2552,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#unmpiuzpen .gt_first_grand_summary_row {
+#oosjcuwwiw .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2556,7 +2561,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#unmpiuzpen .gt_last_grand_summary_row_top {
+#oosjcuwwiw .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2565,10 +2570,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#unmpiuzpen .gt_striped {
+#oosjcuwwiw .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#unmpiuzpen .gt_table_body {
+#oosjcuwwiw .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2576,7 +2581,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#unmpiuzpen .gt_footnotes {
+#oosjcuwwiw .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2589,7 +2594,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#unmpiuzpen .gt_footnote {
+#oosjcuwwiw .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -2597,7 +2602,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#unmpiuzpen .gt_sourcenotes {
+#oosjcuwwiw .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2610,64 +2615,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#unmpiuzpen .gt_sourcenote {
+#oosjcuwwiw .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#unmpiuzpen .gt_left {
+#oosjcuwwiw .gt_left {
 text-align: left;
 }
-#unmpiuzpen .gt_center {
+#oosjcuwwiw .gt_center {
 text-align: center;
 }
-#unmpiuzpen .gt_right {
+#oosjcuwwiw .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#unmpiuzpen .gt_font_normal {
+#oosjcuwwiw .gt_font_normal {
 font-weight: normal;
 }
-#unmpiuzpen .gt_font_bold {
+#oosjcuwwiw .gt_font_bold {
 font-weight: bold;
 }
-#unmpiuzpen .gt_font_italic {
+#oosjcuwwiw .gt_font_italic {
 font-style: italic;
 }
-#unmpiuzpen .gt_super {
+#oosjcuwwiw .gt_super {
 font-size: 65%;
 }
-#unmpiuzpen .gt_footnote_marks {
+#oosjcuwwiw .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#unmpiuzpen .gt_asterisk {
+#oosjcuwwiw .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#unmpiuzpen .gt_indent_1 {
+#oosjcuwwiw .gt_indent_1 {
 text-indent: 5px;
 }
-#unmpiuzpen .gt_indent_2 {
+#oosjcuwwiw .gt_indent_2 {
 text-indent: 10px;
 }
-#unmpiuzpen .gt_indent_3 {
+#oosjcuwwiw .gt_indent_3 {
 text-indent: 15px;
 }
-#unmpiuzpen .gt_indent_4 {
+#oosjcuwwiw .gt_indent_4 {
 text-indent: 20px;
 }
-#unmpiuzpen .gt_indent_5 {
+#oosjcuwwiw .gt_indent_5 {
 text-indent: 25px;
 }
-#unmpiuzpen .katex-display {
+#oosjcuwwiw .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#unmpiuzpen div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#oosjcuwwiw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -2686,43 +2691,7 @@ height: 0px !important;
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" headers="col">bedtime</td>
-<td class="gt_row gt_left" headers="expected">POSIXct</td>
-<td class="gt_row gt_center" headers="present">TRUE</td>
-<td class="gt_row gt_left" headers="actual">POSIXct</td>
-<td class="gt_row gt_center" headers="type_ok">TRUE</td>
-<td class="gt_row gt_left" headers="issue">ok</td>
-<td class="gt_row gt_left" headers="expected_example">as.POSIXct(..., tz = &#39;UTC&#39;)</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="col">sleep</td>
-<td class="gt_row gt_left" headers="expected">POSIXct</td>
-<td class="gt_row gt_center" headers="present">TRUE</td>
-<td class="gt_row gt_left" headers="actual">POSIXct</td>
-<td class="gt_row gt_center" headers="type_ok">TRUE</td>
-<td class="gt_row gt_left" headers="issue">ok</td>
-<td class="gt_row gt_left" headers="expected_example">as.POSIXct(..., tz = &#39;UTC&#39;)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="col">offset</td>
-<td class="gt_row gt_left" headers="expected">POSIXct</td>
-<td class="gt_row gt_center" headers="present">TRUE</td>
-<td class="gt_row gt_left" headers="actual">POSIXct</td>
-<td class="gt_row gt_center" headers="type_ok">TRUE</td>
-<td class="gt_row gt_left" headers="issue">ok</td>
-<td class="gt_row gt_left" headers="expected_example">as.POSIXct(..., tz = &#39;UTC&#39;)</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="col">out_ofbed</td>
-<td class="gt_row gt_left" headers="expected">POSIXct</td>
-<td class="gt_row gt_center" headers="present">TRUE</td>
-<td class="gt_row gt_left" headers="actual">POSIXct</td>
-<td class="gt_row gt_center" headers="type_ok">TRUE</td>
-<td class="gt_row gt_left" headers="issue">ok</td>
-<td class="gt_row gt_left" headers="expected_example">as.POSIXct(..., tz = &#39;UTC&#39;)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="col">sleepdelay</td>
+<td class="gt_row gt_left" headers="col">consent</td>
 <td class="gt_row gt_left" headers="expected">numeric</td>
 <td class="gt_row gt_center" headers="present">TRUE</td>
 <td class="gt_row gt_left" headers="actual">numeric</td>
@@ -2731,7 +2700,7 @@ height: 0px !important;
 <td class="gt_row gt_left" headers="expected_example">as.numeric(...)</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="col">awakenings</td>
+<td class="gt_row gt_left" headers="col">age</td>
 <td class="gt_row gt_left" headers="expected">numeric</td>
 <td class="gt_row gt_center" headers="present">TRUE</td>
 <td class="gt_row gt_left" headers="actual">numeric</td>
@@ -2740,7 +2709,7 @@ height: 0px !important;
 <td class="gt_row gt_left" headers="expected_example">as.numeric(...)</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="col">awake_duration</td>
+<td class="gt_row gt_left" headers="col">sex</td>
 <td class="gt_row gt_left" headers="expected">numeric</td>
 <td class="gt_row gt_center" headers="present">TRUE</td>
 <td class="gt_row gt_left" headers="actual">numeric</td>
@@ -2749,7 +2718,7 @@ height: 0px !important;
 <td class="gt_row gt_left" headers="expected_example">as.numeric(...)</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="col">sleepquality</td>
+<td class="gt_row gt_left" headers="col">gender</td>
 <td class="gt_row gt_left" headers="expected">numeric</td>
 <td class="gt_row gt_center" headers="present">TRUE</td>
 <td class="gt_row gt_left" headers="actual">numeric</td>
@@ -2758,7 +2727,7 @@ height: 0px !important;
 <td class="gt_row gt_left" headers="expected_example">as.numeric(...)</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="col">daytype2</td>
+<td class="gt_row gt_left" headers="col">language_specification</td>
 <td class="gt_row gt_left" headers="expected">numeric</td>
 <td class="gt_row gt_center" headers="present">TRUE</td>
 <td class="gt_row gt_left" headers="actual">numeric</td>
@@ -2767,7 +2736,7 @@ height: 0px !important;
 <td class="gt_row gt_left" headers="expected_example">as.numeric(...)</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="col">status</td>
+<td class="gt_row gt_left" headers="col">employment_status</td>
 <td class="gt_row gt_left" headers="expected">numeric</td>
 <td class="gt_row gt_center" headers="present">TRUE</td>
 <td class="gt_row gt_left" headers="actual">numeric</td>
@@ -2776,13 +2745,13 @@ height: 0px !important;
 <td class="gt_row gt_left" headers="expected_example">as.numeric(...)</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="col">scheduledate</td>
-<td class="gt_row gt_left" headers="expected">Date</td>
+<td class="gt_row gt_left" headers="col">native_language</td>
+<td class="gt_row gt_left" headers="expected">logical</td>
 <td class="gt_row gt_center" headers="present">TRUE</td>
-<td class="gt_row gt_left" headers="actual">Date</td>
+<td class="gt_row gt_left" headers="actual">logical</td>
 <td class="gt_row gt_center" headers="type_ok">TRUE</td>
 <td class="gt_row gt_left" headers="issue">ok</td>
-<td class="gt_row gt_left" headers="expected_example">as.Date(...)</td>
+<td class="gt_row gt_left" headers="expected_example">as.logical(...)</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="col">record_id</td>
@@ -2794,34 +2763,16 @@ height: 0px !important;
 <td class="gt_row gt_left" headers="expected_example">as.character(...)</td>
 </tr>
 <tr class="odd">
+<td class="gt_row gt_left" headers="col">explanation</td>
+<td class="gt_row gt_left" headers="expected">character</td>
+<td class="gt_row gt_center" headers="present">FALSE</td>
+<td class="gt_row gt_left" headers="actual">NA</td>
+<td class="gt_row gt_center" headers="type_ok">FALSE</td>
+<td class="gt_row gt_left" headers="issue">missing</td>
+<td class="gt_row gt_left" headers="expected_example">as.character(...)</td>
+</tr>
+<tr class="even">
 <td class="gt_row gt_left" headers="col">comments</td>
-<td class="gt_row gt_left" headers="expected">character</td>
-<td class="gt_row gt_center" headers="present">TRUE</td>
-<td class="gt_row gt_left" headers="actual">character</td>
-<td class="gt_row gt_center" headers="type_ok">TRUE</td>
-<td class="gt_row gt_left" headers="issue">ok</td>
-<td class="gt_row gt_left" headers="expected_example">as.character(...)</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="col">uuid</td>
-<td class="gt_row gt_left" headers="expected">character</td>
-<td class="gt_row gt_center" headers="present">TRUE</td>
-<td class="gt_row gt_left" headers="actual">character</td>
-<td class="gt_row gt_center" headers="type_ok">TRUE</td>
-<td class="gt_row gt_left" headers="issue">ok</td>
-<td class="gt_row gt_left" headers="expected_example">as.character(...)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="col">supplementaldata</td>
-<td class="gt_row gt_left" headers="expected">character</td>
-<td class="gt_row gt_center" headers="present">TRUE</td>
-<td class="gt_row gt_left" headers="actual">character</td>
-<td class="gt_row gt_center" headers="type_ok">TRUE</td>
-<td class="gt_row gt_left" headers="issue">ok</td>
-<td class="gt_row gt_left" headers="expected_example">as.character(...)</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="col">serializedresult</td>
 <td class="gt_row gt_left" headers="expected">character</td>
 <td class="gt_row gt_center" headers="present">TRUE</td>
 <td class="gt_row gt_left" headers="actual">character</td>
@@ -2834,67 +2785,55 @@ height: 0px !important;
 
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#collect relevant columns: POSIXct, Date &amp; numeric</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#collect relevant columns</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>relevant_columns <span class="ot">&lt;-</span> </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(expected <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;POSIXct&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;Date&quot;</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(col) <span class="sc">|&gt;</span> </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setdiff</span>(<span class="fu">c</span>(<span class="st">&quot;status&quot;</span>, <span class="st">&quot;scheduledate&quot;</span>))</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#add specific character columns</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>relevant_columns <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;record_id&quot;</span>, relevant_columns, <span class="st">&quot;comments&quot;</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#select relevant columns</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">any_of</span>(relevant_columns))</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">record_id =</span> <span class="fu">sprintf</span>(<span class="st">&quot;KNUST_S%03d&quot;</span>, record_id))</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#label variables</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_radio_factors</span>(codebook, </span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, </span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">type_col =</span> <span class="st">`</span><span class="at">Field Type</span><span class="st">`</span>,</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels_col =</span> <span class="st">`</span><span class="at">Choices, Calculations, OR Slider Labels</span><span class="st">`</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                    ) <span class="sc">|&gt;</span> </span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_col_labels</span>(codebook, <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, <span class="at">label_col =</span> <span class="st">`</span><span class="at">Field Label</span><span class="st">`</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(col)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#select relevant columns</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">any_of</span>(relevant_columns))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">record_id =</span> <span class="fu">sprintf</span>(<span class="st">&quot;KNUST_S%03d&quot;</span>, record_id))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#label variables</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_radio_factors</span>(codebook, </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                    <span class="at">type_col =</span> <span class="st">`</span><span class="at">Field Type</span><span class="st">`</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels_col =</span> <span class="st">`</span><span class="at">Choices, Calculations, OR Slider Labels</span><span class="st">`</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                    ) <span class="sc">|&gt;</span> </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_col_labels</span>(codebook, <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, <span class="at">label_col =</span> <span class="st">`</span><span class="at">Field Label</span><span class="st">`</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in add_col_labels(add_radio_factors(data, codebook, var_col = `Variable
-/ Field Name`, : Labels provided for variables not in `data`: uuid, startdate,
-enddate, scheduledate, status, supplementaldata, serializedresult</code></pre>
+/ Field Name`, : Labels provided for variables not in `data`: explanation</code></pre>
 </div>
-</div>
-</section>
-<section id="calculate-sleep-and-sleepduration" class="level2">
-<h2 class="anchored" data-anchor-id="calculate-sleep-and-sleepduration">Calculate sleep and sleepduration</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">wake =</span> offset, <span class="at">sleepprep =</span> sleep) <span class="sc">|&gt;</span> </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sleep =</span> sleepprep <span class="sc">+</span> <span class="fu">dminutes</span>(sleepdelay),</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">sleep_duration =</span> wake <span class="sc">-</span> sleep</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(data<span class="sc">$</span>sleep, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep onset (calculated)&quot;</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(data<span class="sc">$</span>sleep_duration, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep duration (calculated)&quot;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#reorder variables</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(native_language, <span class="at">.before =</span> language_specification) <span class="sc">|&gt;</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(record_id) <span class="sc">|&gt;</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>consent)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="summarize-results" class="level2">
 <h2 class="anchored" data-anchor-id="summarize-results">Summarize results</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table_sleepdiary</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table_demographics</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="djixvpfmhn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#djixvpfmhn table {
+<div id="iiwjryykhi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#iiwjryykhi table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#djixvpfmhn thead, #djixvpfmhn tbody, #djixvpfmhn tfoot, #djixvpfmhn tr, #djixvpfmhn td, #djixvpfmhn th {
+#iiwjryykhi thead, #iiwjryykhi tbody, #iiwjryykhi tfoot, #iiwjryykhi tr, #iiwjryykhi td, #iiwjryykhi th {
 border-style: none;
 }
-#djixvpfmhn p {
+#iiwjryykhi p {
 margin: 0;
 padding: 0;
 }
-#djixvpfmhn .gt_table {
+#iiwjryykhi .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -2919,11 +2858,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#djixvpfmhn .gt_caption {
+#iiwjryykhi .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#djixvpfmhn .gt_title {
+#iiwjryykhi .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -2934,7 +2873,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#djixvpfmhn .gt_subtitle {
+#iiwjryykhi .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -2945,7 +2884,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#djixvpfmhn .gt_heading {
+#iiwjryykhi .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -2956,12 +2895,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#djixvpfmhn .gt_bottom_border {
+#iiwjryykhi .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#djixvpfmhn .gt_col_headings {
+#iiwjryykhi .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2975,7 +2914,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#djixvpfmhn .gt_col_heading {
+#iiwjryykhi .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2994,7 +2933,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#djixvpfmhn .gt_column_spanner_outer {
+#iiwjryykhi .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3005,13 +2944,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#djixvpfmhn .gt_column_spanner_outer:first-child {
+#iiwjryykhi .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#djixvpfmhn .gt_column_spanner_outer:last-child {
+#iiwjryykhi .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#djixvpfmhn .gt_column_spanner {
+#iiwjryykhi .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -3022,10 +2961,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#djixvpfmhn .gt_spanner_row {
+#iiwjryykhi .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#djixvpfmhn .gt_group_heading {
+#iiwjryykhi .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3050,7 +2989,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#djixvpfmhn .gt_empty_group_heading {
+#iiwjryykhi .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -3064,13 +3003,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#djixvpfmhn .gt_from_md > :first-child {
+#iiwjryykhi .gt_from_md > :first-child {
 margin-top: 0;
 }
-#djixvpfmhn .gt_from_md > :last-child {
+#iiwjryykhi .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#djixvpfmhn .gt_row {
+#iiwjryykhi .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3088,7 +3027,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#djixvpfmhn .gt_stub {
+#iiwjryykhi .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3100,7 +3039,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#djixvpfmhn .gt_stub_row_group {
+#iiwjryykhi .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3113,13 +3052,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#djixvpfmhn .gt_row_group_first td {
+#iiwjryykhi .gt_row_group_first td {
 border-top-width: 2px;
 }
-#djixvpfmhn .gt_row_group_first th {
+#iiwjryykhi .gt_row_group_first th {
 border-top-width: 2px;
 }
-#djixvpfmhn .gt_summary_row {
+#iiwjryykhi .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3128,14 +3067,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#djixvpfmhn .gt_first_summary_row {
+#iiwjryykhi .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#djixvpfmhn .gt_first_summary_row.thick {
+#iiwjryykhi .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#djixvpfmhn .gt_last_summary_row {
+#iiwjryykhi .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3144,7 +3083,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#djixvpfmhn .gt_grand_summary_row {
+#iiwjryykhi .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3153,7 +3092,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#djixvpfmhn .gt_first_grand_summary_row {
+#iiwjryykhi .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3162,7 +3101,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#djixvpfmhn .gt_last_grand_summary_row_top {
+#iiwjryykhi .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3171,10 +3110,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#djixvpfmhn .gt_striped {
+#iiwjryykhi .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#djixvpfmhn .gt_table_body {
+#iiwjryykhi .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3182,7 +3121,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#djixvpfmhn .gt_footnotes {
+#iiwjryykhi .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3195,7 +3134,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#djixvpfmhn .gt_footnote {
+#iiwjryykhi .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -3203,7 +3142,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#djixvpfmhn .gt_sourcenotes {
+#iiwjryykhi .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3216,64 +3155,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#djixvpfmhn .gt_sourcenote {
+#iiwjryykhi .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#djixvpfmhn .gt_left {
+#iiwjryykhi .gt_left {
 text-align: left;
 }
-#djixvpfmhn .gt_center {
+#iiwjryykhi .gt_center {
 text-align: center;
 }
-#djixvpfmhn .gt_right {
+#iiwjryykhi .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#djixvpfmhn .gt_font_normal {
+#iiwjryykhi .gt_font_normal {
 font-weight: normal;
 }
-#djixvpfmhn .gt_font_bold {
+#iiwjryykhi .gt_font_bold {
 font-weight: bold;
 }
-#djixvpfmhn .gt_font_italic {
+#iiwjryykhi .gt_font_italic {
 font-style: italic;
 }
-#djixvpfmhn .gt_super {
+#iiwjryykhi .gt_super {
 font-size: 65%;
 }
-#djixvpfmhn .gt_footnote_marks {
+#iiwjryykhi .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#djixvpfmhn .gt_asterisk {
+#iiwjryykhi .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#djixvpfmhn .gt_indent_1 {
+#iiwjryykhi .gt_indent_1 {
 text-indent: 5px;
 }
-#djixvpfmhn .gt_indent_2 {
+#iiwjryykhi .gt_indent_2 {
 text-indent: 10px;
 }
-#djixvpfmhn .gt_indent_3 {
+#iiwjryykhi .gt_indent_3 {
 text-indent: 15px;
 }
-#djixvpfmhn .gt_indent_4 {
+#iiwjryykhi .gt_indent_4 {
 text-indent: 20px;
 }
-#djixvpfmhn .gt_indent_5 {
+#iiwjryykhi .gt_indent_5 {
 text-indent: 25px;
 }
-#djixvpfmhn .katex-display {
+#iiwjryykhi .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#djixvpfmhn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#iiwjryykhi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -3286,117 +3225,163 @@ height: 0px !important;
 </colgroup>
 <thead>
 <tr class="gt_col_headings header">
-<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Morning sleep diary</strong></th>
+<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Demographics</strong></th>
 <th id="n" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>N</strong></th>
-<th id="stat_0" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>N = 104</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1,2</sup></span></th>
+<th id="stat_0" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>N = 15</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" headers="label" style="font-weight: bold">What time did you get into bed?</td>
-<td class="gt_row gt_center" headers="n">104</td>
-<td class="gt_row gt_center" headers="stat_0">22:01:30 (21:00:00, 23:00:00)</td>
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Current age in years</td>
+<td class="gt_row gt_center" headers="n">15</td>
+<td class="gt_row gt_center" headers="stat_0">23.00 (22.00, 25.00)</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="label" style="font-weight: bold">What time did you try to go to sleep?</td>
-<td class="gt_row gt_center" headers="n">104</td>
-<td class="gt_row gt_center" headers="stat_0">22:30:00 (21:30:00, 23:22:30)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label" style="font-weight: bold">What time was your final awakening? i.,e. when did you wake up today?</td>
-<td class="gt_row gt_center" headers="n">104</td>
-<td class="gt_row gt_center" headers="stat_0">06:35:00 (06:00:00, 07:04:30)</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label" style="font-weight: bold">What time did you get out of bed for the day?</td>
-<td class="gt_row gt_center" headers="n">104</td>
-<td class="gt_row gt_center" headers="stat_0">06:55:30 (06:18:45, 07:40:00)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label" style="font-weight: bold">How long did it take you to fall asleep? Please answer in minutes</td>
-<td class="gt_row gt_center" headers="n">104</td>
-<td class="gt_row gt_center" headers="stat_0">10 (10, 20)</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label" style="font-weight: bold">How many times did you wake up, not counting your final awakening?</td>
-<td class="gt_row gt_center" headers="n">104</td>
-<td class="gt_row gt_center" headers="stat_0">1.00 (0.00, 1.00)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label" style="font-weight: bold">In total, how long did these awakenings last? Please answer in minutes</td>
-<td class="gt_row gt_center" headers="n">104</td>
-<td class="gt_row gt_center" headers="stat_0">2 (0, 5)</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label" style="font-weight: bold">How would you rate the quality of your sleep?</td>
-<td class="gt_row gt_center" headers="n">104</td>
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Sex assigned at birth</td>
+<td class="gt_row gt_center" headers="n">15</td>
 <td class="gt_row gt_center" headers="stat_0"><br>
 </td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="label">    Very poor</td>
+<td class="gt_row gt_left" headers="label">    Female</td>
+<td class="gt_row gt_center" headers="n"><br>
+</td>
+<td class="gt_row gt_center" headers="stat_0">8 (53%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Male</td>
+<td class="gt_row gt_center" headers="n"><br>
+</td>
+<td class="gt_row gt_center" headers="stat_0">7 (47%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Intersex</td>
 <td class="gt_row gt_center" headers="n"><br>
 </td>
 <td class="gt_row gt_center" headers="stat_0">0 (0%)</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="label">    Poor</td>
+<td class="gt_row gt_left" headers="label">    Prefer not to say</td>
 <td class="gt_row gt_center" headers="n"><br>
 </td>
-<td class="gt_row gt_center" headers="stat_0">3 (2.9%)</td>
+<td class="gt_row gt_center" headers="stat_0">0 (0%)</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="label">    Fair</td>
-<td class="gt_row gt_center" headers="n"><br>
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Gender identity</td>
+<td class="gt_row gt_center" headers="n">15</td>
+<td class="gt_row gt_center" headers="stat_0"><br>
 </td>
-<td class="gt_row gt_center" headers="stat_0">24 (23%)</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="label">    Good</td>
+<td class="gt_row gt_left" headers="label">    Woman</td>
 <td class="gt_row gt_center" headers="n"><br>
 </td>
-<td class="gt_row gt_center" headers="stat_0">46 (44%)</td>
+<td class="gt_row gt_center" headers="stat_0">8 (53%)</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="label">    Very good</td>
+<td class="gt_row gt_left" headers="label">    Man</td>
 <td class="gt_row gt_center" headers="n"><br>
 </td>
-<td class="gt_row gt_center" headers="stat_0">31 (30%)</td>
+<td class="gt_row gt_center" headers="stat_0">7 (47%)</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="label" style="font-weight: bold">Today is...</td>
-<td class="gt_row gt_center" headers="n">104</td>
+<td class="gt_row gt_left" headers="label">    Non-binary</td>
+<td class="gt_row gt_center" headers="n"><br>
+</td>
+<td class="gt_row gt_center" headers="stat_0">0 (0%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Other</td>
+<td class="gt_row gt_center" headers="n"><br>
+</td>
+<td class="gt_row gt_center" headers="stat_0">0 (0%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Prefer not to say</td>
+<td class="gt_row gt_center" headers="n"><br>
+</td>
+<td class="gt_row gt_center" headers="stat_0">0 (0%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Is English your native language?</td>
+<td class="gt_row gt_center" headers="n">15</td>
+<td class="gt_row gt_center" headers="stat_0">10 (67%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">If your native language is not English, please specify your English language proficiency</td>
+<td class="gt_row gt_center" headers="n">5</td>
 <td class="gt_row gt_center" headers="stat_0"><br>
 </td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="label">    a free day</td>
+<td class="gt_row gt_left" headers="label">    Advanced</td>
 <td class="gt_row gt_center" headers="n"><br>
 </td>
-<td class="gt_row gt_center" headers="stat_0">49 (47%)</td>
+<td class="gt_row gt_center" headers="stat_0">2 (40%)</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="label">    a work day</td>
+<td class="gt_row gt_left" headers="label">    Intermediate</td>
 <td class="gt_row gt_center" headers="n"><br>
 </td>
-<td class="gt_row gt_center" headers="stat_0">55 (53%)</td>
+<td class="gt_row gt_center" headers="stat_0">3 (60%)</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="label" style="font-weight: bold">Sleep onset (calculated)</td>
-<td class="gt_row gt_center" headers="n">104</td>
-<td class="gt_row gt_center" headers="stat_0">22:49:30 (21:48:45, 23:42:30)</td>
+<td class="gt_row gt_left" headers="label">    Basic</td>
+<td class="gt_row gt_center" headers="n"><br>
+</td>
+<td class="gt_row gt_center" headers="stat_0">0 (0%)</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="label" style="font-weight: bold">Sleep duration (calculated)</td>
-<td class="gt_row gt_center" headers="n">104</td>
-<td class="gt_row gt_center" headers="stat_0">7.68 hours (6.43 hours, 8.82 hours)</td>
+<td class="gt_row gt_left" headers="label">    missing</td>
+<td class="gt_row gt_center" headers="n"><br>
+</td>
+<td class="gt_row gt_center" headers="stat_0">10</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Employment</td>
+<td class="gt_row gt_center" headers="n">15</td>
+<td class="gt_row gt_center" headers="stat_0"><br>
+</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Full time employed</td>
+<td class="gt_row gt_center" headers="n"><br>
+</td>
+<td class="gt_row gt_center" headers="stat_0">0 (0%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Part time employed</td>
+<td class="gt_row gt_center" headers="n"><br>
+</td>
+<td class="gt_row gt_center" headers="stat_0">0 (0%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Marginally employed (Minijob)</td>
+<td class="gt_row gt_center" headers="n"><br>
+</td>
+<td class="gt_row gt_center" headers="stat_0">1 (6.7%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Not employed but studying or in training</td>
+<td class="gt_row gt_center" headers="n"><br>
+</td>
+<td class="gt_row gt_center" headers="stat_0">12 (80%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Studying and employed</td>
+<td class="gt_row gt_center" headers="n"><br>
+</td>
+<td class="gt_row gt_center" headers="stat_0">1 (6.7%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Not employed</td>
+<td class="gt_row gt_center" headers="n"><br>
+</td>
+<td class="gt_row gt_center" headers="stat_0">1 (6.7%)</td>
 </tr>
 </tbody><tfoot class="gt_footnotes">
 <tr class="odd">
-<td colspan="3" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> time_median (nighttime_p25, nighttime_p75); time_median (daytime_p25, daytime_p75); Median (Q1, Q3); n (%)</td>
-</tr>
-<tr class="even">
-<td colspan="3" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> Nighttime variables center on midnight, daytime variables on noon; median for time is based on circular time</td>
+<td colspan="3" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> Median (Q1, Q3); n (%)</td>
 </tr>
 </tfoot>
 
@@ -3404,19 +3389,19 @@ height: 0px !important;
 
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gtsave</span>(<span class="fu">table_sleepdiary</span>(data) <span class="sc">|&gt;</span> <span class="fu">as_gt</span>(), <span class="at">filename =</span> <span class="st">&quot;../output/tables/table_sleepdiary.png&quot;</span>, <span class="at">vwidth =</span> <span class="dv">800</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gtsave</span>(<span class="fu">table_demographics</span>(data) <span class="sc">|&gt;</span> <span class="fu">as_gt</span>(), <span class="at">filename =</span> <span class="st">&quot;../output/tables/table_demographics.png&quot;</span>, <span class="at">vwidth =</span> <span class="dv">800</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>file:////var/folders/9p/326_k3kx43qbn_cyl1rqfhb00000gn/T//Rtmp8VLKSY/file10016dd44cdc.html screenshot completed</code></pre>
+<pre><code>file:////var/folders/9p/326_k3kx43qbn_cyl1rqfhb00000gn/T//RtmpfuqUO8/fileffc9aff111a.html screenshot completed</code></pre>
 </div>
 </div>
 <section id="export" class="level3">
 <h3 class="anchored" data-anchor-id="export">Export</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">rename</span>(<span class="at">Id =</span> record_id)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sleepdiary <span class="ot">&lt;-</span> data</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">&quot;../data/imported/continuous/&quot;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>demographics <span class="ot">&lt;-</span> data</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">&quot;../data/imported/&quot;</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(path)) <span class="fu">dir.create</span>(path, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(sleepdiary, <span class="at">file =</span> <span class="st">&quot;../data/imported/continuous/sleepdiaries.RData&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(demographics, <span class="at">file =</span> <span class="st">&quot;../data/imported/continuous/demographics.RData&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <!-- -->
 
@@ -3877,109 +3862,105 @@ height: 0px !important;
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Import sleep diaries&quot;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Import demographics&quot;</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> &quot;Johannes Zauner&quot;</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">    self-contained: true</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Preface</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">  chunk_output_type: console</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>This document imports the <span class="in">`sleepdiaries`</span> and shows descriptive statistics for the site.</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Preface</span></span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>This document imports the <span class="in">`demographics`</span> and shows descriptive statistics for the site.</span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(LightLogR)</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>remote <span class="ot">&lt;-</span> </span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/&quot;</span></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;labeling&quot;</span>,</span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;radio_factors&quot;</span>,</span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;time_summaries&quot;</span>,</span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;prepare_codebook&quot;</span>,</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;filefinder&quot;</span>,</span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;general_parameters&quot;</span>,</span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;coltype_checker&quot;</span>,</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tables&quot;</span></span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">walk</span>(\(x) <span class="fu">source</span>(<span class="fu">paste0</span>(remote, x, <span class="st">&quot;.R&quot;</span>)))</span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Preparation</span></span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="co">#collect codebook</span></span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>codebook <span class="ot">&lt;-</span> <span class="fu">prepare_codebook</span>(<span class="st">&quot;MeLiDosMorningSleepDiaries_DataDictionary_2024-10-16.csv&quot;</span>)</span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="co">#collect files</span></span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">filefinder</span>(<span class="st">&quot;sleepdiary&quot;</span>, <span class="at">continuous =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="co">#import files</span></span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(files, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(redcap_repeat_instance)</span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a><span class="co">#check column types</span></span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>coltype_check <span class="ot">&lt;-</span> <span class="fu">coltype_checker</span>(codebook, data)</span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> <span class="fu">gt</span>()</span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="co">#collect relevant columns: POSIXct, Date &amp; numeric</span></span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>relevant_columns <span class="ot">&lt;-</span> </span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>  coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> </span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(expected <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;POSIXct&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;Date&quot;</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(col) <span class="sc">|&gt;</span> </span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setdiff</span>(<span class="fu">c</span>(<span class="st">&quot;status&quot;</span>, <span class="st">&quot;scheduledate&quot;</span>))</span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a><span class="co">#add specific character columns</span></span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>relevant_columns <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;record_id&quot;</span>, relevant_columns, <span class="st">&quot;comments&quot;</span>)</span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a><span class="co">#select relevant columns</span></span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">any_of</span>(relevant_columns))</span>
-<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
-<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">record_id =</span> <span class="fu">sprintf</span>(<span class="st">&quot;KNUST_S%03d&quot;</span>, record_id))</span>
-<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a><span class="co">#label variables</span></span>
-<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
-<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
-<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_radio_factors</span>(codebook, </span>
-<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>                    <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, </span>
-<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>                    <span class="at">type_col =</span> <span class="st">`</span><span class="at">Field Type</span><span class="st">`</span>,</span>
-<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels_col =</span> <span class="st">`</span><span class="at">Choices, Calculations, OR Slider Labels</span><span class="st">`</span></span>
-<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>                    ) <span class="sc">|&gt;</span> </span>
-<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_col_labels</span>(codebook, <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, <span class="at">label_col =</span> <span class="st">`</span><span class="at">Field Label</span><span class="st">`</span>)</span>
-<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calculate sleep and sleepduration</span></span>
-<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
-<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
-<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">wake =</span> offset, <span class="at">sleepprep =</span> sleep) <span class="sc">|&gt;</span> </span>
-<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sleep =</span> sleepprep <span class="sc">+</span> <span class="fu">dminutes</span>(sleepdelay),</span>
-<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>         <span class="at">sleep_duration =</span> wake <span class="sc">-</span> sleep</span>
-<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(LightLogR)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>remote <span class="ot">&lt;-</span> </span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/&quot;</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;labeling&quot;</span>,</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;radio_factors&quot;</span>,</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;prepare_codebook&quot;</span>,</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;filefinder&quot;</span>,</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;general_parameters&quot;</span>,</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;coltype_checker&quot;</span>,</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tables&quot;</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">walk</span>(\(x) <span class="fu">source</span>(<span class="fu">paste0</span>(remote, x, <span class="st">&quot;.R&quot;</span>)))</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Preparation</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="co">#collect codebook</span></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>codebook <span class="ot">&lt;-</span> </span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prepare_codebook</span>(<span class="st">&quot;MeLiDosScreeningQuestionnaire_DataDictionary_2024-10-16.csv&quot;</span>,</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">c</span>(<span class="st">&quot;online_screening_consent_form&quot;</span>, <span class="st">&quot;your_demographics&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;email&quot;</span>, <span class="st">&quot;email_2&quot;</span>))</span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a><span class="co">#collect files</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">filefinder</span>(<span class="st">&quot;demographics&quot;</span>,<span class="at">individual =</span> <span class="cn">FALSE</span>, <span class="at">negate =</span> <span class="st">&quot;lookup&quot;</span>)</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="co">#import files</span></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(files, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(redcap_repeat_instance) <span class="sc">|&gt;</span> </span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">native_language =</span> <span class="fu">as.logical</span>(native_language))</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a><span class="co">#check column types</span></span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>coltype_check <span class="ot">&lt;-</span> <span class="fu">coltype_checker</span>(codebook, data)</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> <span class="fu">gt</span>()</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a><span class="co">#collect relevant columns</span></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>relevant_columns <span class="ot">&lt;-</span> </span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>  coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> </span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(col)</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a><span class="co">#select relevant columns</span></span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">any_of</span>(relevant_columns))</span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">record_id =</span> <span class="fu">sprintf</span>(<span class="st">&quot;KNUST_S%03d&quot;</span>, record_id))</span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a><span class="co">#label variables</span></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_radio_factors</span>(codebook, </span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>                    <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, </span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>                    <span class="at">type_col =</span> <span class="st">`</span><span class="at">Field Type</span><span class="st">`</span>,</span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels_col =</span> <span class="st">`</span><span class="at">Choices, Calculations, OR Slider Labels</span><span class="st">`</span></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>                    ) <span class="sc">|&gt;</span> </span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_col_labels</span>(codebook, <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, <span class="at">label_col =</span> <span class="st">`</span><span class="at">Field Label</span><span class="st">`</span>)</span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a><span class="co">#reorder variables</span></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(native_language, <span class="at">.before =</span> language_specification) <span class="sc">|&gt;</span> </span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(record_id) <span class="sc">|&gt;</span> </span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>consent)</span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summarize results</span></span>
 <span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(data<span class="sc">$</span>sleep, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep onset (calculated)&quot;</span></span>
-<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(data<span class="sc">$</span>sleep_duration, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep duration (calculated)&quot;</span></span>
-<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summarize results</span></span>
-<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a><span class="fu">table_sleepdiary</span>(data)</span>
-<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a><span class="fu">gtsave</span>(<span class="fu">table_sleepdiary</span>(data) <span class="sc">|&gt;</span> <span class="fu">as_gt</span>(), <span class="at">filename =</span> <span class="st">&quot;../output/tables/table_sleepdiary.png&quot;</span>, <span class="at">vwidth =</span> <span class="dv">800</span>)</span>
-<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a><span class="fu">### Export</span></span>
-<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">rename</span>(<span class="at">Id =</span> record_id)</span>
-<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a>sleepdiary <span class="ot">&lt;-</span> data</span>
-<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">&quot;../data/imported/continuous/&quot;</span></span>
-<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(path)) <span class="fu">dir.create</span>(path, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(sleepdiary, <span class="at">file =</span> <span class="st">&quot;../data/imported/continuous/sleepdiaries.RData&quot;</span>)</span>
-<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a><span class="fu">table_demographics</span>(data)</span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a><span class="fu">gtsave</span>(<span class="fu">table_demographics</span>(data) <span class="sc">|&gt;</span> <span class="fu">as_gt</span>(), <span class="at">filename =</span> <span class="st">&quot;../output/tables/table_demographics.png&quot;</span>, <span class="at">vwidth =</span> <span class="dv">800</span>)</span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a><span class="fu">### Export</span></span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">rename</span>(<span class="at">Id =</span> record_id)</span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a>demographics <span class="ot">&lt;-</span> data</span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">&quot;../data/imported/&quot;</span></span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(path)) <span class="fu">dir.create</span>(path, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(demographics, <span class="at">file =</span> <span class="st">&quot;../data/imported/continuous/demographics.RData&quot;</span>)</span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

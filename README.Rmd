@@ -38,6 +38,20 @@ APA reference:
 
 > Akuffo, K. O., Agbeshie, G. K., Zauner, J., & Spitschan, M. (2025). Personal light exposure dataset for Kumasi, Ghana (Version 1.0.1) [Data set]. URL: https://github.com/MeLiDosProject/AkuffoEtAl_Dataset_2025. DOI: doi.org/10.5281/zenodo.15576731
 
+## Descriptive statistics
+
+### Demographics
+
+![Summary table of participant demographics](output/tables/table_demographics.png)
+
+### Light
+
+![Summary table of personal light exposure (eye-level data)](output/tables/table_summary.png)
+
+### Sleep
+
+![Summary table of the morning sleep diary](output/tables/table_sleepdiary.png)
+
 ## Summary of the dataset
 | Dataset name | KNUST |
 | --- | --- |
@@ -89,17 +103,6 @@ The following files are included with this Dataset:
   permissive CC-BY-4.0 license
 
 All data are anonymous.
-
-# Descriptive statistics
-
-## Light
-
-![Summary table of personal light exposure](output/tables/table_summary.png)
-
-## Sleep
-
-![Summary table of the morning sleep diary](output/tables/table_sleepdiary.png)
-
 
 # Folder structure
 ## Group
