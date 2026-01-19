@@ -1,0 +1,260 @@
+---
+title: "Import chronotype"
+author: "Johannes Zauner"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Preface
+
+This document imports the `chronotype` and shows descriptive statistics for the site.
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+library(LightLogR)
+library(glue)
+library(readxl)
+library(gt)
+library(gtsummary)
+library(mctq)
+
+remote <- 
+  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/"
+
+c("labeling",
+  "radio_factors",
+  "prepare_codebook",
+  "time_summaries",
+  "filefinder",
+  "general_parameters",
+  "coltype_checker",
+  "tables"
+) |> walk(\(x) source(paste0(remote, x, ".R")))
+```
+
+#calculate mctq
+
+```{r}
+#collect codebook
+codebook <- 
+  prepare_codebook("MeLiDosIntakeQuestionnaires_DataDictionary_2024-10-16.csv")
+#collect files
+files <- filefinder("chronotype",individual = FALSE, negate = "lookup|meq")
+#import files
+data <- read_csv(files, show_col_types = FALSE)
+#check column types
+coltype_check <- coltype_checker(codebook, data)
+coltype_check$details |> gt()
+#collect relevant columns
+relevant_columns <- 
+  coltype_check$details |> 
+  pull(col)
+#select relevant columns
+data <- data |> select(any_of(relevant_columns))
+data <- 
+  data |> 
+  mutate(record_id = sprintf("KNUST_S%03d", record_id))
+```
+
+2 participants provided an unlikely bedtime before noon (and have not indicated shiftwork) - these participants will be treated as if their bedtime is 12 hours later (problem with am/pm)
+
+```{r}
+Id_to_shift <- c("KNUST_S001", "KNUST_S013")
+
+data <-
+  data %>% 
+  mutate(across(contains(c("ready_sleep_", "bedtime")), 
+                \(x) case_when(
+                  record_id %in% Id_to_shift ~ (x + hms::hms(hours = 12)) %>% hms::as_hms(),
+                  .default = x))
+         )
+```
+
+3 participants provided an unlikely early end of work - these will be increased by 12 hours
+
+```{r}
+Id_to_shift <- c("KNUST_S001", "KNUST_S009", "KNUST_S011")
+
+data <-
+  data %>% 
+  mutate(across(contains(c("work_end")), 
+                \(x) case_when(
+                  record_id %in% Id_to_shift ~ (x + hms::hms(hours = 12)) %>% hms::as_hms(),
+                  .default = x))
+         )
+```
+
+Furthermore, some participants indicated that they are ready to sleep before going to bed. In the way the questionnaire is analysed, this has to be after they go to bed. Thus we will take the later time in both cases (i.e., if bedtime is later then ready to sleep, we will use this).
+
+```{r}
+data <-
+ data %>%
+ pivot_longer(
+    cols = contains(c("ready_sleep_", "bedtime")),
+    names_to = c(".value", "context"),
+    names_pattern = "^(mctq_bedtime|mctq_ready_sleep)_(.*)$"
+  ) %>%
+  mutate(
+    mctq_ready_sleep = pmax(mctq_bedtime, mctq_ready_sleep),
+    mctq_nr_workdays_adj = ifelse(is.na(mctq_nr_workdays), 5, mctq_nr_workdays)
+  ) %>%
+  pivot_wider(names_from = context, values_from = c(mctq_bedtime, mctq_ready_sleep))
+```
+
+> Note: participants that indicated no number of regular work days, but that still provided numbers for work- and free days will be calculated as 5 work days and 2 free days.
+
+```{r}
+#reorder variables, remove mctq variable, recode falling asleep to minutes
+data <- 
+  data |> 
+  relocate(any_of(codebook$`Variable / Field Name`)) |> 
+  rename_with(\(x) str_remove(x, "mctq_")) |> 
+  mutate(across(contains("fall_sleep"), ~as.duration(.x*60)))
+
+#label variables
+data <-
+data |> 
+  add_radio_factors(codebook |> mutate(`Variable / Field Name` = `Variable / Field Name` |> str_remove("mctq_")), 
+                    var_col = `Variable / Field Name`, 
+                    type_col = `Field Type`,
+                    levels_col = `Choices, Calculations, OR Slider Labels`
+                    ) |> 
+  add_col_labels(codebook |> mutate(`Variable / Field Name` = `Variable / Field Name` |> str_remove("mctq_")), 
+                 var_col = `Variable / Field Name`, label_col = `Field Label`)
+```
+
+```{r}
+data <- 
+data %>% 
+mutate(
+    so_w = so(ready_sleep_work, fall_sleep_work),
+    so_f = so(ready_sleep_free, fall_sleep_free),
+    sd_w = sdu(so_w, wake_time_work),
+    sd_f = sdu(so_f, wake_time_free),
+    msw = msl(so_w, sd_w),
+    msf = msl(so_f, sd_f),
+    sd_week = sd_week(sd_w, sd_f, nr_workdays_adj),
+    msf_sc = msf_sc(msf, sd_w, sd_f, sd_week, alarm_f = rep(FALSE, n())),
+    sjl = sjl(msw, msf, abs = FALSE),
+  .before = 2
+    )
+
+chronotype <- data |> select(record_id:sjl)
+```
+> Note: Participants who indicated they use an alarm clock on free days (alarm_free) cannot be used for MCTQ calculation. In this overview, this behavior is overwritten by setting the alarm_f parameter to FALSE. For formal analysis, these must be removed.
+
+## meq
+
+```{r}
+#collect files
+files <- filefinder("chronotype",individual = FALSE, negate = "lookup|mctq")
+#import files
+data <- read_csv(files, show_col_types = FALSE) |>
+    drop_na(redcap_repeat_instance)
+#check column types
+coltype_check <- coltype_checker(codebook, data)
+coltype_check$details |> gt()
+#collect relevant columns
+#select relevant columns
+data <- data |> select(-redcap_repeat_instance, -redcap_repeat_instrument)
+data <- 
+  data |> 
+  mutate(record_id = sprintf("KNUST_S%03d", record_id))
+#label variables
+data <-
+data |> 
+  add_radio_factors(codebook |> mutate(`Variable / Field Name` = `Variable / Field Name` |> str_remove("mctq_")), 
+                    var_col = `Variable / Field Name`, 
+                    type_col = `Field Type`,
+                    levels_col = `Choices, Calculations, OR Slider Labels`
+                    ) |> 
+  add_col_labels(codebook |> mutate(`Variable / Field Name` = `Variable / Field Name` |> str_remove("mctq_")), 
+                 var_col = `Variable / Field Name`, label_col = `Field Label`)
+```
+
+```{r}
+data <- 
+  data |> 
+  #invert scores
+  mutate(across(c("meq_freewake", "meq_freesleep", "meq_peak_perf", "meq_perceived_chron"),
+         \(x) {
+           n_levels <- levels(x) |> length()
+           n_levels - as.numeric(x)
+         }, .names = "{.col}_scored"),
+         across(c("meq_alarm", "meq_free_bedtime", "meq_mor_exercise", "meq_eve_tired", "meq_delayed_sleep", "meq_phys_work", "meq_ideal_week", "meq_besthour"),
+         \(x) {
+           n_levels <- levels(x) |> length()
+           n_levels - as.numeric(x) + 1
+         }, .names = "{.col}_scored"),
+         across(c("meq_wakeupease", "meq_mor_alert", "meq_mor_hunger", "meq_mor_feel", "meq_shift_conseq", "meq_eve_exercise"),
+         \(x) {
+           as.numeric(x)
+         }, .names = "{.col}_scored"),
+         meq_peak_perf_scored = meq_peak_perf_scored*2,
+         meq_eleven_tired_scored = case_match(meq_eleven_tired,
+                                             "Not at all tired" ~ 0,
+                                             "A little tired" ~ 2,
+                                             "Fairly tired" ~ 3,
+                                             "Very tired" ~ 5),
+         meq_perceived_chron_scored = meq_perceived_chron_scored*2
+         )
+
+data <- 
+  data |> 
+  rowwise() |> 
+  mutate(meq = sum(c_across(contains("_scored")))) |> 
+  select(-contains("_scored"), -morning_eveningness_questionnaire_meq_complete)
+
+attr(data$meq, "label") <- "Morningness-Eveningness-Score (calculated)"
+```
+
+## Summarize results
+
+```{r}
+chronotype <- left_join(chronotype, data |> select(record_id, meq), by = "record_id")
+chronotype <- 
+  chronotype |> mutate(sjl = sjl |> as.duration(),
+                       across(c(so_w, so_f, msw, msf, msf_sc), \(x) paste("2000-01-01", x) |> parse_datetime()))
+attr(chronotype$so_w, "label") <- "Sleep onset on working days (calculated)"
+attr(chronotype$so_f, "label") <- "Sleep onset on free days (calculated)"
+attr(chronotype$sd_w, "label") <- "Sleep duration on working days (calculated)"
+attr(chronotype$sd_f, "label") <- "Sleep duration on free days (calculated)"
+attr(chronotype$msw, "label") <- "Mid-sleep on working days (calculated)"
+attr(chronotype$msf, "label") <- "Mid-sleep on free days (calculated)"
+attr(chronotype$sd_week, "label") <- "Average weekly sleep duration (calculated)"
+attr(chronotype$msf_sc, "label") <- "Mid-sleep on free days, sleep corrected (calculated)"
+attr(chronotype$sjl, "label") <- "Social jetlag (calculated)"
+
+chronotype <- chronotype |> relocate(meq, msf_sc, sjl, .after = record_id)
+
+table_chronotype(chronotype)
+
+gtsave(table_chronotype(chronotype) |> as_gt(), filename = "../output/tables/table_chronotype.png", vwidth = 800)
+```
+
+### Export
+
+```{r}
+chronotype <- 
+  chronotype |> mutate(across(c(so_w, so_f, msw, msf, msf_sc), \(x) x |> hms::as_hms()))
+
+attr(chronotype$so_w, "label") <- "Sleep onset on working days (calculated)"
+attr(chronotype$so_f, "label") <- "Sleep onset on free days (calculated)"
+attr(chronotype$msw, "label") <- "Mid-sleep on working days (calculated)"
+attr(chronotype$msf, "label") <- "Mid-sleep on free days (calculated)"
+attr(chronotype$msf_sc, "label") <- "Mid-sleep on free days, sleep corrected (calculated)"
+
+chronotype <- chronotype |> rename(Id = record_id)
+path <- "../data/imported/"
+if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+save(chronotype, file = "../data/imported/chronotype.RData")
+
+
+```

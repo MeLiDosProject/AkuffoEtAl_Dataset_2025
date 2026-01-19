@@ -89,6 +89,15 @@ alt="Summary table of the morning sleep diary" />
 diary</figcaption>
 </figure>
 
+## Chronotype
+
+<figure>
+<img src="output/tables/table_chronotype.png"
+alt="Summary table of the chronotype questionnaires" />
+<figcaption aria-hidden="true">Summary table of the chronotype
+questionnaires</figcaption>
+</figure>
+
 ## Summary of the dataset
 
 | Dataset name | KNUST |

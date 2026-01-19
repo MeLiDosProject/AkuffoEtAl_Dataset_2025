@@ -218,7 +218,7 @@ prefix <- paste0(site, "_")
 data_cleaned |> 
   mutate(Id = Id |> fct_relabel(\(x) str_remove(x, prefix))) |> 
 grand_overview(coordinates[[site]], cities[[site]], countries[[site]], 
-               country_colors[[site]])
+               country_colors[[site]], photoperiod_sequence = 0.1)
 
 ggsave("../output/figures/Figure_1.png", width = 17, height = 10, scale = 2, units = "cm")
 ggsave("../output/figures/Figure_1.jpeg", width = 17, height = 10, scale = 2, units = "cm")
