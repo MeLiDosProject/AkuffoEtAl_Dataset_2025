@@ -2259,8 +2259,9 @@ vertical-align: -.125em;
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;filefinder&quot;</span>,</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;general_parameters&quot;</span>,</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;coltype_checker&quot;</span>,</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tables&quot;</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">walk</span>(\(x) <span class="fu">source</span>(<span class="fu">paste0</span>(remote, x, <span class="st">&quot;.R&quot;</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;mctq_bedsleeptimes&quot;</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tables&quot;</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">walk</span>(\(x) <span class="fu">source</span>(<span class="fu">paste0</span>(remote, x, <span class="st">&quot;.R&quot;</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>#calculate mctq</p>
 <div class="cell">
@@ -2275,20 +2276,20 @@ vertical-align: -.125em;
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>coltype_check <span class="ot">&lt;-</span> <span class="fu">coltype_checker</span>(codebook, data)</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> <span class="fu">gt</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="erwhwltuck" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#erwhwltuck table {
+<div id="vfaixmyagd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vfaixmyagd table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#erwhwltuck thead, #erwhwltuck tbody, #erwhwltuck tfoot, #erwhwltuck tr, #erwhwltuck td, #erwhwltuck th {
+#vfaixmyagd thead, #vfaixmyagd tbody, #vfaixmyagd tfoot, #vfaixmyagd tr, #vfaixmyagd td, #vfaixmyagd th {
 border-style: none;
 }
-#erwhwltuck p {
+#vfaixmyagd p {
 margin: 0;
 padding: 0;
 }
-#erwhwltuck .gt_table {
+#vfaixmyagd .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -2313,11 +2314,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#erwhwltuck .gt_caption {
+#vfaixmyagd .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#erwhwltuck .gt_title {
+#vfaixmyagd .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -2328,7 +2329,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#erwhwltuck .gt_subtitle {
+#vfaixmyagd .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -2339,7 +2340,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#erwhwltuck .gt_heading {
+#vfaixmyagd .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -2350,12 +2351,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#erwhwltuck .gt_bottom_border {
+#vfaixmyagd .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#erwhwltuck .gt_col_headings {
+#vfaixmyagd .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2369,7 +2370,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#erwhwltuck .gt_col_heading {
+#vfaixmyagd .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2388,7 +2389,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#erwhwltuck .gt_column_spanner_outer {
+#vfaixmyagd .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2399,13 +2400,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#erwhwltuck .gt_column_spanner_outer:first-child {
+#vfaixmyagd .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#erwhwltuck .gt_column_spanner_outer:last-child {
+#vfaixmyagd .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#erwhwltuck .gt_column_spanner {
+#vfaixmyagd .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -2416,10 +2417,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#erwhwltuck .gt_spanner_row {
+#vfaixmyagd .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#erwhwltuck .gt_group_heading {
+#vfaixmyagd .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2444,7 +2445,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#erwhwltuck .gt_empty_group_heading {
+#vfaixmyagd .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -2458,13 +2459,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#erwhwltuck .gt_from_md > :first-child {
+#vfaixmyagd .gt_from_md > :first-child {
 margin-top: 0;
 }
-#erwhwltuck .gt_from_md > :last-child {
+#vfaixmyagd .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#erwhwltuck .gt_row {
+#vfaixmyagd .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2482,7 +2483,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#erwhwltuck .gt_stub {
+#vfaixmyagd .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2494,7 +2495,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#erwhwltuck .gt_stub_row_group {
+#vfaixmyagd .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2507,13 +2508,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#erwhwltuck .gt_row_group_first td {
+#vfaixmyagd .gt_row_group_first td {
 border-top-width: 2px;
 }
-#erwhwltuck .gt_row_group_first th {
+#vfaixmyagd .gt_row_group_first th {
 border-top-width: 2px;
 }
-#erwhwltuck .gt_summary_row {
+#vfaixmyagd .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2522,14 +2523,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#erwhwltuck .gt_first_summary_row {
+#vfaixmyagd .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#erwhwltuck .gt_first_summary_row.thick {
+#vfaixmyagd .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#erwhwltuck .gt_last_summary_row {
+#vfaixmyagd .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2538,7 +2539,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#erwhwltuck .gt_grand_summary_row {
+#vfaixmyagd .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2547,7 +2548,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#erwhwltuck .gt_first_grand_summary_row {
+#vfaixmyagd .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2556,7 +2557,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#erwhwltuck .gt_last_grand_summary_row_top {
+#vfaixmyagd .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2565,10 +2566,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#erwhwltuck .gt_striped {
+#vfaixmyagd .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#erwhwltuck .gt_table_body {
+#vfaixmyagd .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2576,7 +2577,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#erwhwltuck .gt_footnotes {
+#vfaixmyagd .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2589,7 +2590,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#erwhwltuck .gt_footnote {
+#vfaixmyagd .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -2597,7 +2598,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#erwhwltuck .gt_sourcenotes {
+#vfaixmyagd .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2610,64 +2611,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#erwhwltuck .gt_sourcenote {
+#vfaixmyagd .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#erwhwltuck .gt_left {
+#vfaixmyagd .gt_left {
 text-align: left;
 }
-#erwhwltuck .gt_center {
+#vfaixmyagd .gt_center {
 text-align: center;
 }
-#erwhwltuck .gt_right {
+#vfaixmyagd .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#erwhwltuck .gt_font_normal {
+#vfaixmyagd .gt_font_normal {
 font-weight: normal;
 }
-#erwhwltuck .gt_font_bold {
+#vfaixmyagd .gt_font_bold {
 font-weight: bold;
 }
-#erwhwltuck .gt_font_italic {
+#vfaixmyagd .gt_font_italic {
 font-style: italic;
 }
-#erwhwltuck .gt_super {
+#vfaixmyagd .gt_super {
 font-size: 65%;
 }
-#erwhwltuck .gt_footnote_marks {
+#vfaixmyagd .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#erwhwltuck .gt_asterisk {
+#vfaixmyagd .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#erwhwltuck .gt_indent_1 {
+#vfaixmyagd .gt_indent_1 {
 text-indent: 5px;
 }
-#erwhwltuck .gt_indent_2 {
+#vfaixmyagd .gt_indent_2 {
 text-indent: 10px;
 }
-#erwhwltuck .gt_indent_3 {
+#vfaixmyagd .gt_indent_3 {
 text-indent: 15px;
 }
-#erwhwltuck .gt_indent_4 {
+#vfaixmyagd .gt_indent_4 {
 text-indent: 20px;
 }
-#erwhwltuck .gt_indent_5 {
+#vfaixmyagd .gt_indent_5 {
 text-indent: 25px;
 }
-#erwhwltuck .katex-display {
+#vfaixmyagd .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#erwhwltuck div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#vfaixmyagd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -3444,20 +3445,9 @@ height: 0px !important;
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">.default =</span> x))</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>         )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Furthermore, some participants indicated that they are ready to sleep before going to bed. In the way the questionnaire is analysed, this has to be after they go to bed. Thus we will take the later time in both cases (i.e., if bedtime is later then ready to sleep, we will use this).</p>
+<p>In case participants provide a later bed time than sleep time, bedtimes are used.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a> data <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">pivot_longer</span>(</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">&quot;ready_sleep_&quot;</span>, <span class="st">&quot;bedtime&quot;</span>)),</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;context&quot;</span>),</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">&quot;^(mctq_bedtime|mctq_ready_sleep)_(.*)$&quot;</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">mctq_ready_sleep =</span> <span class="fu">pmax</span>(mctq_bedtime, mctq_ready_sleep),</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">mctq_nr_workdays_adj =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(mctq_nr_workdays), <span class="dv">5</span>, mctq_nr_workdays)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> context, <span class="at">values_from =</span> <span class="fu">c</span>(mctq_bedtime, mctq_ready_sleep))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">mctq_bedsleeptimes</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <blockquote class="blockquote">
 <p>Note: participants that indicated no number of regular work days, but that still provided numbers for work- and free days will be calculated as 5 work days and 2 free days.</p>
@@ -3514,10 +3504,11 @@ meq_ideal_week, meq_besthour, meq_perceived_chron</code></pre>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_week =</span> <span class="fu">sd_week</span>(sd_w, sd_f, nr_workdays_adj),</span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">msf_sc =</span> <span class="fu">msf_sc</span>(msf, sd_w, sd_f, sd_week, <span class="at">alarm_f =</span> <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="fu">n</span>())),</span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">sjl =</span> <span class="fu">sjl</span>(msw, msf, <span class="at">abs =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">.before =</span> <span class="dv">2</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">select</span>(record_id<span class="sc">:</span>sjl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">.before =</span> <span class="dv">2</span>,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">outdoor =</span> ((outdoor_work_calc <span class="sc">*</span> nr_workdays_adj) <span class="sc">+</span> (outdoor_free_calc<span class="sc">*</span> (<span class="dv">7</span><span class="sc">-</span>nr_workdays_adj))) <span class="sc">/</span> <span class="dv">7</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">select</span>(record_id<span class="sc">:</span>outdoor)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <blockquote class="blockquote">
 <p>Note: Participants who indicated they use an alarm clock on free days (alarm_free) cannot be used for MCTQ calculation. In this overview, this behavior is overwritten by setting the alarm_f parameter to FALSE. For formal analysis, these must be removed.</p>
@@ -3535,20 +3526,20 @@ meq_ideal_week, meq_besthour, meq_perceived_chron</code></pre>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>coltype_check <span class="ot">&lt;-</span> <span class="fu">coltype_checker</span>(codebook, data)</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> <span class="fu">gt</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="ngvsmhfmcf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ngvsmhfmcf table {
+<div id="udyjuztszb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#udyjuztszb table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#ngvsmhfmcf thead, #ngvsmhfmcf tbody, #ngvsmhfmcf tfoot, #ngvsmhfmcf tr, #ngvsmhfmcf td, #ngvsmhfmcf th {
+#udyjuztszb thead, #udyjuztszb tbody, #udyjuztszb tfoot, #udyjuztszb tr, #udyjuztszb td, #udyjuztszb th {
 border-style: none;
 }
-#ngvsmhfmcf p {
+#udyjuztszb p {
 margin: 0;
 padding: 0;
 }
-#ngvsmhfmcf .gt_table {
+#udyjuztszb .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -3573,11 +3564,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#ngvsmhfmcf .gt_caption {
+#udyjuztszb .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#ngvsmhfmcf .gt_title {
+#udyjuztszb .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -3588,7 +3579,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#ngvsmhfmcf .gt_subtitle {
+#udyjuztszb .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -3599,7 +3590,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#ngvsmhfmcf .gt_heading {
+#udyjuztszb .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -3610,12 +3601,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ngvsmhfmcf .gt_bottom_border {
+#udyjuztszb .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ngvsmhfmcf .gt_col_headings {
+#udyjuztszb .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3629,7 +3620,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ngvsmhfmcf .gt_col_heading {
+#udyjuztszb .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3648,7 +3639,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#ngvsmhfmcf .gt_column_spanner_outer {
+#udyjuztszb .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3659,13 +3650,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#ngvsmhfmcf .gt_column_spanner_outer:first-child {
+#udyjuztszb .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#ngvsmhfmcf .gt_column_spanner_outer:last-child {
+#udyjuztszb .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#ngvsmhfmcf .gt_column_spanner {
+#udyjuztszb .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -3676,10 +3667,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#ngvsmhfmcf .gt_spanner_row {
+#udyjuztszb .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#ngvsmhfmcf .gt_group_heading {
+#udyjuztszb .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3704,7 +3695,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#ngvsmhfmcf .gt_empty_group_heading {
+#udyjuztszb .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -3718,13 +3709,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#ngvsmhfmcf .gt_from_md > :first-child {
+#udyjuztszb .gt_from_md > :first-child {
 margin-top: 0;
 }
-#ngvsmhfmcf .gt_from_md > :last-child {
+#udyjuztszb .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#ngvsmhfmcf .gt_row {
+#udyjuztszb .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3742,7 +3733,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#ngvsmhfmcf .gt_stub {
+#udyjuztszb .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3754,7 +3745,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ngvsmhfmcf .gt_stub_row_group {
+#udyjuztszb .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3767,13 +3758,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#ngvsmhfmcf .gt_row_group_first td {
+#udyjuztszb .gt_row_group_first td {
 border-top-width: 2px;
 }
-#ngvsmhfmcf .gt_row_group_first th {
+#udyjuztszb .gt_row_group_first th {
 border-top-width: 2px;
 }
-#ngvsmhfmcf .gt_summary_row {
+#udyjuztszb .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3782,14 +3773,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ngvsmhfmcf .gt_first_summary_row {
+#udyjuztszb .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#ngvsmhfmcf .gt_first_summary_row.thick {
+#udyjuztszb .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#ngvsmhfmcf .gt_last_summary_row {
+#udyjuztszb .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3798,7 +3789,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ngvsmhfmcf .gt_grand_summary_row {
+#udyjuztszb .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3807,7 +3798,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ngvsmhfmcf .gt_first_grand_summary_row {
+#udyjuztszb .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3816,7 +3807,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#ngvsmhfmcf .gt_last_grand_summary_row_top {
+#udyjuztszb .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3825,10 +3816,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#ngvsmhfmcf .gt_striped {
+#udyjuztszb .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#ngvsmhfmcf .gt_table_body {
+#udyjuztszb .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3836,7 +3827,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ngvsmhfmcf .gt_footnotes {
+#udyjuztszb .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3849,7 +3840,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ngvsmhfmcf .gt_footnote {
+#udyjuztszb .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -3857,7 +3848,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ngvsmhfmcf .gt_sourcenotes {
+#udyjuztszb .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3870,64 +3861,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ngvsmhfmcf .gt_sourcenote {
+#udyjuztszb .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ngvsmhfmcf .gt_left {
+#udyjuztszb .gt_left {
 text-align: left;
 }
-#ngvsmhfmcf .gt_center {
+#udyjuztszb .gt_center {
 text-align: center;
 }
-#ngvsmhfmcf .gt_right {
+#udyjuztszb .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#ngvsmhfmcf .gt_font_normal {
+#udyjuztszb .gt_font_normal {
 font-weight: normal;
 }
-#ngvsmhfmcf .gt_font_bold {
+#udyjuztszb .gt_font_bold {
 font-weight: bold;
 }
-#ngvsmhfmcf .gt_font_italic {
+#udyjuztszb .gt_font_italic {
 font-style: italic;
 }
-#ngvsmhfmcf .gt_super {
+#udyjuztszb .gt_super {
 font-size: 65%;
 }
-#ngvsmhfmcf .gt_footnote_marks {
+#udyjuztszb .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#ngvsmhfmcf .gt_asterisk {
+#udyjuztszb .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#ngvsmhfmcf .gt_indent_1 {
+#udyjuztszb .gt_indent_1 {
 text-indent: 5px;
 }
-#ngvsmhfmcf .gt_indent_2 {
+#udyjuztszb .gt_indent_2 {
 text-indent: 10px;
 }
-#ngvsmhfmcf .gt_indent_3 {
+#udyjuztszb .gt_indent_3 {
 text-indent: 15px;
 }
-#ngvsmhfmcf .gt_indent_4 {
+#udyjuztszb .gt_indent_4 {
 text-indent: 20px;
 }
-#ngvsmhfmcf .gt_indent_5 {
+#udyjuztszb .gt_indent_5 {
 text-indent: 25px;
 }
-#ngvsmhfmcf .katex-display {
+#udyjuztszb .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#ngvsmhfmcf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#udyjuztszb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -4774,25 +4765,26 @@ nr_sleep_med, meq_instructions</code></pre>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>sd_week, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Average weekly sleep duration (calculated)&quot;</span></span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>msf_sc, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Mid-sleep on free days, sleep corrected (calculated)&quot;</span></span>
 <span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>sjl, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Social jetlag (calculated)&quot;</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> chronotype <span class="sc">|&gt;</span> <span class="fu">relocate</span>(meq_type, meq, msf_sc, sjl, <span class="at">.after =</span> record_id)</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="fu">table_chronotype</span>(chronotype)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>outdoor, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Average number of minutes outside (calculated)&quot;</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> chronotype <span class="sc">|&gt;</span> <span class="fu">relocate</span>(meq_type, meq, msf_sc, sjl, <span class="at">.after =</span> record_id)</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="fu">table_chronotype</span>(chronotype)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="buylmbricu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#buylmbricu table {
+<div id="oqkfiobcxc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oqkfiobcxc table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#buylmbricu thead, #buylmbricu tbody, #buylmbricu tfoot, #buylmbricu tr, #buylmbricu td, #buylmbricu th {
+#oqkfiobcxc thead, #oqkfiobcxc tbody, #oqkfiobcxc tfoot, #oqkfiobcxc tr, #oqkfiobcxc td, #oqkfiobcxc th {
 border-style: none;
 }
-#buylmbricu p {
+#oqkfiobcxc p {
 margin: 0;
 padding: 0;
 }
-#buylmbricu .gt_table {
+#oqkfiobcxc .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -4817,11 +4809,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#buylmbricu .gt_caption {
+#oqkfiobcxc .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#buylmbricu .gt_title {
+#oqkfiobcxc .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -4832,7 +4824,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#buylmbricu .gt_subtitle {
+#oqkfiobcxc .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -4843,7 +4835,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#buylmbricu .gt_heading {
+#oqkfiobcxc .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -4854,12 +4846,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#buylmbricu .gt_bottom_border {
+#oqkfiobcxc .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#buylmbricu .gt_col_headings {
+#oqkfiobcxc .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -4873,7 +4865,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#buylmbricu .gt_col_heading {
+#oqkfiobcxc .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4892,7 +4884,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#buylmbricu .gt_column_spanner_outer {
+#oqkfiobcxc .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4903,13 +4895,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#buylmbricu .gt_column_spanner_outer:first-child {
+#oqkfiobcxc .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#buylmbricu .gt_column_spanner_outer:last-child {
+#oqkfiobcxc .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#buylmbricu .gt_column_spanner {
+#oqkfiobcxc .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -4920,10 +4912,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#buylmbricu .gt_spanner_row {
+#oqkfiobcxc .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#buylmbricu .gt_group_heading {
+#oqkfiobcxc .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4948,7 +4940,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#buylmbricu .gt_empty_group_heading {
+#oqkfiobcxc .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -4962,13 +4954,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#buylmbricu .gt_from_md > :first-child {
+#oqkfiobcxc .gt_from_md > :first-child {
 margin-top: 0;
 }
-#buylmbricu .gt_from_md > :last-child {
+#oqkfiobcxc .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#buylmbricu .gt_row {
+#oqkfiobcxc .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4986,7 +4978,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#buylmbricu .gt_stub {
+#oqkfiobcxc .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4998,7 +4990,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#buylmbricu .gt_stub_row_group {
+#oqkfiobcxc .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5011,13 +5003,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#buylmbricu .gt_row_group_first td {
+#oqkfiobcxc .gt_row_group_first td {
 border-top-width: 2px;
 }
-#buylmbricu .gt_row_group_first th {
+#oqkfiobcxc .gt_row_group_first th {
 border-top-width: 2px;
 }
-#buylmbricu .gt_summary_row {
+#oqkfiobcxc .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -5026,14 +5018,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#buylmbricu .gt_first_summary_row {
+#oqkfiobcxc .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#buylmbricu .gt_first_summary_row.thick {
+#oqkfiobcxc .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#buylmbricu .gt_last_summary_row {
+#oqkfiobcxc .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5042,7 +5034,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#buylmbricu .gt_grand_summary_row {
+#oqkfiobcxc .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -5051,7 +5043,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#buylmbricu .gt_first_grand_summary_row {
+#oqkfiobcxc .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5060,7 +5052,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#buylmbricu .gt_last_grand_summary_row_top {
+#oqkfiobcxc .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5069,10 +5061,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#buylmbricu .gt_striped {
+#oqkfiobcxc .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#buylmbricu .gt_table_body {
+#oqkfiobcxc .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -5080,7 +5072,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#buylmbricu .gt_footnotes {
+#oqkfiobcxc .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -5093,7 +5085,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#buylmbricu .gt_footnote {
+#oqkfiobcxc .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -5101,7 +5093,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#buylmbricu .gt_sourcenotes {
+#oqkfiobcxc .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -5114,64 +5106,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#buylmbricu .gt_sourcenote {
+#oqkfiobcxc .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#buylmbricu .gt_left {
+#oqkfiobcxc .gt_left {
 text-align: left;
 }
-#buylmbricu .gt_center {
+#oqkfiobcxc .gt_center {
 text-align: center;
 }
-#buylmbricu .gt_right {
+#oqkfiobcxc .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#buylmbricu .gt_font_normal {
+#oqkfiobcxc .gt_font_normal {
 font-weight: normal;
 }
-#buylmbricu .gt_font_bold {
+#oqkfiobcxc .gt_font_bold {
 font-weight: bold;
 }
-#buylmbricu .gt_font_italic {
+#oqkfiobcxc .gt_font_italic {
 font-style: italic;
 }
-#buylmbricu .gt_super {
+#oqkfiobcxc .gt_super {
 font-size: 65%;
 }
-#buylmbricu .gt_footnote_marks {
+#oqkfiobcxc .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#buylmbricu .gt_asterisk {
+#oqkfiobcxc .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#buylmbricu .gt_indent_1 {
+#oqkfiobcxc .gt_indent_1 {
 text-indent: 5px;
 }
-#buylmbricu .gt_indent_2 {
+#oqkfiobcxc .gt_indent_2 {
 text-indent: 10px;
 }
-#buylmbricu .gt_indent_3 {
+#oqkfiobcxc .gt_indent_3 {
 text-indent: 15px;
 }
-#buylmbricu .gt_indent_4 {
+#oqkfiobcxc .gt_indent_4 {
 text-indent: 20px;
 }
-#buylmbricu .gt_indent_5 {
+#oqkfiobcxc .gt_indent_5 {
 text-indent: 25px;
 }
-#buylmbricu .katex-display {
+#oqkfiobcxc .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#buylmbricu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#oqkfiobcxc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -5234,12 +5226,12 @@ height: 0px !important;
 <tr class="even">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Mid-sleep on free days, sleep corrected (calculated)</td>
 <td class="gt_row gt_center" headers="n">15</td>
-<td class="gt_row gt_center" headers="stat_0">02:18:09 (01:28:45, 03:01:25.714285)</td>
+<td class="gt_row gt_center" headers="stat_0">02:30:00 (02:03:45, 03:11:25.714285)</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Social jetlag (calculated)</td>
 <td class="gt_row gt_center" headers="n">15</td>
-<td class="gt_row gt_center" headers="stat_0">900s (~15 minutes) (0s, 2700s (~45 minutes))</td>
+<td class="gt_row gt_center" headers="stat_0">900s (~15 minutes) (0s, 3600s (~1 hours))</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Sleep onset on working days (calculated)</td>
@@ -5249,7 +5241,7 @@ height: 0px !important;
 <tr class="odd">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Sleep onset on free days (calculated)</td>
 <td class="gt_row gt_center" headers="n">15</td>
-<td class="gt_row gt_center" headers="stat_0">22:30:00 (22:03:30, 23:15:00)</td>
+<td class="gt_row gt_center" headers="stat_0">23:00:00 (22:20:00, 00:00:00)</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Sleep duration on working days (calculated)</td>
@@ -5259,7 +5251,7 @@ height: 0px !important;
 <tr class="odd">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Sleep duration on free days (calculated)</td>
 <td class="gt_row gt_center" headers="n">15</td>
-<td class="gt_row gt_center" headers="stat_0">27000s (~7.5 hours) (24600s (~6.83 hours), 33300s (~9.25 hours))</td>
+<td class="gt_row gt_center" headers="stat_0">27000s (~7.5 hours) (24600s (~6.83 hours), 34200s (~9.5 hours))</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Mid-sleep on working days (calculated)</td>
@@ -5269,12 +5261,17 @@ height: 0px !important;
 <tr class="odd">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Mid-sleep on free days (calculated)</td>
 <td class="gt_row gt_center" headers="n">15</td>
-<td class="gt_row gt_center" headers="stat_0">02:30:00 (01:42:30, 03:10:00)</td>
+<td class="gt_row gt_center" headers="stat_0">02:30:00 (01:43:45, 03:15:00)</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Average weekly sleep duration (calculated)</td>
 <td class="gt_row gt_center" headers="n">15</td>
-<td class="gt_row gt_center" headers="stat_0">25200s (~7 hours) (23614s (~6.56 hours), 30737s (~8.54 hours))</td>
+<td class="gt_row gt_center" headers="stat_0">25714s (~7.14 hours) (22800s (~6.33 hours), 31114s (~8.64 hours))</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Average number of minutes outside (calculated)</td>
+<td class="gt_row gt_center" headers="n">15</td>
+<td class="gt_row gt_center" headers="stat_0">137 (90, 274)</td>
 </tr>
 </tbody><tfoot class="gt_footnotes">
 <tr class="odd">
@@ -5288,7 +5285,7 @@ height: 0px !important;
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gtsave</span>(<span class="fu">table_chronotype</span>(chronotype) <span class="sc">|&gt;</span> <span class="fu">as_gt</span>(), <span class="at">filename =</span> <span class="st">&quot;../output/tables/table_chronotype.png&quot;</span>, <span class="at">vwidth =</span> <span class="dv">800</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>file:////var/folders/9p/326_k3kx43qbn_cyl1rqfhb00000gn/T//RtmpRhapcO/file1053a7136f476.html screenshot completed</code></pre>
+<pre><code>file:////var/folders/9p/326_k3kx43qbn_cyl1rqfhb00000gn/T//RtmpfqnUex/file1251e63fb06e4.html screenshot completed</code></pre>
 </div>
 </div>
 <section id="export" class="level3">
@@ -5803,243 +5800,235 @@ height: 0px !important;
 <span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;filefinder&quot;</span>,</span>
 <span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;general_parameters&quot;</span>,</span>
 <span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;coltype_checker&quot;</span>,</span>
-<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tables&quot;</span></span>
-<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">walk</span>(\(x) <span class="fu">source</span>(<span class="fu">paste0</span>(remote, x, <span class="st">&quot;.R&quot;</span>)))</span>
-<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a>#calculate mctq</span>
-<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a><span class="co">#collect codebook</span></span>
-<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>codebook <span class="ot">&lt;-</span> </span>
-<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prepare_codebook</span>(<span class="st">&quot;MeLiDosIntakeQuestionnaires_DataDictionary_2024-10-16.csv&quot;</span>)</span>
-<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a><span class="co">#collect files</span></span>
-<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">filefinder</span>(<span class="st">&quot;chronotype&quot;</span>,<span class="at">individual =</span> <span class="cn">FALSE</span>, <span class="at">negate =</span> <span class="st">&quot;lookup|meq&quot;</span>)</span>
-<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a><span class="co">#import files</span></span>
-<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(files, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a><span class="co">#check column types</span></span>
-<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a>coltype_check <span class="ot">&lt;-</span> <span class="fu">coltype_checker</span>(codebook, data)</span>
-<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a>coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> <span class="fu">gt</span>()</span>
-<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a><span class="co">#collect relevant columns</span></span>
-<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a>relevant_columns <span class="ot">&lt;-</span> </span>
-<span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a>  coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> </span>
-<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(col)</span>
-<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a><span class="co">#select relevant columns</span></span>
-<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">any_of</span>(relevant_columns))</span>
-<span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
-<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
-<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">record_id =</span> <span class="fu">sprintf</span>(<span class="st">&quot;KNUST_S%03d&quot;</span>, record_id))</span>
-<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a>2 participants provided an unlikely bedtime before noon (and have not indicated shiftwork) - these participants will be treated as if their bedtime is 12 hours later (problem with am/pm)</span>
-<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a>Id_to_shift <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;KNUST_S001&quot;</span>, <span class="st">&quot;KNUST_S013&quot;</span>)</span>
-<span id="cb22-76"><a href="#cb22-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
-<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span> </span>
-<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">&quot;ready_sleep_&quot;</span>, <span class="st">&quot;bedtime&quot;</span>)), </span>
-<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a>                \(x) <span class="fu">case_when</span>(</span>
-<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a>                  record_id <span class="sc">%in%</span> Id_to_shift <span class="sc">~</span> (x <span class="sc">+</span> hms<span class="sc">::</span><span class="fu">hms</span>(<span class="at">hours =</span> <span class="dv">12</span>)) <span class="sc">%&gt;%</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(),</span>
-<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a>                  <span class="at">.default =</span> x))</span>
-<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a>         )</span>
-<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a>3 participants provided an unlikely early end of work - these will be increased by 12 hours</span>
-<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a>Id_to_shift <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;KNUST_S001&quot;</span>, <span class="st">&quot;KNUST_S009&quot;</span>, <span class="st">&quot;KNUST_S011&quot;</span>)</span>
-<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
-<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span> </span>
-<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">&quot;work_end&quot;</span>)), </span>
-<span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a>                \(x) <span class="fu">case_when</span>(</span>
-<span id="cb22-97"><a href="#cb22-97" aria-hidden="true" tabindex="-1"></a>                  record_id <span class="sc">%in%</span> Id_to_shift <span class="sc">~</span> (x <span class="sc">+</span> hms<span class="sc">::</span><span class="fu">hms</span>(<span class="at">hours =</span> <span class="dv">12</span>)) <span class="sc">%&gt;%</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(),</span>
-<span id="cb22-98"><a href="#cb22-98" aria-hidden="true" tabindex="-1"></a>                  <span class="at">.default =</span> x))</span>
-<span id="cb22-99"><a href="#cb22-99" aria-hidden="true" tabindex="-1"></a>         )</span>
-<span id="cb22-100"><a href="#cb22-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-101"><a href="#cb22-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-102"><a href="#cb22-102" aria-hidden="true" tabindex="-1"></a>Furthermore, some participants indicated that they are ready to sleep before going to bed. In the way the questionnaire is analysed, this has to be after they go to bed. Thus we will take the later time in both cases (i.e., if bedtime is later then ready to sleep, we will use this).</span>
-<span id="cb22-103"><a href="#cb22-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-106"><a href="#cb22-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-107"><a href="#cb22-107" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
-<span id="cb22-108"><a href="#cb22-108" aria-hidden="true" tabindex="-1"></a> data <span class="sc">%&gt;%</span></span>
-<span id="cb22-109"><a href="#cb22-109" aria-hidden="true" tabindex="-1"></a> <span class="fu">pivot_longer</span>(</span>
-<span id="cb22-110"><a href="#cb22-110" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">&quot;ready_sleep_&quot;</span>, <span class="st">&quot;bedtime&quot;</span>)),</span>
-<span id="cb22-111"><a href="#cb22-111" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;context&quot;</span>),</span>
-<span id="cb22-112"><a href="#cb22-112" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">&quot;^(mctq_bedtime|mctq_ready_sleep)_(.*)$&quot;</span></span>
-<span id="cb22-113"><a href="#cb22-113" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb22-114"><a href="#cb22-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb22-115"><a href="#cb22-115" aria-hidden="true" tabindex="-1"></a>    <span class="at">mctq_ready_sleep =</span> <span class="fu">pmax</span>(mctq_bedtime, mctq_ready_sleep),</span>
-<span id="cb22-116"><a href="#cb22-116" aria-hidden="true" tabindex="-1"></a>    <span class="at">mctq_nr_workdays_adj =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(mctq_nr_workdays), <span class="dv">5</span>, mctq_nr_workdays)</span>
-<span id="cb22-117"><a href="#cb22-117" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb22-118"><a href="#cb22-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> context, <span class="at">values_from =</span> <span class="fu">c</span>(mctq_bedtime, mctq_ready_sleep))</span>
-<span id="cb22-119"><a href="#cb22-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-120"><a href="#cb22-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-121"><a href="#cb22-121" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Note: participants that indicated no number of regular work days, but that still provided numbers for work- and free days will be calculated as 5 work days and 2 free days.</span></span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;mctq_bedsleeptimes&quot;</span>,</span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tables&quot;</span></span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">walk</span>(\(x) <span class="fu">source</span>(<span class="fu">paste0</span>(remote, x, <span class="st">&quot;.R&quot;</span>)))</span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a>#calculate mctq</span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a><span class="co">#collect codebook</span></span>
+<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a>codebook <span class="ot">&lt;-</span> </span>
+<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prepare_codebook</span>(<span class="st">&quot;MeLiDosIntakeQuestionnaires_DataDictionary_2024-10-16.csv&quot;</span>)</span>
+<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a><span class="co">#collect files</span></span>
+<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">filefinder</span>(<span class="st">&quot;chronotype&quot;</span>,<span class="at">individual =</span> <span class="cn">FALSE</span>, <span class="at">negate =</span> <span class="st">&quot;lookup|meq&quot;</span>)</span>
+<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a><span class="co">#import files</span></span>
+<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(files, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a><span class="co">#check column types</span></span>
+<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a>coltype_check <span class="ot">&lt;-</span> <span class="fu">coltype_checker</span>(codebook, data)</span>
+<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a>coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> <span class="fu">gt</span>()</span>
+<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a><span class="co">#collect relevant columns</span></span>
+<span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a>relevant_columns <span class="ot">&lt;-</span> </span>
+<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a>  coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> </span>
+<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(col)</span>
+<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a><span class="co">#select relevant columns</span></span>
+<span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">any_of</span>(relevant_columns))</span>
+<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
+<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
+<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">record_id =</span> <span class="fu">sprintf</span>(<span class="st">&quot;KNUST_S%03d&quot;</span>, record_id))</span>
+<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a>2 participants provided an unlikely bedtime before noon (and have not indicated shiftwork) - these participants will be treated as if their bedtime is 12 hours later (problem with am/pm)</span>
+<span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-76"><a href="#cb22-76" aria-hidden="true" tabindex="-1"></a>Id_to_shift <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;KNUST_S001&quot;</span>, <span class="st">&quot;KNUST_S013&quot;</span>)</span>
+<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
+<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span> </span>
+<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">&quot;ready_sleep_&quot;</span>, <span class="st">&quot;bedtime&quot;</span>)), </span>
+<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a>                \(x) <span class="fu">case_when</span>(</span>
+<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a>                  record_id <span class="sc">%in%</span> Id_to_shift <span class="sc">~</span> (x <span class="sc">+</span> hms<span class="sc">::</span><span class="fu">hms</span>(<span class="at">hours =</span> <span class="dv">12</span>)) <span class="sc">%&gt;%</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(),</span>
+<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a>                  <span class="at">.default =</span> x))</span>
+<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a>3 participants provided an unlikely early end of work - these will be increased by 12 hours</span>
+<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a>Id_to_shift <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;KNUST_S001&quot;</span>, <span class="st">&quot;KNUST_S009&quot;</span>, <span class="st">&quot;KNUST_S011&quot;</span>)</span>
+<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
+<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span> </span>
+<span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">&quot;work_end&quot;</span>)), </span>
+<span id="cb22-97"><a href="#cb22-97" aria-hidden="true" tabindex="-1"></a>                \(x) <span class="fu">case_when</span>(</span>
+<span id="cb22-98"><a href="#cb22-98" aria-hidden="true" tabindex="-1"></a>                  record_id <span class="sc">%in%</span> Id_to_shift <span class="sc">~</span> (x <span class="sc">+</span> hms<span class="sc">::</span><span class="fu">hms</span>(<span class="at">hours =</span> <span class="dv">12</span>)) <span class="sc">%&gt;%</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(),</span>
+<span id="cb22-99"><a href="#cb22-99" aria-hidden="true" tabindex="-1"></a>                  <span class="at">.default =</span> x))</span>
+<span id="cb22-100"><a href="#cb22-100" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb22-101"><a href="#cb22-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-102"><a href="#cb22-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-103"><a href="#cb22-103" aria-hidden="true" tabindex="-1"></a>In case participants provide a later bed time than sleep time, bedtimes are used.</span>
+<span id="cb22-104"><a href="#cb22-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-107"><a href="#cb22-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-108"><a href="#cb22-108" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">mctq_bedsleeptimes</span>(data)</span>
+<span id="cb22-109"><a href="#cb22-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-110"><a href="#cb22-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-111"><a href="#cb22-111" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Note: participants that indicated no number of regular work days, but that still provided numbers for work- and free days will be calculated as 5 work days and 2 free days.</span></span>
+<span id="cb22-112"><a href="#cb22-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-115"><a href="#cb22-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-116"><a href="#cb22-116" aria-hidden="true" tabindex="-1"></a><span class="co">#reorder variables, remove mctq variable, recode falling asleep to minutes</span></span>
+<span id="cb22-117"><a href="#cb22-117" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
+<span id="cb22-118"><a href="#cb22-118" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
+<span id="cb22-119"><a href="#cb22-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="fu">any_of</span>(codebook<span class="sc">$</span><span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb22-120"><a href="#cb22-120" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(\(x) <span class="fu">str_remove</span>(x, <span class="st">&quot;mctq_&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb22-121"><a href="#cb22-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">contains</span>(<span class="st">&quot;fall_sleep&quot;</span>), <span class="sc">~</span><span class="fu">as.duration</span>(.x<span class="sc">*</span><span class="dv">60</span>)))</span>
 <span id="cb22-122"><a href="#cb22-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a><span class="co">#reorder variables, remove mctq variable, recode falling asleep to minutes</span></span>
-<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
-<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
-<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="fu">any_of</span>(codebook<span class="sc">$</span><span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(\(x) <span class="fu">str_remove</span>(x, <span class="st">&quot;mctq_&quot;</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">contains</span>(<span class="st">&quot;fall_sleep&quot;</span>), <span class="sc">~</span><span class="fu">as.duration</span>(.x<span class="sc">*</span><span class="dv">60</span>)))</span>
-<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-133"><a href="#cb22-133" aria-hidden="true" tabindex="-1"></a><span class="co">#label variables</span></span>
-<span id="cb22-134"><a href="#cb22-134" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
-<span id="cb22-135"><a href="#cb22-135" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
-<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_radio_factors</span>(codebook <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="sc">|&gt;</span> <span class="fu">str_remove</span>(<span class="st">&quot;mctq_&quot;</span>)), </span>
-<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a>                    <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, </span>
-<span id="cb22-138"><a href="#cb22-138" aria-hidden="true" tabindex="-1"></a>                    <span class="at">type_col =</span> <span class="st">`</span><span class="at">Field Type</span><span class="st">`</span>,</span>
-<span id="cb22-139"><a href="#cb22-139" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels_col =</span> <span class="st">`</span><span class="at">Choices, Calculations, OR Slider Labels</span><span class="st">`</span></span>
-<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a>                    ) <span class="sc">|&gt;</span> </span>
-<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_col_labels</span>(codebook <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="sc">|&gt;</span> <span class="fu">str_remove</span>(<span class="st">&quot;mctq_&quot;</span>)), </span>
-<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a>                 <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, <span class="at">label_col =</span> <span class="st">`</span><span class="at">Field Label</span><span class="st">`</span>)</span>
-<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-147"><a href="#cb22-147" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
-<span id="cb22-149"><a href="#cb22-149" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
-<span id="cb22-150"><a href="#cb22-150" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(</span>
-<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a>    <span class="at">so_w =</span> <span class="fu">so</span>(ready_sleep_work, fall_sleep_work),</span>
-<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a>    <span class="at">so_f =</span> <span class="fu">so</span>(ready_sleep_free, fall_sleep_free),</span>
-<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_w =</span> <span class="fu">sdu</span>(so_w, wake_time_work),</span>
-<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_f =</span> <span class="fu">sdu</span>(so_f, wake_time_free),</span>
-<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a>    <span class="at">msw =</span> <span class="fu">msl</span>(so_w, sd_w),</span>
-<span id="cb22-156"><a href="#cb22-156" aria-hidden="true" tabindex="-1"></a>    <span class="at">msf =</span> <span class="fu">msl</span>(so_f, sd_f),</span>
-<span id="cb22-157"><a href="#cb22-157" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_week =</span> <span class="fu">sd_week</span>(sd_w, sd_f, nr_workdays_adj),</span>
-<span id="cb22-158"><a href="#cb22-158" aria-hidden="true" tabindex="-1"></a>    <span class="at">msf_sc =</span> <span class="fu">msf_sc</span>(msf, sd_w, sd_f, sd_week, <span class="at">alarm_f =</span> <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="fu">n</span>())),</span>
-<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a>    <span class="at">sjl =</span> <span class="fu">sjl</span>(msw, msf, <span class="at">abs =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb22-160"><a href="#cb22-160" aria-hidden="true" tabindex="-1"></a>  <span class="at">.before =</span> <span class="dv">2</span></span>
-<span id="cb22-161"><a href="#cb22-161" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-163"><a href="#cb22-163" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">select</span>(record_id<span class="sc">:</span>sjl)</span>
-<span id="cb22-164"><a href="#cb22-164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-165"><a href="#cb22-165" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Note: Participants who indicated they use an alarm clock on free days (alarm_free) cannot be used for MCTQ calculation. In this overview, this behavior is overwritten by setting the alarm_f parameter to FALSE. For formal analysis, these must be removed.</span></span>
-<span id="cb22-166"><a href="#cb22-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-167"><a href="#cb22-167" aria-hidden="true" tabindex="-1"></a><span class="fu">## meq</span></span>
-<span id="cb22-168"><a href="#cb22-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-171"><a href="#cb22-171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a><span class="co">#collect files</span></span>
-<span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">filefinder</span>(<span class="st">&quot;chronotype&quot;</span>,<span class="at">individual =</span> <span class="cn">FALSE</span>, <span class="at">negate =</span> <span class="st">&quot;lookup|mctq&quot;</span>)</span>
-<span id="cb22-174"><a href="#cb22-174" aria-hidden="true" tabindex="-1"></a><span class="co">#import files</span></span>
-<span id="cb22-175"><a href="#cb22-175" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(files, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-176"><a href="#cb22-176" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(redcap_repeat_instance)</span>
-<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a><span class="co">#check column types</span></span>
-<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a>coltype_check <span class="ot">&lt;-</span> <span class="fu">coltype_checker</span>(codebook, data)</span>
-<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a>coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> <span class="fu">gt</span>()</span>
-<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a><span class="co">#collect relevant columns</span></span>
-<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a><span class="co">#select relevant columns</span></span>
-<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>redcap_repeat_instance, <span class="sc">-</span>redcap_repeat_instrument)</span>
-<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
-<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
-<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">record_id =</span> <span class="fu">sprintf</span>(<span class="st">&quot;KNUST_S%03d&quot;</span>, record_id))</span>
-<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a><span class="co">#label variables</span></span>
-<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
-<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
-<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_radio_factors</span>(codebook <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="sc">|&gt;</span> <span class="fu">str_remove</span>(<span class="st">&quot;mctq_&quot;</span>)), </span>
-<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a>                    <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, </span>
-<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a>                    <span class="at">type_col =</span> <span class="st">`</span><span class="at">Field Type</span><span class="st">`</span>,</span>
-<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels_col =</span> <span class="st">`</span><span class="at">Choices, Calculations, OR Slider Labels</span><span class="st">`</span></span>
-<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a>                    ) <span class="sc">|&gt;</span> </span>
-<span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_col_labels</span>(codebook <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="sc">|&gt;</span> <span class="fu">str_remove</span>(<span class="st">&quot;mctq_&quot;</span>)), </span>
-<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a>                 <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, <span class="at">label_col =</span> <span class="st">`</span><span class="at">Field Label</span><span class="st">`</span>)</span>
-<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-200"><a href="#cb22-200" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
-<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
-<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a>  <span class="co">#invert scores</span></span>
-<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(<span class="st">&quot;meq_freewake&quot;</span>, <span class="st">&quot;meq_freesleep&quot;</span>, <span class="st">&quot;meq_peak_perf&quot;</span>, <span class="st">&quot;meq_perceived_chron&quot;</span>),</span>
-<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a>         \(x) {</span>
-<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a>           n_levels <span class="ot">&lt;-</span> <span class="fu">levels</span>(x) <span class="sc">|&gt;</span> <span class="fu">length</span>()</span>
-<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a>           n_levels <span class="sc">-</span> <span class="fu">as.numeric</span>(x)</span>
+<span id="cb22-123"><a href="#cb22-123" aria-hidden="true" tabindex="-1"></a><span class="co">#label variables</span></span>
+<span id="cb22-124"><a href="#cb22-124" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
+<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
+<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_radio_factors</span>(codebook <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="sc">|&gt;</span> <span class="fu">str_remove</span>(<span class="st">&quot;mctq_&quot;</span>)), </span>
+<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a>                    <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, </span>
+<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a>                    <span class="at">type_col =</span> <span class="st">`</span><span class="at">Field Type</span><span class="st">`</span>,</span>
+<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels_col =</span> <span class="st">`</span><span class="at">Choices, Calculations, OR Slider Labels</span><span class="st">`</span></span>
+<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a>                    ) <span class="sc">|&gt;</span> </span>
+<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_col_labels</span>(codebook <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="sc">|&gt;</span> <span class="fu">str_remove</span>(<span class="st">&quot;mctq_&quot;</span>)), </span>
+<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a>                 <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, <span class="at">label_col =</span> <span class="st">`</span><span class="at">Field Label</span><span class="st">`</span>)</span>
+<span id="cb22-133"><a href="#cb22-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-134"><a href="#cb22-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-138"><a href="#cb22-138" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
+<span id="cb22-139"><a href="#cb22-139" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(</span>
+<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a>    <span class="at">so_w =</span> <span class="fu">so</span>(ready_sleep_work, fall_sleep_work),</span>
+<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a>    <span class="at">so_f =</span> <span class="fu">so</span>(ready_sleep_free, fall_sleep_free),</span>
+<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_w =</span> <span class="fu">sdu</span>(so_w, wake_time_work),</span>
+<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_f =</span> <span class="fu">sdu</span>(so_f, wake_time_free),</span>
+<span id="cb22-145"><a href="#cb22-145" aria-hidden="true" tabindex="-1"></a>    <span class="at">msw =</span> <span class="fu">msl</span>(so_w, sd_w),</span>
+<span id="cb22-146"><a href="#cb22-146" aria-hidden="true" tabindex="-1"></a>    <span class="at">msf =</span> <span class="fu">msl</span>(so_f, sd_f),</span>
+<span id="cb22-147"><a href="#cb22-147" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_week =</span> <span class="fu">sd_week</span>(sd_w, sd_f, nr_workdays_adj),</span>
+<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a>    <span class="at">msf_sc =</span> <span class="fu">msf_sc</span>(msf, sd_w, sd_f, sd_week, <span class="at">alarm_f =</span> <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="fu">n</span>())),</span>
+<span id="cb22-149"><a href="#cb22-149" aria-hidden="true" tabindex="-1"></a>    <span class="at">sjl =</span> <span class="fu">sjl</span>(msw, msf, <span class="at">abs =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb22-150"><a href="#cb22-150" aria-hidden="true" tabindex="-1"></a>  <span class="at">.before =</span> <span class="dv">2</span>,</span>
+<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a>    <span class="at">outdoor =</span> ((outdoor_work_calc <span class="sc">*</span> nr_workdays_adj) <span class="sc">+</span> (outdoor_free_calc<span class="sc">*</span> (<span class="dv">7</span><span class="sc">-</span>nr_workdays_adj))) <span class="sc">/</span> <span class="dv">7</span></span>
+<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">select</span>(record_id<span class="sc">:</span>outdoor)</span>
+<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-156"><a href="#cb22-156" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Note: Participants who indicated they use an alarm clock on free days (alarm_free) cannot be used for MCTQ calculation. In this overview, this behavior is overwritten by setting the alarm_f parameter to FALSE. For formal analysis, these must be removed.</span></span>
+<span id="cb22-157"><a href="#cb22-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-158"><a href="#cb22-158" aria-hidden="true" tabindex="-1"></a><span class="fu">## meq</span></span>
+<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-163"><a href="#cb22-163" aria-hidden="true" tabindex="-1"></a><span class="co">#collect files</span></span>
+<span id="cb22-164"><a href="#cb22-164" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">filefinder</span>(<span class="st">&quot;chronotype&quot;</span>,<span class="at">individual =</span> <span class="cn">FALSE</span>, <span class="at">negate =</span> <span class="st">&quot;lookup|mctq&quot;</span>)</span>
+<span id="cb22-165"><a href="#cb22-165" aria-hidden="true" tabindex="-1"></a><span class="co">#import files</span></span>
+<span id="cb22-166"><a href="#cb22-166" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(files, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-167"><a href="#cb22-167" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(redcap_repeat_instance)</span>
+<span id="cb22-168"><a href="#cb22-168" aria-hidden="true" tabindex="-1"></a><span class="co">#check column types</span></span>
+<span id="cb22-169"><a href="#cb22-169" aria-hidden="true" tabindex="-1"></a>coltype_check <span class="ot">&lt;-</span> <span class="fu">coltype_checker</span>(codebook, data)</span>
+<span id="cb22-170"><a href="#cb22-170" aria-hidden="true" tabindex="-1"></a>coltype_check<span class="sc">$</span>details <span class="sc">|&gt;</span> <span class="fu">gt</span>()</span>
+<span id="cb22-171"><a href="#cb22-171" aria-hidden="true" tabindex="-1"></a><span class="co">#collect relevant columns</span></span>
+<span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a><span class="co">#select relevant columns</span></span>
+<span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>redcap_repeat_instance, <span class="sc">-</span>redcap_repeat_instrument)</span>
+<span id="cb22-174"><a href="#cb22-174" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
+<span id="cb22-175"><a href="#cb22-175" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
+<span id="cb22-176"><a href="#cb22-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">record_id =</span> <span class="fu">sprintf</span>(<span class="st">&quot;KNUST_S%03d&quot;</span>, record_id))</span>
+<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a><span class="co">#label variables</span></span>
+<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span></span>
+<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
+<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_radio_factors</span>(codebook <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="sc">|&gt;</span> <span class="fu">str_remove</span>(<span class="st">&quot;mctq_&quot;</span>)), </span>
+<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a>                    <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, </span>
+<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a>                    <span class="at">type_col =</span> <span class="st">`</span><span class="at">Field Type</span><span class="st">`</span>,</span>
+<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels_col =</span> <span class="st">`</span><span class="at">Choices, Calculations, OR Slider Labels</span><span class="st">`</span></span>
+<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a>                    ) <span class="sc">|&gt;</span> </span>
+<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_col_labels</span>(codebook <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span> <span class="sc">|&gt;</span> <span class="fu">str_remove</span>(<span class="st">&quot;mctq_&quot;</span>)), </span>
+<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a>                 <span class="at">var_col =</span> <span class="st">`</span><span class="at">Variable / Field Name</span><span class="st">`</span>, <span class="at">label_col =</span> <span class="st">`</span><span class="at">Field Label</span><span class="st">`</span>)</span>
+<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
+<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
+<span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a>  <span class="co">#invert scores</span></span>
+<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(<span class="st">&quot;meq_freewake&quot;</span>, <span class="st">&quot;meq_freesleep&quot;</span>, <span class="st">&quot;meq_peak_perf&quot;</span>, <span class="st">&quot;meq_perceived_chron&quot;</span>),</span>
+<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a>         \(x) {</span>
+<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a>           n_levels <span class="ot">&lt;-</span> <span class="fu">levels</span>(x) <span class="sc">|&gt;</span> <span class="fu">length</span>()</span>
+<span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a>           n_levels <span class="sc">-</span> <span class="fu">as.numeric</span>(x)</span>
+<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a>         }, <span class="at">.names =</span> <span class="st">&quot;{.col}_scored&quot;</span>),</span>
+<span id="cb22-200"><a href="#cb22-200" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="fu">c</span>(<span class="st">&quot;meq_alarm&quot;</span>, <span class="st">&quot;meq_free_bedtime&quot;</span>, <span class="st">&quot;meq_mor_exercise&quot;</span>, <span class="st">&quot;meq_eve_tired&quot;</span>, <span class="st">&quot;meq_delayed_sleep&quot;</span>, <span class="st">&quot;meq_phys_work&quot;</span>, <span class="st">&quot;meq_ideal_week&quot;</span>, <span class="st">&quot;meq_besthour&quot;</span>),</span>
+<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a>         \(x) {</span>
+<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a>           n_levels <span class="ot">&lt;-</span> <span class="fu">levels</span>(x) <span class="sc">|&gt;</span> <span class="fu">length</span>()</span>
+<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a>           n_levels <span class="sc">-</span> <span class="fu">as.numeric</span>(x) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a>         }, <span class="at">.names =</span> <span class="st">&quot;{.col}_scored&quot;</span>),</span>
+<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="fu">c</span>(<span class="st">&quot;meq_wakeupease&quot;</span>, <span class="st">&quot;meq_mor_alert&quot;</span>, <span class="st">&quot;meq_mor_hunger&quot;</span>, <span class="st">&quot;meq_mor_feel&quot;</span>, <span class="st">&quot;meq_shift_conseq&quot;</span>, <span class="st">&quot;meq_eve_exercise&quot;</span>),</span>
+<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a>         \(x) {</span>
+<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a>           <span class="fu">as.numeric</span>(x)</span>
 <span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a>         }, <span class="at">.names =</span> <span class="st">&quot;{.col}_scored&quot;</span>),</span>
-<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="fu">c</span>(<span class="st">&quot;meq_alarm&quot;</span>, <span class="st">&quot;meq_free_bedtime&quot;</span>, <span class="st">&quot;meq_mor_exercise&quot;</span>, <span class="st">&quot;meq_eve_tired&quot;</span>, <span class="st">&quot;meq_delayed_sleep&quot;</span>, <span class="st">&quot;meq_phys_work&quot;</span>, <span class="st">&quot;meq_ideal_week&quot;</span>, <span class="st">&quot;meq_besthour&quot;</span>),</span>
-<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a>         \(x) {</span>
-<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a>           n_levels <span class="ot">&lt;-</span> <span class="fu">levels</span>(x) <span class="sc">|&gt;</span> <span class="fu">length</span>()</span>
-<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a>           n_levels <span class="sc">-</span> <span class="fu">as.numeric</span>(x) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a>         }, <span class="at">.names =</span> <span class="st">&quot;{.col}_scored&quot;</span>),</span>
-<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="fu">c</span>(<span class="st">&quot;meq_wakeupease&quot;</span>, <span class="st">&quot;meq_mor_alert&quot;</span>, <span class="st">&quot;meq_mor_hunger&quot;</span>, <span class="st">&quot;meq_mor_feel&quot;</span>, <span class="st">&quot;meq_shift_conseq&quot;</span>, <span class="st">&quot;meq_eve_exercise&quot;</span>),</span>
-<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a>         \(x) {</span>
-<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a>           <span class="fu">as.numeric</span>(x)</span>
-<span id="cb22-217"><a href="#cb22-217" aria-hidden="true" tabindex="-1"></a>         }, <span class="at">.names =</span> <span class="st">&quot;{.col}_scored&quot;</span>),</span>
-<span id="cb22-218"><a href="#cb22-218" aria-hidden="true" tabindex="-1"></a>         <span class="at">meq_peak_perf_scored =</span> meq_peak_perf_scored<span class="sc">*</span><span class="dv">2</span>,</span>
-<span id="cb22-219"><a href="#cb22-219" aria-hidden="true" tabindex="-1"></a>         <span class="at">meq_eleven_tired_scored =</span> <span class="fu">case_match</span>(meq_eleven_tired,</span>
-<span id="cb22-220"><a href="#cb22-220" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;Not at all tired&quot;</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
-<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;A little tired&quot;</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;Fairly tired&quot;</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
-<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;Very tired&quot;</span> <span class="sc">~</span> <span class="dv">5</span>),</span>
-<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a>         <span class="at">meq_perceived_chron_scored =</span> meq_perceived_chron_scored<span class="sc">*</span><span class="dv">2</span></span>
-<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a>         )</span>
-<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a>meq_types <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Definitely morning type&quot;</span>, <span class="st">&quot;Moderately morning type&quot;</span>,</span>
-<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;Intermediate&quot;</span>, <span class="st">&quot;Moderately evening type&quot;</span>,</span>
-<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;Definitely evening type&quot;</span>)</span>
-<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
-<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
-<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">meq =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(<span class="fu">contains</span>(<span class="st">&quot;_scored&quot;</span>))),</span>
-<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a>         <span class="at">meq_type =</span> <span class="fu">case_when</span>(meq <span class="sc">&gt;=</span> <span class="dv">70</span> <span class="sc">~</span> <span class="st">&quot;Definitely morning type&quot;</span>,</span>
-<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a>                              meq <span class="sc">&gt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="st">&quot;Moderately morning type&quot;</span>,</span>
-<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a>                              meq <span class="sc">&gt;=</span> <span class="dv">42</span> <span class="sc">~</span> <span class="st">&quot;Intermediate&quot;</span>,</span>
-<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a>                              meq <span class="sc">&gt;=</span> <span class="dv">31</span> <span class="sc">~</span> <span class="st">&quot;Moderately evening type&quot;</span>,</span>
-<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a>                              meq <span class="sc">&gt;=</span> <span class="dv">16</span> <span class="sc">~</span> <span class="st">&quot;Definitely evening type&quot;</span>,</span>
-<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a>                              <span class="at">.default =</span> <span class="cn">NA</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a>           <span class="fu">factor</span>(<span class="at">levels =</span> meq_types)) <span class="sc">|&gt;</span> </span>
-<span id="cb22-243"><a href="#cb22-243" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;_scored&quot;</span>), <span class="sc">-</span>morning_eveningness_questionnaire_meq_complete)</span>
-<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(data<span class="sc">$</span>meq, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Morningness-Eveningness-Score (calculated)&quot;</span></span>
-<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(data<span class="sc">$</span>meq_type, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;MEQ chronotypes (calculated)&quot;</span></span>
-<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summarize results</span></span>
-<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-254"><a href="#cb22-254" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-255"><a href="#cb22-255" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> <span class="fu">left_join</span>(chronotype, data <span class="sc">|&gt;</span> <span class="fu">select</span>(record_id, meq, meq_type), <span class="at">by =</span> <span class="st">&quot;record_id&quot;</span>)</span>
-<span id="cb22-256"><a href="#cb22-256" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> </span>
-<span id="cb22-257"><a href="#cb22-257" aria-hidden="true" tabindex="-1"></a>  chronotype <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">sjl =</span> sjl <span class="sc">|&gt;</span> <span class="fu">as.duration</span>(),</span>
-<span id="cb22-258"><a href="#cb22-258" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">across</span>(<span class="fu">c</span>(so_w, so_f, msw, msf, msf_sc), \(x) <span class="fu">paste</span>(<span class="st">&quot;2000-01-01&quot;</span>, x) <span class="sc">|&gt;</span> <span class="fu">parse_datetime</span>()))</span>
-<span id="cb22-259"><a href="#cb22-259" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>so_w, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep onset on working days (calculated)&quot;</span></span>
-<span id="cb22-260"><a href="#cb22-260" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>so_f, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep onset on free days (calculated)&quot;</span></span>
-<span id="cb22-261"><a href="#cb22-261" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>sd_w, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep duration on working days (calculated)&quot;</span></span>
-<span id="cb22-262"><a href="#cb22-262" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>sd_f, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep duration on free days (calculated)&quot;</span></span>
-<span id="cb22-263"><a href="#cb22-263" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>msw, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Mid-sleep on working days (calculated)&quot;</span></span>
-<span id="cb22-264"><a href="#cb22-264" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>msf, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Mid-sleep on free days (calculated)&quot;</span></span>
-<span id="cb22-265"><a href="#cb22-265" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>sd_week, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Average weekly sleep duration (calculated)&quot;</span></span>
-<span id="cb22-266"><a href="#cb22-266" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>msf_sc, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Mid-sleep on free days, sleep corrected (calculated)&quot;</span></span>
-<span id="cb22-267"><a href="#cb22-267" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>sjl, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Social jetlag (calculated)&quot;</span></span>
-<span id="cb22-268"><a href="#cb22-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-269"><a href="#cb22-269" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> chronotype <span class="sc">|&gt;</span> <span class="fu">relocate</span>(meq_type, meq, msf_sc, sjl, <span class="at">.after =</span> record_id)</span>
-<span id="cb22-270"><a href="#cb22-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-271"><a href="#cb22-271" aria-hidden="true" tabindex="-1"></a><span class="fu">table_chronotype</span>(chronotype)</span>
-<span id="cb22-272"><a href="#cb22-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-273"><a href="#cb22-273" aria-hidden="true" tabindex="-1"></a><span class="fu">gtsave</span>(<span class="fu">table_chronotype</span>(chronotype) <span class="sc">|&gt;</span> <span class="fu">as_gt</span>(), <span class="at">filename =</span> <span class="st">&quot;../output/tables/table_chronotype.png&quot;</span>, <span class="at">vwidth =</span> <span class="dv">800</span>)</span>
-<span id="cb22-274"><a href="#cb22-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a>         <span class="at">meq_peak_perf_scored =</span> meq_peak_perf_scored<span class="sc">*</span><span class="dv">2</span>,</span>
+<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a>         <span class="at">meq_eleven_tired_scored =</span> <span class="fu">case_match</span>(meq_eleven_tired,</span>
+<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;Not at all tired&quot;</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;A little tired&quot;</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;Fairly tired&quot;</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;Very tired&quot;</span> <span class="sc">~</span> <span class="dv">5</span>),</span>
+<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a>         <span class="at">meq_perceived_chron_scored =</span> meq_perceived_chron_scored<span class="sc">*</span><span class="dv">2</span></span>
+<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb22-217"><a href="#cb22-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-218"><a href="#cb22-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-219"><a href="#cb22-219" aria-hidden="true" tabindex="-1"></a>meq_types <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Definitely morning type&quot;</span>, <span class="st">&quot;Moderately morning type&quot;</span>,</span>
+<span id="cb22-220"><a href="#cb22-220" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;Intermediate&quot;</span>, <span class="st">&quot;Moderately evening type&quot;</span>,</span>
+<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;Definitely evening type&quot;</span>)</span>
+<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> </span>
+<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
+<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">meq =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(<span class="fu">contains</span>(<span class="st">&quot;_scored&quot;</span>))),</span>
+<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a>         <span class="at">meq_type =</span> <span class="fu">case_when</span>(meq <span class="sc">&gt;=</span> <span class="dv">70</span> <span class="sc">~</span> <span class="st">&quot;Definitely morning type&quot;</span>,</span>
+<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a>                              meq <span class="sc">&gt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="st">&quot;Moderately morning type&quot;</span>,</span>
+<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a>                              meq <span class="sc">&gt;=</span> <span class="dv">42</span> <span class="sc">~</span> <span class="st">&quot;Intermediate&quot;</span>,</span>
+<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a>                              meq <span class="sc">&gt;=</span> <span class="dv">31</span> <span class="sc">~</span> <span class="st">&quot;Moderately evening type&quot;</span>,</span>
+<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a>                              meq <span class="sc">&gt;=</span> <span class="dv">16</span> <span class="sc">~</span> <span class="st">&quot;Definitely evening type&quot;</span>,</span>
+<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a>                              <span class="at">.default =</span> <span class="cn">NA</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a>           <span class="fu">factor</span>(<span class="at">levels =</span> meq_types)) <span class="sc">|&gt;</span> </span>
+<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;_scored&quot;</span>), <span class="sc">-</span>morning_eveningness_questionnaire_meq_complete)</span>
+<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(data<span class="sc">$</span>meq, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Morningness-Eveningness-Score (calculated)&quot;</span></span>
+<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(data<span class="sc">$</span>meq_type, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;MEQ chronotypes (calculated)&quot;</span></span>
+<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summarize results</span></span>
+<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> <span class="fu">left_join</span>(chronotype, data <span class="sc">|&gt;</span> <span class="fu">select</span>(record_id, meq, meq_type), <span class="at">by =</span> <span class="st">&quot;record_id&quot;</span>)</span>
+<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> </span>
+<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a>  chronotype <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">sjl =</span> sjl <span class="sc">|&gt;</span> <span class="fu">as.duration</span>(),</span>
+<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">across</span>(<span class="fu">c</span>(so_w, so_f, msw, msf, msf_sc), \(x) <span class="fu">paste</span>(<span class="st">&quot;2000-01-01&quot;</span>, x) <span class="sc">|&gt;</span> <span class="fu">parse_datetime</span>()))</span>
+<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>so_w, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep onset on working days (calculated)&quot;</span></span>
+<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>so_f, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep onset on free days (calculated)&quot;</span></span>
+<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>sd_w, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep duration on working days (calculated)&quot;</span></span>
+<span id="cb22-253"><a href="#cb22-253" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>sd_f, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep duration on free days (calculated)&quot;</span></span>
+<span id="cb22-254"><a href="#cb22-254" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>msw, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Mid-sleep on working days (calculated)&quot;</span></span>
+<span id="cb22-255"><a href="#cb22-255" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>msf, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Mid-sleep on free days (calculated)&quot;</span></span>
+<span id="cb22-256"><a href="#cb22-256" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>sd_week, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Average weekly sleep duration (calculated)&quot;</span></span>
+<span id="cb22-257"><a href="#cb22-257" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>msf_sc, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Mid-sleep on free days, sleep corrected (calculated)&quot;</span></span>
+<span id="cb22-258"><a href="#cb22-258" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>sjl, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Social jetlag (calculated)&quot;</span></span>
+<span id="cb22-259"><a href="#cb22-259" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>outdoor, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Average number of minutes outside (calculated)&quot;</span></span>
+<span id="cb22-260"><a href="#cb22-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-261"><a href="#cb22-261" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> chronotype <span class="sc">|&gt;</span> <span class="fu">relocate</span>(meq_type, meq, msf_sc, sjl, <span class="at">.after =</span> record_id)</span>
+<span id="cb22-262"><a href="#cb22-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-263"><a href="#cb22-263" aria-hidden="true" tabindex="-1"></a><span class="fu">table_chronotype</span>(chronotype)</span>
+<span id="cb22-264"><a href="#cb22-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-265"><a href="#cb22-265" aria-hidden="true" tabindex="-1"></a><span class="fu">gtsave</span>(<span class="fu">table_chronotype</span>(chronotype) <span class="sc">|&gt;</span> <span class="fu">as_gt</span>(), <span class="at">filename =</span> <span class="st">&quot;../output/tables/table_chronotype.png&quot;</span>, <span class="at">vwidth =</span> <span class="dv">800</span>)</span>
+<span id="cb22-266"><a href="#cb22-266" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-267"><a href="#cb22-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-268"><a href="#cb22-268" aria-hidden="true" tabindex="-1"></a><span class="fu">### Export</span></span>
+<span id="cb22-269"><a href="#cb22-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-272"><a href="#cb22-272" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-273"><a href="#cb22-273" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> </span>
+<span id="cb22-274"><a href="#cb22-274" aria-hidden="true" tabindex="-1"></a>  chronotype <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(so_w, so_f, msw, msf, msf_sc), \(x) x <span class="sc">|&gt;</span> hms<span class="sc">::</span><span class="fu">as_hms</span>()))</span>
 <span id="cb22-275"><a href="#cb22-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-276"><a href="#cb22-276" aria-hidden="true" tabindex="-1"></a><span class="fu">### Export</span></span>
-<span id="cb22-277"><a href="#cb22-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-280"><a href="#cb22-280" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-281"><a href="#cb22-281" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> </span>
-<span id="cb22-282"><a href="#cb22-282" aria-hidden="true" tabindex="-1"></a>  chronotype <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(so_w, so_f, msw, msf, msf_sc), \(x) x <span class="sc">|&gt;</span> hms<span class="sc">::</span><span class="fu">as_hms</span>()))</span>
-<span id="cb22-283"><a href="#cb22-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-284"><a href="#cb22-284" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>so_w, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep onset on working days (calculated)&quot;</span></span>
-<span id="cb22-285"><a href="#cb22-285" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>so_f, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep onset on free days (calculated)&quot;</span></span>
-<span id="cb22-286"><a href="#cb22-286" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>msw, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Mid-sleep on working days (calculated)&quot;</span></span>
-<span id="cb22-287"><a href="#cb22-287" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>msf, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Mid-sleep on free days (calculated)&quot;</span></span>
-<span id="cb22-288"><a href="#cb22-288" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>msf_sc, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Mid-sleep on free days, sleep corrected (calculated)&quot;</span></span>
-<span id="cb22-289"><a href="#cb22-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-290"><a href="#cb22-290" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> chronotype <span class="sc">|&gt;</span> <span class="fu">rename</span>(<span class="at">Id =</span> record_id)</span>
-<span id="cb22-291"><a href="#cb22-291" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">&quot;../data/imported/&quot;</span></span>
-<span id="cb22-292"><a href="#cb22-292" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(path)) <span class="fu">dir.create</span>(path, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb22-293"><a href="#cb22-293" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(chronotype, <span class="at">file =</span> <span class="st">&quot;../data/imported/chronotype.RData&quot;</span>)</span>
-<span id="cb22-294"><a href="#cb22-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-295"><a href="#cb22-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-296"><a href="#cb22-296" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-276"><a href="#cb22-276" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>so_w, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep onset on working days (calculated)&quot;</span></span>
+<span id="cb22-277"><a href="#cb22-277" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>so_f, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Sleep onset on free days (calculated)&quot;</span></span>
+<span id="cb22-278"><a href="#cb22-278" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>msw, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Mid-sleep on working days (calculated)&quot;</span></span>
+<span id="cb22-279"><a href="#cb22-279" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>msf, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Mid-sleep on free days (calculated)&quot;</span></span>
+<span id="cb22-280"><a href="#cb22-280" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(chronotype<span class="sc">$</span>msf_sc, <span class="st">&quot;label&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Mid-sleep on free days, sleep corrected (calculated)&quot;</span></span>
+<span id="cb22-281"><a href="#cb22-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-282"><a href="#cb22-282" aria-hidden="true" tabindex="-1"></a>chronotype <span class="ot">&lt;-</span> chronotype <span class="sc">|&gt;</span> <span class="fu">rename</span>(<span class="at">Id =</span> record_id)</span>
+<span id="cb22-283"><a href="#cb22-283" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">&quot;../data/imported/&quot;</span></span>
+<span id="cb22-284"><a href="#cb22-284" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(path)) <span class="fu">dir.create</span>(path, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-285"><a href="#cb22-285" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(chronotype, <span class="at">file =</span> <span class="st">&quot;../data/imported/chronotype.RData&quot;</span>)</span>
+<span id="cb22-286"><a href="#cb22-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-287"><a href="#cb22-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-288"><a href="#cb22-288" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -35,6 +35,7 @@ c("labeling",
   "filefinder",
   "general_parameters",
   "coltype_checker",
+  "mctq_bedsleeptimes",
   "tables"
 ) |> walk(\(x) source(paste0(remote, x, ".R")))
 ```
@@ -91,21 +92,10 @@ data <-
          )
 ```
 
-Furthermore, some participants indicated that they are ready to sleep before going to bed. In the way the questionnaire is analysed, this has to be after they go to bed. Thus we will take the later time in both cases (i.e., if bedtime is later then ready to sleep, we will use this).
+In case participants provide a later bed time than sleep time, bedtimes are used.
 
 ```{r}
-data <-
- data %>%
- pivot_longer(
-    cols = contains(c("ready_sleep_", "bedtime")),
-    names_to = c(".value", "context"),
-    names_pattern = "^(mctq_bedtime|mctq_ready_sleep)_(.*)$"
-  ) %>%
-  mutate(
-    mctq_ready_sleep = pmax(mctq_bedtime, mctq_ready_sleep),
-    mctq_nr_workdays_adj = ifelse(is.na(mctq_nr_workdays), 5, mctq_nr_workdays)
-  ) %>%
-  pivot_wider(names_from = context, values_from = c(mctq_bedtime, mctq_ready_sleep))
+data <- mctq_bedsleeptimes(data)
 ```
 
 > Note: participants that indicated no number of regular work days, but that still provided numbers for work- and free days will be calculated as 5 work days and 2 free days.
@@ -143,10 +133,11 @@ mutate(
     sd_week = sd_week(sd_w, sd_f, nr_workdays_adj),
     msf_sc = msf_sc(msf, sd_w, sd_f, sd_week, alarm_f = rep(FALSE, n())),
     sjl = sjl(msw, msf, abs = FALSE),
-  .before = 2
+  .before = 2,
+    outdoor = ((outdoor_work_calc * nr_workdays_adj) + (outdoor_free_calc* (7-nr_workdays_adj))) / 7
     )
 
-chronotype <- data |> select(record_id:sjl)
+chronotype <- data |> select(record_id:outdoor)
 ```
 > Note: Participants who indicated they use an alarm clock on free days (alarm_free) cannot be used for MCTQ calculation. In this overview, this behavior is overwritten by setting the alarm_f parameter to FALSE. For formal analysis, these must be removed.
 
@@ -245,6 +236,7 @@ attr(chronotype$msf, "label") <- "Mid-sleep on free days (calculated)"
 attr(chronotype$sd_week, "label") <- "Average weekly sleep duration (calculated)"
 attr(chronotype$msf_sc, "label") <- "Mid-sleep on free days, sleep corrected (calculated)"
 attr(chronotype$sjl, "label") <- "Social jetlag (calculated)"
+attr(chronotype$outdoor, "label") <- "Average number of minutes outside (calculated)"
 
 chronotype <- chronotype |> relocate(meq_type, meq, msf_sc, sjl, .after = record_id)
 
