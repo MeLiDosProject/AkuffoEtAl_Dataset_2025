@@ -206,19 +206,33 @@ data <-
          meq_perceived_chron_scored = meq_perceived_chron_scored*2
          )
 
+
+meq_types <- c("Definitely morning type", "Moderately morning type",
+               "Intermediate", "Moderately evening type",
+               "Definitely evening type")
+
 data <- 
   data |> 
   rowwise() |> 
-  mutate(meq = sum(c_across(contains("_scored")))) |> 
+  mutate(meq = sum(c_across(contains("_scored"))),
+         meq_type = case_when(meq >= 70 ~ "Definitely morning type",
+                              meq >= 59 ~ "Moderately morning type",
+                              meq >= 42 ~ "Intermediate",
+                              meq >= 31 ~ "Moderately evening type",
+                              meq >= 16 ~ "Definitely evening type",
+                              .default = NA) |> 
+           factor(levels = meq_types)) |> 
   select(-contains("_scored"), -morning_eveningness_questionnaire_meq_complete)
 
 attr(data$meq, "label") <- "Morningness-Eveningness-Score (calculated)"
+attr(data$meq_type, "label") <- "MEQ chronotypes (calculated)"
+
 ```
 
 ## Summarize results
 
 ```{r}
-chronotype <- left_join(chronotype, data |> select(record_id, meq), by = "record_id")
+chronotype <- left_join(chronotype, data |> select(record_id, meq, meq_type), by = "record_id")
 chronotype <- 
   chronotype |> mutate(sjl = sjl |> as.duration(),
                        across(c(so_w, so_f, msw, msf, msf_sc), \(x) paste("2000-01-01", x) |> parse_datetime()))
@@ -232,7 +246,7 @@ attr(chronotype$sd_week, "label") <- "Average weekly sleep duration (calculated)
 attr(chronotype$msf_sc, "label") <- "Mid-sleep on free days, sleep corrected (calculated)"
 attr(chronotype$sjl, "label") <- "Social jetlag (calculated)"
 
-chronotype <- chronotype |> relocate(meq, msf_sc, sjl, .after = record_id)
+chronotype <- chronotype |> relocate(meq_type, meq, msf_sc, sjl, .after = record_id)
 
 table_chronotype(chronotype)
 
