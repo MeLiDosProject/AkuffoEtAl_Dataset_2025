@@ -227,6 +227,11 @@ chronotype <- left_join(chronotype, data |> select(record_id, meq, meq_type), by
 chronotype <- 
   chronotype |> mutate(sjl = sjl |> as.duration(),
                        across(c(so_w, so_f, msw, msf, msf_sc), \(x) paste("2000-01-01", x) |> parse_datetime()))
+chronotype <- 
+  chronotype |> 
+  mutate(across(where(is.duration), \(x) as.difftime(x, units = "hours")/3600),
+         outdoor = outdoor |> as.difftime(units = "mins"))
+
 attr(chronotype$so_w, "label") <- "Sleep onset on working days (calculated)"
 attr(chronotype$so_f, "label") <- "Sleep onset on free days (calculated)"
 attr(chronotype$sd_w, "label") <- "Sleep duration on working days (calculated)"
