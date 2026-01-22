@@ -1,0 +1,189 @@
+---
+title: "Import exercise diaries"
+author: "Johannes Zauner"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+---
+
+## Preface
+
+This document imports the `exercisediary` and shows descriptive statistics for the site.
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+library(LightLogR)
+library(glue)
+library(readxl)
+library(gt)
+library(gtsummary)
+
+remote <- 
+  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/"
+
+c("labeling",
+  "radio_factors",
+  "time_summaries",
+  "prepare_codebook",
+  "filefinder",
+  "general_parameters",
+  "coltype_checker",
+  "diarydate",
+  "tables"
+) |> walk(\(x) source(paste0(remote, x, ".R")))
+```
+
+## Preparation
+
+```{r}
+#collect codebook
+codebook <- prepare_codebook("MeLiDosEveningDiaries_DataDictionary_2024-10-16.csv", form.filter = "exercise_diary")
+#collect files
+files <- filefinder("exercisediary", continuous = TRUE, individual = TRUE)
+#import files
+data <- 
+  read_csv(files, show_col_types = FALSE) |> 
+  drop_na(redcap_repeat_instance) |> 
+  mutate(across(c(startdate_3, enddate_3),
+                \(x) parse_date_time(x, c("ymdHMS", "mdyHMS"))))
+#check column types
+coltype_check <- coltype_checker(codebook, data)
+coltype_check$details |> gt()
+#collect relevant columns: POSIXct, Date & numeric
+relevant_columns <- 
+  coltype_check$details |> 
+  pull(col)
+#add specific character columns
+relevant_columns <- c("record_id", relevant_columns)
+#select relevant columns
+data <- data |> select(any_of(relevant_columns))
+data <- 
+  data |> 
+  mutate(record_id = sprintf("KNUST_S%03d", record_id))
+#label variables
+data <-
+data |> 
+  add_radio_factors(codebook, 
+                    var_col = `Variable / Field Name`, 
+                    type_col = `Field Type`,
+                    levels_col = `Choices, Calculations, OR Slider Labels`
+                    ) |> 
+  add_col_labels(codebook, var_col = `Variable / Field Name`, label_col = `Field Label`) |> 
+  relocate(record_id, any_of(codebook$`Variable / Field Name`))
+
+attr(data$record_id, "label") <- "Record ID"
+```
+
+## Translate comments into english
+
+Native language is translated into English with AI and later checked by a site researcher.
+
+```{r}
+#| label: translate into english with AI
+
+# library(ellmer)
+# 
+# #Providing the relevant codebook portions
+# codebook_red <-
+# codebook|>
+#   pmap(~ paste(paste(names(codebook), c(...), sep = ": "), collapse = ", ")) |>
+#   list_c() |>
+#   paste0(collapse = "newline: ")
+# 
+# chat <- chat_openai(paste0("Clean the dataset according to the instructions in the output structure. Here is the codebook: "))
+# 
+# #Providing the input
+# data_red <-
+# data|>
+#   select(record_id, type)
+# data_red <-
+#   data_red |>
+#   pmap(~ paste(paste(names(data_red), c(...), sep = ": "), collapse = ", "))
+# 
+# #creating an output structure
+# type_data <- type_object(
+#   record_id = type_string("use the record_id information"),
+#   type = type_string("copy the type information here", required = FALSE),
+#   type_english = type_string("translation of the type into english", required = FALSE)
+# )
+# 
+# data_llm <-
+# parallel_chat_structured(
+#   chat,
+#   data_red,
+#   type = type_data
+# )
+# 
+# #Ensure that no NA is caught as string
+# data_llm <-
+#   data_llm |>
+#   mutate(type = case_when(type == "NA" ~ NA, .default = type),
+#          type_english = case_when(type_english == "NA" ~ NA, .default = type_english))
+# 
+# #check that input and output are identical
+# stopifnot("Input must by identical to output check" =
+#             all(data_llm$type == data$type, na.rm = TRUE))
+# stopifnot("Input must by identical to output check" =
+#             all(data_llm$record_id == data$record_id, na.rm = TRUE))
+# 
+# data_llm <-
+#   data_llm |>
+#   distinct(record_id, type, .keep_all = TRUE)
+# 
+# path <- "../data/AI_translations/"
+# if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+# write_csv(data_llm, "../data/AI_translations/exercisediary.csv")
+```
+
+```{r}
+data_llm <- 
+  read_csv("../data/AI_translations/exercisediary.csv")
+#add output to original
+data <- data |> left_join(data_llm, by = c("record_id", "type"))
+```
+
+## Set relevant dates
+
+```{r}
+#if data was collected between 14:00 and 24:00, it is assigned to the same day.
+#if collected between 00:00 and 13:59, it is assigned to the previous day.
+
+data <- data |> diarydate(startdate_3)
+attr(data$Date, "label") <- "Date"
+```
+
+## Adjust minute column names
+
+```{r}
+data <-
+  data |> 
+  mutate(across(c(commute, sedentary), \(x) as.difftime(x, unit = "mins")))
+
+data <-
+data |> 
+  add_col_labels(codebook, var_col = `Variable / Field Name`, label_col = `Field Label`)
+
+```
+
+
+## Summarize results
+
+```{r}
+table_exercisediary(data)
+
+gtsave(table_exercisediary(data) |> as_gt(), filename = "../output/tables/table_exercisediary.png", vwidth = 800)
+```
+
+### Export
+
+```{r}
+data <- data |> rename(Id = record_id)
+exercisediary <- data
+path <- "../data/imported/continuous/"
+if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+save(exercisediary, file = "../data/imported/continuous/exercisediary.RData")
+```

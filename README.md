@@ -98,6 +98,15 @@ alt="Summary table of the chronotype questionnaires" />
 questionnaires</figcaption>
 </figure>
 
+## Exercise diary
+
+<figure>
+<img src="output/tables/table_exercisediary.png"
+alt="Summary table of the evening exercise diary" />
+<figcaption aria-hidden="true">Summary table of the evening exercise
+diary</figcaption>
+</figure>
+
 ## Summary of the dataset
 
 | Dataset name | KNUST |
