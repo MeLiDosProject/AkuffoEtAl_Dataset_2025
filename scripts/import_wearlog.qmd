@@ -1,0 +1,271 @@
+---
+title: "Import wearlog"
+author: "Johannes Zauner"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+---
+
+## Preface
+
+This document imports the `wear log` and shows descriptive statistics for the site.
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+library(LightLogR)
+library(glue)
+library(readxl)
+library(gt)
+library(gtsummary)
+
+site <- "KNUST"
+
+remote <- 
+  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/"
+
+c("labeling",
+  "radio_factors",
+  "time_summaries",
+  "prepare_codebook",
+  "filefinder",
+  "general_parameters",
+  "coltype_checker",
+  "diarydate",
+  "wearlog_plausibility",
+  "tables"
+) |> walk(\(x) source(paste0(remote, x, ".R")))
+```
+
+## Preparation
+
+```{r}
+#collect codebook
+codebook <- prepare_codebook("MeLiDosWearLog_DataDictionary_2024-10-16.csv")
+#collect files
+files <- filefinder("wearlog", continuous = TRUE, individual = TRUE)
+#import files
+data <- read_csv(files, show_col_types = FALSE) |> drop_na(redcap_repeat_instance)
+#check column types
+coltype_check <- coltype_checker(codebook, data)
+coltype_check$details |> gt()
+#collect relevant columns: POSIXct, Date & numeric
+relevant_columns <- 
+  coltype_check$details |> 
+  pull(col)
+#add specific character columns
+relevant_columns <- c("record_id", relevant_columns)
+#select relevant columns
+data <- data |> select(any_of(relevant_columns))
+#label variables
+data <-
+data |> 
+  add_radio_factors(codebook, 
+                    var_col = `Variable / Field Name`, 
+                    type_col = `Field Type`,
+                    levels_col = `Choices, Calculations, OR Slider Labels`
+                    ) |> 
+  add_col_labels(codebook, var_col = `Variable / Field Name`, label_col = `Field Label`) |> 
+  relocate(record_id, any_of(codebook$`Variable / Field Name`))|> 
+  select(-c(uuid:serializedresult))
+
+#rename so that past is at the end
+data <-
+  data |> 
+  rename_with(\(x) ifelse(str_detect(x, "_past"), 
+                          str_remove(x, "_past") |> str_c("_past"),
+                          x)) |> 
+  rename(wearlog_bed_past = wearlog_sleep_past,
+         wearlog_event_past = wearlog_past,
+         wearlog_place_past = wearlog_location_past)
+
+#bring past and present events together
+past_columns <- 
+  data |> select(contains("_past")) |>  names() |> str_remove("_past")
+
+data <-
+data |> 
+  pivot_longer(any_of(c(past_columns, paste0(past_columns, "_past"))),
+               names_to = c(".value", "is_past"),
+               names_pattern = "^(.*?)(?:(_past))?$",
+               values_drop_na = FALSE
+               ) |> 
+  mutate(is_past = is_past != "") |>
+  pivot_longer(c(wearlog_on, wearlog_off, wearlog_bed, 
+                 radius_time, radius_back),
+               names_to = "event",
+               values_to = "start"
+               ) |> 
+  drop_na(start) |> 
+  relocate(.after = record_id,
+           start, event, wearlog_event, reason, is_past, wearlog_type, radius) |> 
+  mutate(event = case_match(event,
+                            "radius_time" ~ "site_leave",
+                            "radius_back" ~ "site_return",
+                            "wearlog_on" ~ "on",
+                            "wearlog_off" ~ "off",
+                            "wearlog_bed" ~ "sleep")) |> 
+  mutate(across(where(is.POSIXct), \(x) force_tz(x, tzs[[site]])))
+```
+
+## Plausibility checking
+
+Here, we perform some basic plausibility checking for the wearlog:
+
+1. Sorting by `record_id` and `Datetime`
+
+2. Set to plausible if:
+
+- site `leave` and `return` are consecutive events?
+- wearlog `off` event is followed by `on` within 16 hours?
+- wearlog `off` event is followed by `sleep` within 4 hours?
+- wearlog `sleep` event is followed by `on` within 1 day?
+- wearlog `sleep` event is followed by `off` within 1 day?
+- wearlog `on` event is preceded by either `off` or `sleep` within 12 hours?
+
+```{r}
+data <- data |> wearlog_plausibility()
+```
+
+## Durations for different conditions
+
+### Site
+
+```{r}
+data_site <- 
+data |> 
+  filter(event %in% c("site_leave", "site_return"), is.plausible) |> 
+  mutate(.by = record_id,
+         duration = difftime(lead(start), start, unit = "mins"),
+         end = start + duration,
+         .after = event) |> 
+  filter(event == "site_leave", duration != 0)
+```
+
+### Wear
+
+```{r}
+data_wear <-
+data |> 
+  filter(event %in% c("on", "off", "sleep"), is.plausible | event == "on") |> 
+  mutate(.by = record_id,
+         duration = difftime(lead(start), start, unit = "mins"),
+         end = start + duration,
+         .after = event) |> 
+  filter(event %in% c("off", "sleep"), duration != 0)
+```
+
+### Join
+
+```{r}
+data <-
+  rbind(data_wear, data_site) |> 
+  arrange(record_id, start) |> 
+  select(-c(is.plausible, is_past)) |> 
+  rename(state = event)
+```
+
+## Translate comments into english
+
+Native language is translated into English with AI and later checked by a site researcher.
+
+```{r}
+#| label: translate into english with AI
+
+# library(ellmer)
+# 
+# #Providing the relevant codebook portions
+# codebook_red <-
+# codebook|>
+#   pmap(~ paste(paste(names(codebook), c(...), sep = ": "), collapse = ", ")) |>
+#   list_c() |>
+#   paste0(collapse = "newline: ")
+# 
+# chat <- chat_openai(paste0("Clean the dataset according to the instructions in the output structure. Here is the codebook: "))
+# 
+# #Providing the input
+# data_red <-
+# data|>
+#   select(record_id, wearlog_place)
+# data_red <-
+#   data_red |>
+#   pmap(~ paste(paste(names(data_red), c(...), sep = ": "), collapse = ", "))
+# 
+# #creating an output structure
+# type_data <- type_object(
+#   record_id = type_string("use the record_id information"),
+#   wearlog_place = type_string("copy the original information here", required = FALSE),
+#   wearlog_place_english = type_string("translation of the original information into english", required = FALSE)
+# )
+# 
+# data_llm <-
+# parallel_chat_structured(
+#   chat,
+#   data_red,
+#   type = type_data
+# )
+# 
+# #Ensure that no NA is caught as string
+# data_llm <-
+#   data_llm |>
+#   mutate(wearlog_place = case_when(wearlog_place == "NA" ~ NA, .default = wearlog_place),
+#          wearlog_place_english = case_when(wearlog_place_english == "NA" ~ NA, .default = wearlog_place_english))
+# 
+# #check that input and output are identical
+# stopifnot("Input must by identical to output check" =
+#             all(data_llm$wearlog_place == data$wearlog_place, na.rm = TRUE))
+# stopifnot("Input must by identical to output check" =
+#             all(data_llm$record_id == data$record_id, na.rm = TRUE))
+# 
+# data_llm <-
+#   data_llm |>
+#   distinct(record_id, wearlog_place, .keep_all = TRUE)
+# 
+# path <- "../data/AI_translations/"
+# if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+# write_csv(data_llm, "../data/AI_translations/wearlog.csv")
+
+```
+
+```{r}
+data_llm <- 
+  read_csv("../data/AI_translations/wearlog.csv")
+#add output to original
+data <- data |> left_join(data_llm, by = c("record_id", "wearlog_place"))
+```
+
+## Labels
+
+```{r}
+data <-
+data |> 
+  add_col_labels(codebook, var_col = `Variable / Field Name`, label_col = `Field Label`)
+attr(data$start, "label") <- "Start datetime of the state"
+attr(data$state, "label") <- "Wearlog state"
+attr(data$duration, "label") <- "Duration of the state"
+attr(data$end, "label") <- "End datetime of the state"
+attr(data$wearlog_event, "label") <- "Description of the starting event"
+attr(data$wearlog_type, "label") <- "Logging a current or past event"
+attr(data$wearlog_place_english, "label") <- "Placement of the light glasses"
+```
+
+## Summarize results
+
+```{r}
+table_wearlog(data)
+
+gtsave(table_wearlog(data) |> as_gt(), filename = "../output/tables/table_wearlog.png", vwidth = 800)
+```
+
+### Export
+
+```{r}
+data <- data |> rename(Id = record_id)
+wearlog <- data
+path <- "../data/imported/continuous/"
+if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+save(wearlog, file = "../data/imported/continuous/wearlog.RData")
+```

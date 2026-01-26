@@ -98,6 +98,15 @@ alt="Summary table of the chronotype questionnaires" />
 questionnaires</figcaption>
 </figure>
 
+## Wear log
+
+<figure>
+<img src="output/tables/table_wearlog.png"
+alt="Summary table of the wear log" />
+<figcaption aria-hidden="true">Summary table of the wear
+log</figcaption>
+</figure>
+
 ## Exercise diary
 
 <figure>
