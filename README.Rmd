@@ -64,6 +64,14 @@ APA reference:
 
 ![Summary table of the evening exercise diary](output/tables/table_exercisediary.png)
 
+## Light exposure behaviour
+
+![Summary table of the LEBA questionnaire](output/tables/table_leba.png)
+
+## Lifestyle and health
+
+![Summary table of the lifestyle and health questionnaire](output/tables/table_health.png)
+
 ## Summary of the dataset
 | Dataset name | KNUST |
 | --- | --- |

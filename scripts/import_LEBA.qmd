@@ -1,0 +1,143 @@
+---
+title: "Import LEBA"
+author: "Johannes Zauner"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Preface
+
+This document imports the `LEBA` and shows descriptive statistics for the site.
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+library(LightLogR)
+library(glue)
+library(readxl)
+library(gt)
+library(gtsummary)
+
+remote <- 
+  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/"
+
+c("labeling",
+  "radio_factors",
+  "add_label",
+  "prepare_codebook",
+  "filefinder",
+  "general_parameters",
+  "coltype_checker",
+  "tables"
+) |> walk(\(x) source(paste0(remote, x, ".R")))
+```
+
+## Preparation
+
+```{r}
+#collect codebook
+codebook <- 
+  prepare_codebook("MeLiDosDischargeQuestionnaire_DataDictionary_2024-10-16.csv",
+                   "your_light_behaviour_leba")
+#collect files
+files <- filefinder("discharge",individual = FALSE)
+lookup <- read_csv(files[1], show_col_types = FALSE)
+#import files
+data <- 
+  read_csv(files[2], show_col_types = FALSE) |> 
+    left_join(lookup, by = "record_id") |> 
+  select(-record_id) |> 
+  rename(record_id = ID)
+  # drop_na(redcap_repeat_instance)
+#check column types
+coltype_check <- coltype_checker(codebook, data)
+coltype_check$details |> gt()
+#collect relevant columns
+relevant_columns <- 
+  coltype_check$details |> 
+  pull(col)
+#select relevant columns
+data <- data |> select(any_of(relevant_columns))
+#label
+data <-
+data |> 
+  add_radio_factors(codebook, 
+                    var_col = `Variable / Field Name`, 
+                    type_col = `Field Type`,
+                    levels_col = `Choices, Calculations, OR Slider Labels`
+                    ) |> 
+  add_col_labels(codebook, var_col = `Variable / Field Name`, label_col = `Field Label`)
+
+#reorder variables
+data <- 
+  data |> 
+  relocate(any_of(codebook$`Variable / Field Name`))
+```
+
+## Calculate LEBA factors
+
+```{r}
+#Factor calculation
+factors_leba <- list(
+  F2 = paste0("leba_f2_0", 4:9),
+  F3 = paste0("leba_f3_1", 0:4),
+  F4 = paste0("leba_f4_1", 5:8),
+  F5 = paste0("leba_f5_", 19:23)
+)
+Fs <- paste0("F", 2:5)
+
+data <-
+data |> 
+  rowwise() |> 
+  mutate(leba_f2_04 = fct_rev(leba_f2_04), 
+         leba_f2 = rowSums(across(contains(factors_leba$F2), as.numeric)),
+         leba_f3 = rowSums(across(contains(factors_leba$F3), as.numeric)),
+         leba_f4 = rowSums(across(contains(factors_leba$F4), as.numeric)),
+         leba_f5 = rowSums(across(contains(factors_leba$F5), as.numeric)),
+         ) |> 
+  mutate(leba_f2_04 = fct_rev(leba_f2_04)) |> 
+  relocate(leba_f2:leba_f5, .after = record_id)
+
+leba_factors <- c(
+  leba_f2 = "F2: Spending time outdoors",
+  leba_f3 = "F3: Using phones and smartwatches in bed before sleep",
+  leba_f4 = "F4: Controlling and using ambient light before bedtime",
+  leba_f5 = "F5: Using light in the morning and during daytime"
+)
+
+
+#label variables
+data <- 
+  data |> 
+  add_labels(leba_factors)
+
+data <-
+data |> 
+  add_col_labels(codebook, var_col = `Variable / Field Name`, label_col = `Field Label`)
+
+```
+
+
+## Summarize results
+
+```{r}
+table_leba(data)
+
+gtsave(table_leba(data), filename = "../output/tables/table_leba.png", vwidth = 800)
+```
+
+### Export
+
+```{r}
+data <- data |> rename(Id = record_id)
+leba <- data
+path <- "../data/imported/"
+if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+save(leba, file = "../data/imported/leba.RData")
+```

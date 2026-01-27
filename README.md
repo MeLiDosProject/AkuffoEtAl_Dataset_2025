@@ -116,6 +116,24 @@ alt="Summary table of the evening exercise diary" />
 diary</figcaption>
 </figure>
 
+## Light exposure behaviour
+
+<figure>
+<img src="output/tables/table_leba.png"
+alt="Summary table of the LEBA questionnaire" />
+<figcaption aria-hidden="true">Summary table of the LEBA
+questionnaire</figcaption>
+</figure>
+
+## Lifestyle and health
+
+<figure>
+<img src="output/tables/table_health.png"
+alt="Summary table of the lifestyle and health questionnaire" />
+<figcaption aria-hidden="true">Summary table of the lifestyle and health
+questionnaire</figcaption>
+</figure>
+
 ## Summary of the dataset
 
 | Dataset name | KNUST |

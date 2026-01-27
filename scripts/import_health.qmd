@@ -1,5 +1,5 @@
 ---
-title: "Import demographics"
+title: "Import lifestyle and health"
 author: "Johannes Zauner"
 format: 
   html:
@@ -11,7 +11,7 @@ editor_options:
 
 ## Preface
 
-This document imports the `demographics` and shows descriptive statistics for the site.
+This document imports the `health` questionnaire and shows descriptive statistics for the site.
 
 ## Setup
 
@@ -28,7 +28,8 @@ remote <-
   "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/"
 
 c("labeling",
-  "radio_factors",
+  "radio_factors",  
+  "add_label",
   "prepare_codebook",
   "filefinder",
   "general_parameters",
@@ -43,20 +44,22 @@ c("labeling",
 #collect codebook
 codebook <- 
   prepare_codebook("MeLiDosScreeningQuestionnaire_DataDictionary_2024-10-16.csv",
-                   c("online_screening_consent_form", "your_demographics")) |> 
-  filter(!`Variable / Field Name` %in% c("email", "email_2"))
+                   c("online_screening_consent_form", "your_lifestyle_and_health")) |> 
+  filter(!`Variable / Field Name` %in% c("consent", "explanation"))
 #collect files
-files <- filefinder("demographics",individual = FALSE)
-#import files
 files <- filefinder("screening",individual = FALSE)
 lookup <- read_csv(files[1], show_col_types = FALSE)
+#import files
 data <- 
   read_csv(files[2], show_col_types = FALSE) |> 
   drop_na(redcap_repeat_instance) |> 
-  mutate(native_language = as.logical(native_language)) |> 
+  mutate(across(medication:disorder, as.logical),
+         medication_type = as.character(medication_type)) |> 
   left_join(lookup, by = "record_id") |> 
   select(-record_id) |> 
-  rename(record_id = ID)
+  rename(record_id = ID) |> 
+  filter(redcap_repeat_instrument == "your_lifestyle_and_health")
+
 #check column types
 coltype_check <- coltype_checker(codebook, data)
 coltype_check$details |> gt()
@@ -78,27 +81,23 @@ data |>
 #reorder variables
 data <- 
   data |> 
-  dplyr::relocate(native_language, .before = language_specification) |> 
-  relocate(record_id) |> 
-  select(-consent)
+  relocate(any_of(codebook$`Variable / Field Name`))
 ```
 
 ## Summarize results
 
 ```{r}
-table_demographics(data)
+table_health(data)
 
-gtsave(table_demographics(data) |> as_gt(), filename = "../output/tables/table_demographics.png", vwidth = 800)
+gtsave(table_health(data) |> as_gt(), filename = "../output/tables/table_health.png", vwidth = 800)
 ```
 
 ### Export
 
 ```{r}
 data <- data |> rename(Id = record_id)
-demographics <- data
+health <- data
 path <- "../data/imported/"
 if(!dir.exists(path)) dir.create(path, recursive = TRUE)
-save(demographics, file = "../data/imported/demographics.RData")
-
-
+save(health, file = "../data/imported/health.RData")
 ```
