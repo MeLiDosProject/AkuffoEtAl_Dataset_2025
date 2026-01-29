@@ -64,6 +64,10 @@ APA reference:
 
 ![Summary table of the evening exercise diary](output/tables/table_exercisediary.png)
 
+## Current conditions
+
+![Summary table of the current conditions EMA](output/tables/table_currentconditions.png)
+
 ## Light exposure behaviour
 
 ![Summary table of the LEBA questionnaire](output/tables/table_leba.png)

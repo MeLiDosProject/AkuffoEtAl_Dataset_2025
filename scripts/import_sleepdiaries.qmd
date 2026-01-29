@@ -60,6 +60,19 @@ relevant_columns <- c("record_id", relevant_columns, "comments")
 data <- data |> select(any_of(relevant_columns))
 data <- 
   data |> mutate(record_id = sprintf("KNUST_S%03d", record_id))
+```
+
+### Set sleep time zone
+```{r}
+site = "KNUST"
+data <- 
+  data |> 
+  mutate(across(where(is.POSIXct), 
+                \(x) force_tz(x, tzs[[site]]))
+         )
+```
+
+```{r}
 #label variables
 data <-
 data |> 
@@ -93,14 +106,76 @@ table_sleepdiary(data)
 gtsave(table_sleepdiary(data) |> as_gt(), filename = "../output/tables/table_sleepdiary.png", vwidth = 800)
 ```
 
-### Set sleep time zone
+### Translate comments
+
+Native language is translated into English with AI and later checked by a site researcher.
+
 ```{r}
-site = "KNUST"
-data <- 
-  data |> 
-  mutate(across(where(is.POSIXct), 
-                \(x) force_tz(x, tzs[[site]]))
-         )
+#| label: translate into english with AI
+
+# library(ellmer)
+# 
+# #Providing the relevant codebook portions
+# codebook_red <-
+# codebook|>
+#   pmap(~ paste(paste(names(codebook), c(...), sep = ": "), collapse = ", ")) |>
+#   list_c() |>
+#   paste0(collapse = "newline: ")
+# 
+# chat <- chat_openai(paste0("Copy content and make translations according to specific instructions. They represent answers to questionnaires in a scientific field study."))
+# 
+# #Providing the input
+# data_red <-
+# data|>
+#   select(record_id, comments)
+# data_red <-
+#   data_red |>
+#   pmap(~ paste(paste(names(data_red), c(...), sep = ": "), collapse = ", "))
+# 
+# #creating an output structure
+# type_data <- type_object(
+#   record_id = type_string("use the record_id information"),
+#   comments = type_string("copy the original information here", required = FALSE),
+#   comments_english = type_string("translation of the original information into english", required = FALSE)
+# )
+# 
+# data_llm <-
+# parallel_chat_structured(
+#   chat,
+#   data_red,
+#   type = type_data,
+#   rpm = 500,
+#   max_active = 100
+# )
+# 
+# #Ensure that no NA is caught as string
+# data_llm <-
+#   data_llm |>
+#   mutate(comments = case_when(comments == "NA" ~ NA, .default = comments),
+#          comments_english = case_when(comments_english == "NA" ~ NA, .default = comments_english))
+# 
+# #check that input and output are identical
+# stopifnot("Input must by identical to output check" =
+#             all(data_llm$comments == data$comments, na.rm = TRUE))
+# stopifnot("Input must by identical to output check" =
+#             all(data_llm$record_id == data$record_id, na.rm = TRUE))
+# 
+# data_llm <-
+#   data_llm |>
+#   distinct(record_id, comments, .keep_all = TRUE)
+# 
+# path <- "../data/AI_translations/"
+# if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+# write_csv(data_llm, "../data/AI_translations/sleepdiary.csv")
+
+```
+
+```{r}
+data_llm <- 
+  read_csv("../data/AI_translations/sleepdiary.csv")
+#add output to original
+data <- data |> left_join(data_llm, by = c("record_id", "comments"))
+attr(data$comments_english, "label") <- "Comments (English translation)"
 ```
 
 

@@ -1,0 +1,101 @@
+---
+title: "Import current conditions"
+author: "Johannes Zauner"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+---
+
+## Preface
+
+This document imports the `current conditions` and shows descriptive statistics for the site.
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+library(LightLogR)
+library(glue)
+library(readxl)
+library(gt)
+library(gtsummary)
+
+site <- "KNUST"
+
+remote <- 
+  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/"
+
+c("labeling",
+  "radio_factors",
+  "time_summaries",
+  "prepare_codebook",
+  "filefinder",
+  "general_parameters",
+  "coltype_checker",
+  "diarydate",
+  "tables"
+) |> walk(\(x) source(paste0(remote, x, ".R")))
+```
+
+## Preparation
+
+```{r}
+#collect codebook
+codebook <- prepare_codebook("MeLiDosCurrentConditions4xday_DataDictionary_2024-10-16.csv")
+#collect files
+files <- filefinder("currentconditions", continuous = TRUE, individual = TRUE)
+#import files
+data <- read_csv(files, show_col_types = FALSE) |> drop_na(redcap_repeat_instance)
+#check column types
+coltype_check <- coltype_checker(codebook, data)
+coltype_check$details |> gt()
+#collect relevant columns: POSIXct, Date & numeric
+relevant_columns <- 
+  coltype_check$details |> 
+  pull(col)
+relevant_columns <- 
+  c("record_id", relevant_columns)
+#select relevant columns
+data <- 
+  data |> 
+  select(any_of(relevant_columns)) |> 
+  select(-c(scheduledate_4:serializedresult_4, 
+            ema_light, currentmood, kss_instr, status_4)) |> 
+  mutate(check_mixedlight = as.logical(check_mixedlight))
+#label variables
+data <-
+data |> 
+  add_radio_factors(codebook, 
+                    var_col = `Variable / Field Name`, 
+                    type_col = `Field Type`,
+                    levels_col = `Choices, Calculations, OR Slider Labels`
+                    ) |> 
+  add_col_labels(codebook, var_col = `Variable / Field Name`, label_col = `Field Label`) |> 
+  relocate(record_id, any_of(codebook$`Variable / Field Name`)) |> 
+  mutate(across(where(is.POSIXct), \(x) force_tz(x, tzs[[site]]))) |> 
+  rename(Datetime = startdate_4, 
+         currentlight = currentight) |> 
+  relocate(Datetime, .after = record_id)
+attr(data$Datetime, "label") <- "EMA time (start)"
+attr(data$enddate_4, "label") <- "EMA time (finish)"
+```
+
+## Summarize results
+
+```{r}
+table_currentconditions(data)
+
+gtsave(table_currentconditions(data) |> as_gt(), filename = "../output/tables/table_currentconditions.png", vwidth = 800)
+```
+
+### Export
+
+```{r}
+data <- data |> rename(Id = record_id)
+currentconditions <- data
+path <- "../data/imported/continuous/"
+if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+save(currentconditions, file = "../data/imported/continuous/currentconditions.RData")
+```

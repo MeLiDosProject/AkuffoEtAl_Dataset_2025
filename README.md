@@ -116,6 +116,15 @@ alt="Summary table of the evening exercise diary" />
 diary</figcaption>
 </figure>
 
+## Current conditions
+
+<figure>
+<img src="output/tables/table_currentconditions.png"
+alt="Summary table of the current conditions EMA" />
+<figcaption aria-hidden="true">Summary table of the current conditions
+EMA</figcaption>
+</figure>
+
 ## Light exposure behaviour
 
 <figure>
