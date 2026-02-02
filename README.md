@@ -134,6 +134,33 @@ alt="Summary table of the LEBA questionnaire" />
 questionnaire</figcaption>
 </figure>
 
+## Light sensitvity (VLSQ-8)
+
+<figure>
+<img src="output/tables/table_vlsq8.png"
+alt="Summary table of the light sensitvity (VLSQ-8) questionnaire" />
+<figcaption aria-hidden="true">Summary table of the light sensitvity
+(VLSQ-8) questionnaire</figcaption>
+</figure>
+
+## Sleep environment
+
+<figure>
+<img src="output/tables/table_ase.png"
+alt="Summary table of the Sleep environment (ASE) questionnaire" />
+<figcaption aria-hidden="true">Summary table of the Sleep environment
+(ASE) questionnaire</figcaption>
+</figure>
+
+## Light glasses acceptability
+
+<figure>
+<img src="output/tables/table_acceptability.png"
+alt="Summary table of the Light glasses acceptability questionnaire" />
+<figcaption aria-hidden="true">Summary table of the Light glasses
+acceptability questionnaire</figcaption>
+</figure>
+
 ## Lifestyle and health
 
 <figure>
