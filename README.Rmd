@@ -72,6 +72,18 @@ APA reference:
 
 ![Summary table of the LEBA questionnaire](output/tables/table_leba.png)
 
+## Light sensitvity (VLSQ-8)
+
+![Summary table of the light sensitvity (VLSQ-8) questionnaire](output/tables/table_vlsq8.png)
+
+## Sleep environment
+
+![Summary table of the Sleep environment (ASE) questionnaire](output/tables/table_ase.png)
+
+## Light glasses acceptability 
+
+![Summary table of the Light glasses acceptability  questionnaire](output/tables/table_acceptability.png)
+
 ## Lifestyle and health
 
 ![Summary table of the lifestyle and health questionnaire](output/tables/table_health.png)

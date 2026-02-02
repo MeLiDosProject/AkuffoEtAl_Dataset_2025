@@ -1,0 +1,168 @@
+---
+title: "Import light glasses evaluation"
+author: "Johannes Zauner"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Preface
+
+This document imports the `evaluation` (of using light glasses) and shows descriptive statistics for the site.
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+library(LightLogR)
+library(glue)
+library(readxl)
+library(gt)
+library(gtsummary)
+
+remote <- 
+  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/"
+
+c("labeling",
+  "radio_factors",
+  "add_label",
+  "prepare_codebook",
+  "filefinder",
+  "general_parameters",
+  "coltype_checker",
+  "tables"
+) |> walk(\(x) source(paste0(remote, x, ".R")))
+```
+
+## Preparation
+
+```{r}
+#collect codebook
+codebook <- 
+  prepare_codebook("MeLiDosDischargeQuestionnaire_DataDictionary_2024-10-16.csv",
+                   "light_glasses_evaluation")
+#collect files
+files <- filefinder("discharge",individual = FALSE)
+lookup <- read_csv(files[1], show_col_types = FALSE)
+
+#import files
+data <- 
+    read_csv(files[2], show_col_types = FALSE) |> 
+    left_join(lookup, by = "record_id") |> 
+    select(-record_id) |> 
+  rename(record_id = ID) |> 
+  mutate(glasses_use = as.logical(glasses_use))
+
+if(!"improvements_v3" %in% names(data)){
+  data$improvements_v3 <- NA_character_
+}
+  # drop_na(redcap_repeat_instance)
+#check column types
+coltype_check <- coltype_checker(codebook, data)
+coltype_check$details |> gt()
+#collect relevant columns
+relevant_columns <- 
+  coltype_check$details |> 
+  pull(col) |> 
+  c("record_id")
+#select relevant columns
+data <- data |> select(any_of(relevant_columns))
+#label
+data <-
+data |> 
+  add_radio_factors(codebook, 
+                    var_col = `Variable / Field Name`, 
+                    type_col = `Field Type`,
+                    levels_col = `Choices, Calculations, OR Slider Labels`
+                    ) |> 
+  add_col_labels(codebook, var_col = `Variable / Field Name`, label_col = `Field Label`)
+
+#reorder variables
+data <- 
+  data |> 
+  relocate(record_id, any_of(codebook$`Variable / Field Name`))
+data$record_id <- add_label(data$record_id, "Record ID")
+```
+
+### Translate comments
+
+Native language is translated into English with AI and later checked by a site researcher.
+
+```{r}
+#| label: translate into english with AI
+
+# library(ellmer)
+# 
+# chat <- chat_openai(paste0("Copy content and make translations according to specific instructions. They represent answers to questionnaires in a scientific field study."))
+# 
+# #Providing the input
+# data_red <-
+#   data |>
+#   pmap(~ paste(paste(names(data), c(...), sep = ": "), collapse = ", "))
+# 
+# #creating an output structure
+# type_data <- type_object(
+#   record_id = type_string("Copy the original 'record_id' column here"),
+#   general_feeling_english = type_string("Translate (or if in english already, copy) the 'general_feeling' column here. Question: How did you feel about wearing the light glasses throughout the experiment?", required = FALSE),
+#   challenges_english = type_string("Translate (or if in english already, copy) the 'challenges' column here. Question: Can you describe any challenges or discomfort you experienced while wearing the light glasses? How did you cope with them?", required = FALSE),
+#   act_impact_english = type_string("Translate (or if in english already, copy) the 'act_impact' column here. Question: In what situations did you notice the light glasses having the most impact on your daily activities or behavior?", required = FALSE),
+#   beh_adapt_english = type_string("Translate (or if in english already, copy) the 'beh_adapt' column here. Question: How did you adapt your behaviour, if at all, because of the light glasses? Please provide some examples.", required = FALSE),
+#   social_english = type_string("Translate (or if in english already, copy) the 'social' column here. Question: Were there any social situations or interactions where the presence of the light glasses caused curiosity, feedback and/or other reactions?", required = FALSE),
+#   improvements_english = type_string("Translate (or if in english already, copy) the 'social' column here. Question: Can you share any suggestions or improvements for the design or functionality of the light glasses (comprising the sensor and the glasses) for future experiments?", required = FALSE),
+#   improvements_v3_english = type_string("Translate (or if in english already, copy) the 'social' column here. Question: At the end of the measurement week, do you think that completing the questionnaires has changed your behavior with regard to light exposure, sleep, or other factors? If so, in what way?", required = FALSE)
+# )
+# 
+# data_llm <-
+# parallel_chat_structured(
+#   chat,
+#   data_red,
+#   type = type_data,
+#   rpm = 500,
+#   max_active = 100
+# )
+# 
+# #Ensure that no NA is caught as string
+# data_llm <-
+#   data_llm |>
+#   mutate(across(everything(), \(x) case_when(x == "NA" ~ NA, .default = x)))
+# 
+# #check that input and output are identical
+# stopifnot("Input must by identical to output check" =
+#             all(data_llm$record_id == data$record_id, na.rm = TRUE))
+# 
+# data_llm <-
+#   data_llm |> left_join(data, by = "record_id")
+# 
+# path <- "../data/AI_translations/"
+# if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+# write_csv(data_llm, "../data/AI_translations/evaluation.csv")
+
+```
+
+```{r}
+data_llm <- 
+  read_csv("../data/AI_translations/evaluation.csv") |> 
+  select(record_id, ends_with("english"))
+#add output to original
+data <- data |> left_join(data_llm, by = c("record_id"))
+data <-
+  data |> 
+  mutate(across(ends_with("english"), \(x) add_label(x, "English translation")
+                ))
+```
+
+
+
+### Export
+
+```{r}
+data <- data |> rename(Id = record_id)
+evaluation <- data
+path <- "../data/imported/"
+if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+save(evaluation, file = "../data/imported/evaluation.RData")
+```

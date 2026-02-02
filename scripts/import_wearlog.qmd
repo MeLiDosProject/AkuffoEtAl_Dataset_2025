@@ -137,12 +137,12 @@ data <- data |> wearlog_plausibility()
 ```{r}
 data_site <- 
 data |> 
-  filter(event %in% c("site_leave", "site_return"), is.plausible) |> 
+  filter(event %in% c("site_leave", "site_return")) |> 
   mutate(.by = record_id,
          duration = difftime(lead(start), start, unit = "mins"),
          end = start + duration,
          .after = event) |> 
-  filter(event == "site_leave", duration != 0)
+  filter(event == "site_leave", duration != 0, is.plausible)
 ```
 
 ### Wear
@@ -150,12 +150,12 @@ data |>
 ```{r}
 data_wear <-
 data |> 
-  filter(event %in% c("on", "off", "sleep"), is.plausible | event == "on") |> 
+  filter(event %in% c("on", "off", "sleep")) |> 
   mutate(.by = record_id,
          duration = difftime(lead(start), start, unit = "mins"),
          end = start + duration,
          .after = event) |> 
-  filter(event %in% c("off", "sleep"), duration != 0)
+  filter(event %in% c("off", "sleep"), duration != 0, is.plausible)
 ```
 
 ### Join
