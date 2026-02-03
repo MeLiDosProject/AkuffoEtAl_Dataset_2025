@@ -107,6 +107,15 @@ alt="Summary table of the wear log" />
 log</figcaption>
 </figure>
 
+### Wellbeing diary
+
+<figure>
+<img src="output/tables/table_wellbeingdiary.png"
+alt="Summary table of the evening wellbeing diary (WHO-5)" />
+<figcaption aria-hidden="true">Summary table of the evening wellbeing
+diary (WHO-5)</figcaption>
+</figure>
+
 ### Exercise diary
 
 <figure>

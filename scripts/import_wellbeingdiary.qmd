@@ -1,0 +1,114 @@
+---
+title: "Import wellbeing diary"
+author: "Johannes Zauner"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+---
+
+## Preface
+
+This document imports the `WHO5` wellbeing diary and shows descriptive statistics for the site.
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+library(LightLogR)
+library(glue)
+library(readxl)
+library(gt)
+library(gtsummary)
+
+remote <- 
+  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/"
+
+c("labeling",
+  "radio_factors",
+  "time_summaries",
+  "prepare_codebook",
+  "filefinder",
+  "add_label",
+  "who5_scoring",
+  "general_parameters",
+  "coltype_checker",
+  "diarydate",
+  "tables"
+) |> walk(\(x) source(paste0(remote, x, ".R")))
+```
+
+## Preparation
+
+```{r}
+#collect codebook
+codebook <- prepare_codebook("MeLiDosEveningDiaries_DataDictionary_2024-10-16.csv", 
+                             form.filter = c("wellbeing_diary", "form_1"))
+#collect files
+files <- filefinder("wellbeingdiary", continuous = TRUE, individual = TRUE)
+#import files
+data <- 
+  read_csv(files[c(1:2,4:15)], show_col_types = FALSE) |> 
+  bind_rows(read_csv(files[c(3)], show_col_types = FALSE)) |> 
+  drop_na(redcap_repeat_instance) |> 
+  arrange(record_id, startdate_2) |> 
+  mutate(record_id = sprintf("KNUST_S%03d", record_id))
+
+#check column types
+coltype_check <- coltype_checker(codebook, data)
+coltype_check$details |> gt()
+#collect relevant columns: POSIXct, Date & numeric
+relevant_columns <- 
+  coltype_check$details |> 
+  pull(col)
+#select relevant columns
+data <- data |> select(any_of(relevant_columns))
+#label variables
+data <-
+data |> 
+  add_radio_factors(codebook, 
+                    var_col = `Variable / Field Name`, 
+                    type_col = `Field Type`,
+                    levels_col = `Choices, Calculations, OR Slider Labels`
+                    ) |> 
+  add_col_labels(codebook, var_col = `Variable / Field Name`, label_col = `Field Label`) |> 
+  relocate(record_id, any_of(codebook$`Variable / Field Name`)) |> 
+  select(-c(uuid_2, enddate_2:last_col(), introduction_wellbeing))
+
+```
+
+## Set relevant dates
+
+```{r}
+#if data was collected between 14:00 and 24:00, it is assigned to the same day.
+#if collected between 00:00 and 13:59, it is assigned to the previous day.
+
+data <- data |> diarydate(startdate_2)
+attr(data$Date, "label") <- "Date"
+```
+
+## Calculate WHO5 score
+
+```{r}
+data <- data |> who5_scoring() 
+```
+
+
+## Summarize results
+
+```{r}
+table_wellbeingdiary(data)
+
+gtsave(table_wellbeingdiary(data), filename = "../output/tables/table_wellbeingdiary.png", vwidth = 800)
+```
+
+### Export
+
+```{r}
+data <- data |> rename(Id = record_id)
+wellbeingdiary <- data
+path <- "../data/imported/continuous/"
+if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+save(wellbeingdiary, file = "../data/imported/continuous/wellbeingdiary.RData")
+```
