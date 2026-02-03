@@ -1,0 +1,206 @@
+---
+title: "Import experience log"
+author: "Johannes Zauner"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+---
+
+## Preface
+
+This document imports the `experience log` and shows descriptive statistics for the site.
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+library(LightLogR)
+library(glue)
+library(readxl)
+library(gt)
+library(gtsummary)
+
+site <- "KNUST"
+
+remote <- 
+  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/"
+
+c("labeling",
+  "radio_factors",
+  "add_label",
+  "time_summaries",
+  "prepare_codebook",
+  "filefinder",
+  "general_parameters",
+  "coltype_checker",
+  "diarydate",
+  "wearlog_plausibility",
+  "tables"
+) |> walk(\(x) source(paste0(remote, x, ".R")))
+```
+
+## Preparation
+
+```{r}
+#collect codebook
+codebook <- prepare_codebook("MeLiDosExperienceLog_DataDictionary_2024-10-16.csv")
+#collect files
+files <- filefinder("experiencelog", continuous = TRUE, individual = TRUE)
+#import files
+data <- 
+  read_csv(files, show_col_types = FALSE) |> 
+  drop_na(redcap_repeat_instance) |> 
+  mutate(record_id = sprintf("KNUST_S%03d", record_id))
+#combine itentity and social columns
+data <- 
+data |> 
+  mutate(
+    .before = identity___1,
+    identity = case_when(identity___1 == 1 ~ 1,
+                         identity___2 == 1 ~ 2,
+                         identity___3 == 1 ~ 3,
+                         identity___4 == 1 ~ 4,
+                         identity___5 == 1 ~ 5) |> as.character(),
+    social_type = case_when(social_type___1 == 1 ~ 1,
+                         social_type___2 == 1 ~ 2,
+                         social_type___3 == 1 ~ 3,
+                         social_type___4 == 1 ~ 4) |> as.character()
+  ) |> 
+  select(-c(contains("identity__"), contains("social_type__"))) |> 
+  mutate(feedback = as.logical(feedback),
+         removal = as.logical(removal))
+
+#check column types
+coltype_check <- coltype_checker(codebook, data)
+coltype_check$details |> gt()
+#collect relevant columns: POSIXct, Date & numeric
+relevant_columns <- 
+  coltype_check$details |> 
+  pull(col)
+#add specific character columns
+relevant_columns <- c("record_id", relevant_columns)
+#select relevant columns
+data <- data |> select(any_of(relevant_columns))
+#label variables
+data <-
+data |> 
+  add_radio_factors(codebook, 
+                    var_col = `Variable / Field Name`, 
+                    type_col = `Field Type`,
+                    levels_col = `Choices, Calculations, OR Slider Labels`
+                    ) |> 
+  add_col_labels(codebook, var_col = `Variable / Field Name`, label_col = `Field Label`) |> 
+  relocate(record_id, any_of(codebook$`Variable / Field Name`))|> 
+  select(-c(uuid_2:serializedresult_2, startdate_2:scheduledate_2))
+
+
+data <-
+data |> 
+  pivot_longer(c(past, current),
+               names_to = c("is_past"),
+               values_to = "Datetime"
+               ) |> 
+  drop_na(Datetime) |> 
+  relocate(.after = record_id,
+           Datetime, is_past) |> 
+  mutate(across(where(is.POSIXct), \(x) force_tz(x, tzs[[site]])))
+```
+
+```{r}
+data <- data |> arrange(record_id, Datetime)
+```
+
+## Translate comments into english
+
+Native language is translated into English with AI and later checked by a site researcher.
+
+```{r}
+#| label: translate into english with AI
+
+# library(ellmer)
+# 
+# #Providing the relevant codebook portions
+# chat <- chat_openai(paste0("Clean the dataset according to the instructions in the output structure."))
+# 
+# #Providing the input
+# data_red <-
+# data|>
+#   select(record_id, loc_spec, descr, identity_spec, future_use)
+# data_red <-
+#   data_red |>
+#   pmap(~ paste(paste(names(data_red), c(...), sep = ": "), collapse = ", "))
+# 
+# #creating an output structure
+# type_data <- type_object(
+#   record_id = type_string("use the record_id information"),
+#   loc_spec_english = type_string("Translate (or if in english already, copy) the 'loc_spec' column here. Question: Please specify the location which describes the location where you made the experience?", required = FALSE),
+#   descr_english = type_string("Translate (or if in english already, copy) the 'descr' column here. Question: Please provide a brief description of your experience, including the location, the activity you were performing and what feelings it triggered for you.", required = FALSE),
+#   identity_spec_english = type_string("Translate (or if in english already, copy) the 'identity_spec' column here. Question: Who provided this feedback?", required = FALSE),
+#   future_use_english = type_string("Translate (or if in english already, copy) the 'future_use' column here. Question: Explain how this experience will influence your future use of the light glasses, if at all.", required = FALSE)
+# )
+# 
+# data_llm <-
+# parallel_chat_structured(
+#   chat,
+#   data_red,
+#   type = type_data
+# )
+# 
+# #Ensure that no NA is caught as string
+# data_llm <-
+#   data_llm |>
+#   mutate(across(everything(), \(x) case_when(x == "NA" ~ NA, .default = x)))
+# 
+# #check that input and output are identical
+# stopifnot("Input must by identical to output check" =
+#             all(data_llm$record_id == data$record_id, na.rm = TRUE))
+# 
+# data_llm <-
+#   data |>
+#   select(record_id, Datetime, loc_spec, descr, identity_spec, future_use) |>
+#   bind_cols(data_llm |> select(-record_id))
+# 
+# path <- "../data/AI_translations/"
+# if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+# write_csv(data_llm, "../data/AI_translations/experiencelog.csv")
+
+```
+
+```{r}
+data_llm <- 
+  read_csv("../data/AI_translations/experiencelog.csv") |> 
+  select(-c(loc_spec, descr, identity_spec, future_use))
+#add output to original
+data <- data |> left_join(data_llm, by = c("record_id", "Datetime"))
+data <-
+  data |> 
+  mutate(across(ends_with("english"), \(x) add_label(x, "English translation")
+                ))
+```
+
+## Summarize results
+
+```{r}
+table <- 
+table_general(
+  data |> 
+    select(
+      -c(Datetime, is_past, loc_spec, descr, 
+         identity_spec, future_use, ends_with("english"))
+      ), 
+  header = "Experience log")
+table
+gtsave(table |> as_gt(), filename = "../output/tables/table_experiencelog.png", vwidth = 800)
+```
+
+### Export
+
+```{r}
+data <- data |> rename(Id = record_id)
+experiencelog <- data
+path <- "../data/imported/continuous/"
+if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+save(experiencelog, file = "../data/imported/continuous/experiencelog.RData")
+```

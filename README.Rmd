@@ -52,41 +52,44 @@ APA reference:
 
 ![Summary table of the morning sleep diary](output/tables/table_sleepdiary.png)
 
-## Chronotype
+### Chronotype
 
 ![Summary table of the chronotype questionnaires](output/tables/table_chronotype.png)
 
-## Wear log
+### Wear log
 
 ![Summary table of the wear log](output/tables/table_wearlog.png)
 
-## Exercise diary
+### Exercise diary
 
 ![Summary table of the evening exercise diary](output/tables/table_exercisediary.png)
 
-## Current conditions
+### Current conditions
 
 ![Summary table of the current conditions EMA](output/tables/table_currentconditions.png)
 
-## Light exposure behaviour
+### Light exposure behaviour
 
 ![Summary table of the LEBA questionnaire](output/tables/table_leba.png)
 
-## Light sensitvity (VLSQ-8)
+### Light sensitvity (VLSQ-8)
 
 ![Summary table of the light sensitvity (VLSQ-8) questionnaire](output/tables/table_vlsq8.png)
 
-## Sleep environment
+### Sleep environment
 
 ![Summary table of the Sleep environment (ASE) questionnaire](output/tables/table_ase.png)
 
-## Light glasses acceptability 
+### Light glasses acceptability 
 
 ![Summary table of the Light glasses acceptability  questionnaire](output/tables/table_acceptability.png)
 
-## Lifestyle and health
+### Lifestyle and health
 
 ![Summary table of the lifestyle and health questionnaire](output/tables/table_health.png)
+
+### Experience log
+![Summary table of the lifestyle and health questionnaire](output/tables/table_experiencelog.png)
 
 ## Summary of the dataset
 | Dataset name | KNUST |

@@ -48,7 +48,9 @@ codebook <- prepare_codebook("MeLiDosWearLog_DataDictionary_2024-10-16.csv")
 #collect files
 files <- filefinder("wearlog", continuous = TRUE, individual = TRUE)
 #import files
-data <- read_csv(files, show_col_types = FALSE) |> drop_na(redcap_repeat_instance)
+data <- read_csv(files, show_col_types = FALSE) |> 
+  drop_na(redcap_repeat_instance) |> 
+   mutate(record_id = sprintf("KNUST_S%03d", record_id))
 #check column types
 coltype_check <- coltype_checker(codebook, data)
 coltype_check$details |> gt()
@@ -268,4 +270,5 @@ wearlog <- data
 path <- "../data/imported/continuous/"
 if(!dir.exists(path)) dir.create(path, recursive = TRUE)
 save(wearlog, file = "../data/imported/continuous/wearlog.RData")
+# load(file = "../data/imported/continuous/wearlog.RData")
 ```
