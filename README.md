@@ -125,6 +125,15 @@ alt="Summary table of the evening exercise diary" />
 diary</figcaption>
 </figure>
 
+### Light exposure (mH-LEA) and activity diary
+
+<figure>
+<img src="output/tables/table_lightexposurediary.png"
+alt="Summary table of the evening light exposure (mH-LEA) and activity diary" />
+<figcaption aria-hidden="true">Summary table of the evening light
+exposure (mH-LEA) and activity diary</figcaption>
+</figure>
+
 ### Current conditions
 
 <figure>

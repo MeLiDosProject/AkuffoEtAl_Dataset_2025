@@ -1,0 +1,308 @@
+---
+title: "Import mHLEA"
+author: "Johannes Zauner"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+---
+
+## Preface
+
+This document imports the `mHLEA` evening diary (light exposure) and shows descriptive statistics for the site.
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+library(LightLogR)
+library(glue)
+library(readxl)
+library(gt)
+library(gtsummary)
+source("../project_globals.R")
+remote <- 
+  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/"
+
+c("labeling",
+  "radio_factors",
+  "time_summaries",
+  "prepare_codebook",
+  "filefinder",
+  "add_label",
+  "who5_scoring",
+  "general_parameters",
+  "coltype_checker",
+  "diarydate",
+  "tables"
+) |> walk(\(x) source(paste0(remote, x, ".R")))
+```
+
+## Preparation
+
+```{r}
+#collect codebook
+codebook <- prepare_codebook("MeLiDosEveningDiaries_DataDictionary_2024-10-16.csv", 
+                             form.filter = c("light_exposure_diary", "form_1"))
+#collect files
+files <- filefinder("mHLEA_digital", continuous = TRUE, individual = TRUE)
+#import files
+data <-   read_csv(files[c(1:2,4:15)], show_col_types = FALSE) |> 
+  bind_rows(read_csv(files[c(3)], show_col_types = FALSE)) |> 
+  drop_na(redcap_repeat_instance) |> 
+  arrange(record_id, startdate) |> 
+  mutate(record_id = sprintf("KNUST_S%03d", record_id))
+#check column types
+coltype_check <- coltype_checker(codebook, data)
+coltype_check$details |> gt()
+#collect relevant columns: POSIXct, Date & numeric
+relevant_columns <- 
+  coltype_check$details |> 
+  pull(col) |> 
+  union("startdate")
+#select relevant columns
+data <- data |> select(any_of(relevant_columns))
+#label variables
+data <-
+data |> 
+  add_radio_factors(codebook, 
+                    var_col = `Variable / Field Name`, 
+                    type_col = `Field Type`,
+                    levels_col = `Choices, Calculations, OR Slider Labels`
+                    ) |> 
+  add_col_labels(codebook, var_col = `Variable / Field Name`, label_col = `Field Label`) |> 
+  select(record_id, startdate, mhlea_confidence)
+```
+
+## Set relevant dates
+
+```{r}
+#if data was collected between 14:00 and 24:00, it is assigned to the same day.
+#if collected between 00:00 and 13:59, it is assigned to the previous day.
+
+data <- data |> diarydate(startdate)
+attr(data$Date, "label") <- "Date"
+```
+
+## Import paper diaries
+
+```{r}
+#collect files
+files <- 
+  filefinder("mHLEA_paper", continuous = TRUE, individual = TRUE)
+file_ids <- files |> basename() |> str_extract(paste0(site, "_S.{3}"))
+files <- files |> set_names(file_ids)
+#import files
+data_paper <-
+  map(files, read_excel) |> 
+    map(\(x) if(nrow(x) > 0) x |> 
+          mutate(activity = as.character(activity))
+        )
+data_paper <-
+  data_paper[which(!map_lgl(data_paper, is.null))] |> 
+  list_rbind(names_to = "record_id") |> 
+  mutate(timestamp = 
+           round_date(timestamp, unit = "hour") |> 
+           force_tz(tzs[[site]]),
+         Date = date(timestamp),
+         start = timestamp,
+         end = timestamp + dhours(1),
+         .before = timestamp) |> 
+  select(-timestamp)
+```
+
+## Combine paper diaries with confidence rating
+
+```{r}
+data <- 
+data_paper |> 
+  left_join(data, by = c("record_id", "Date")) |> 
+  relocate(startdate, .after = last_col())
+```
+
+## Translate comments into english
+
+Native language is translated into English with AI and later checked by a site researcher.
+
+```{r}
+#| label: translate into english with AI
+# 
+# library(ellmer)
+# 
+# #Providing the relevant codebook portions
+# chat <- chat_openai(paste0("Clean the dataset according to the instructions in the output structure."))
+# 
+# #Providing the input
+# data_red1 <-
+# data|>
+#   select(record_id, start, activity_desc) |>
+#   filter(!is.na(activity_desc))
+# 
+# data_red <- data_red1 |>
+#   pmap(~ paste(paste(names(data_red1), c(...), sep = ": "), collapse = ", "))
+# 
+# #creating an output structure
+# type_data <- type_object(
+#   record_id = type_string("copy the record_id information"),
+#   start = type_string("copy the start information as 'YYYY-MM-DD HH:SS:MM'"),
+#   activity_desc_english = type_string("Translate (or if in english already, copy) the 'activity_desc' column here. Question: Please specify your activity.", required = FALSE),
+# )
+# 
+# data_llm <-
+# parallel_chat_structured(
+#   chat,
+#   data_red,
+#   type = type_data
+# )
+# 
+# #Ensure that no NA is caught as string
+# data_llm <-
+#   data_llm |>
+#   mutate(across(everything(), \(x) case_when(x == "NA" ~ NA, .default = x)))
+# 
+# #check that input and output are identical
+# stopifnot("Input must by identical to output check" =
+#             all(data_llm$record_id == data_red$record_id, na.rm = TRUE))
+# stopifnot("Input must by identical to output check" =
+#             all(data_llm$start == data_red$start, na.rm = TRUE))
+# 
+# data_llm$start <- data_red1$start
+# 
+# data_llm$activity_desc <- data_red1$activity_desc
+# 
+# path <- "../data/AI_translations/"
+# if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+# write_csv(data_llm, "../data/AI_translations/lightexposurediary.csv")
+
+```
+
+```{r}
+data_llm <- 
+  read_csv("../data/AI_translations/lightexposurediary.csv") |> 
+  select(activity_desc, activity_desc_english) |> 
+  distinct(activity_desc, .keep_all = TRUE)
+#add output to original
+data <- data |> left_join(data_llm, by = c("activity_desc"))
+data <-
+  data |> 
+  mutate(across(ends_with("english"), \(x) add_label(x, "Please specify your activity (English translation)")
+                ))
+```
+
+## Dissecting answers
+
+```{r}
+data <- 
+data |> 
+  filter(!is.na(lightsource) | !is.na(activity)) |> 
+  mutate(lightsource = str_remove_all(lightsource, "[^[:alpha:]]"),
+         light_electric_indoor = str_detect(lightsource, "L|l"),
+         light_electric_outdoor = str_detect(lightsource, "S|s"),
+         light_daylight_indoor = str_detect(lightsource, "I|i"),
+         light_daylight_outdoor = str_detect(lightsource, "O|o"),
+         light_display = str_detect(lightsource, "E|e"),
+         light_sleep_darkness = str_detect(lightsource, "D|d"),
+         light_sleep_imission = str_detect(lightsource, "W|w"),
+         .after = lightsource) |> 
+  separate_wider_position(lightsource, 
+                          widths = c("primary" = 1, "secondary" = 1),
+                          names_sep = "_",
+                          too_few = "align_start",
+                          too_many = "drop",
+           ) |> 
+  mutate(activity = str_remove_all(activity, "[^[:digit:]]"),
+         act_sleep = str_detect(activity, "1"),
+         act_home = str_detect(activity, "2"),
+         act_road_vehicle = str_detect(activity, "3"),
+         act_road_open = str_detect(activity, "4"),
+         act_working_indoor = str_detect(activity, "5"),
+         act_working_outdoor = str_detect(activity, "6"),
+         act_free_outdoor = str_detect(activity, "7"),
+         act_other = str_detect(activity, "8"),
+         .after = activity
+         ) |> 
+  select(-activity)
+  
+```
+
+Adding labels:
+
+```{r}
+factor_levels_mHLEA <- c(
+    L = "Electric light source indoors",
+    S = "Electric light source outdoors",
+    I = "Daylight indoors",
+    O = "Daylight outdoors (including shade)",
+    E = "Emissive display light",
+    D = "Darkness during sleep",
+    W = "Light entering from outside during sleep"
+)
+data <-
+data |> 
+  mutate(
+    across(
+      contains("lightsource"), 
+               \(x) x |> 
+                    str_to_upper() |> 
+                    factor( 
+                           levels = names(factor_levels_mHLEA),
+                           labels = factor_levels_mHLEA
+               )
+      )
+    )
+
+```
+
+```{r}
+labels_mHLEA <- 
+  c(
+    record_id = "Record ID",
+    Date = "Date",
+    start = "Beginning timestamp",
+    end = "Ending timestamp",
+    lightsource_primary = "Primary lightsource (mH-LEA)",
+    lightsource_secondary = "Secondary lightsource (mH-LEA)",
+    light_electric_indoor = "Electric light source indoors (mH-LEA)",
+    light_electric_outdoor = "Electric light source outdoors (mH-LEA)",
+    light_daylight_indoor = "Daylight indoors (mH-LEA)",
+    light_daylight_outdoor = "Daylight outdoors (including shade) (mH-LEA)",
+    light_display = "Emissive display light (mH-LEA)",
+    light_sleep_darkness = "Darkness during sleep (mH-LEA)",
+    light_sleep_imission = "Light entering from outside during sleep (mH-LEA)",
+    act_sleep = "Sleeping in bed (activity)",
+    act_home = "Awake at home (activity)",
+    act_road_vehicle = "On the road with public transport/car (activity)",
+    act_road_open = "On the road with bike/on foot (activity)",
+    act_working_indoor = "Working in the office/from home (activity)",
+    act_working_outdoor = "Working outdoors (including lunch break outdoors) (activity)",
+    act_free_outdoor = "Free time outdoors (activity)",
+    act_other = "Other (activity)",
+    act_desc = "Other activity description",
+    act_desc_english = "Other activity (english translation)",
+    startdate = "Starting time to fill in questionnaire"
+  )
+
+data <- add_labels(data, labels_mHLEA)
+```
+
+## Summarize results
+
+```{r}
+table <- 
+  data |> 
+  select(-c(start, end, Date, activity_desc, activity_desc_english, startdate)) |> 
+  table_general("Light exposure (mH-LEA) and activity diary")
+table
+gtsave(table |> as_gt(), filename = "../output/tables/table_lightexposurediary.png", vwidth = 800)
+```
+
+### Export
+
+```{r}
+data <- data |> rename(Id = record_id)
+lightexposurediary <- data
+path <- "../data/imported/continuous/"
+if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+save(lightexposurediary, file = "../data/imported/continuous/lightexposurediary.RData")
+```
