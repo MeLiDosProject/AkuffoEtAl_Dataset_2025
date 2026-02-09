@@ -86,7 +86,7 @@ APA reference:
 
 ### Sleep environment
 
-![Summary table of the Sleep environment (ASE) questionnaire](output/tables/table_ase.png)
+![Summary table of the Sleep environment (ASE) questionnaire](output/tables/table_ASE.png)
 
 ### Light glasses acceptability 
 

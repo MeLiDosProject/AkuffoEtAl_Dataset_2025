@@ -164,7 +164,7 @@ alt="Summary table of the light sensitvity (VLSQ-8) questionnaire" />
 ### Sleep environment
 
 <figure>
-<img src="output/tables/table_ase.png"
+<img src="output/tables/table_ASE.png"
 alt="Summary table of the Sleep environment (ASE) questionnaire" />
 <figcaption aria-hidden="true">Summary table of the Sleep environment
 (ASE) questionnaire</figcaption>
