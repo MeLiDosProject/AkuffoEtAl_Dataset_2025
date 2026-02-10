@@ -1,5 +1,5 @@
 ---
-title: "Import light"
+title: "Import light head/glasses"
 author: "Johannes Zauner"
 format: 
   html:
@@ -9,7 +9,7 @@ format:
 
 # Preface
 
-This is a work-in-progress descriptive analysis of the `DidikogluEtAl2025` dataset.
+This is a work-in-progress descriptive analysis of the `AkuffoEtAl2025` dataset.
 
 ```{r}
 #| label: setup
@@ -194,15 +194,18 @@ data_cleaned |> gap_table(MEDI) |> cols_hide(ends_with("_n"))
 ## Exporting values
 
 ```{r}
-light_1min <- 
+data_cleaned <- 
+  data_cleaned |> mutate(position = "glasses")
+
+light_glasses_1min <- 
 data_cleaned |> 
   aggregate_Datetime("1 minute", numeric.handler = \(x) mean(x, na.rm = TRUE)) |> 
   remove_partial_data(MEDI, threshold.missing = "3 hours", by.date = TRUE)
 
-light <- data_cleaned
+light_glasses <- data_cleaned
 
-save(light_1min, file = "../data/imported/light/light_1minute.RData")
-save(light, file = "../data/imported/light/light.RData")
+save(light_glasses_1min, file = "../data/imported/light/light_glasses_1minute.RData")
+save(light_glasses, file = "../data/imported/light/light_glasses.RData")
 ```
 
 ## Visualization
