@@ -110,8 +110,8 @@ gtsave(table |> as_gt(), filename = "../output/tables/table_vlsq8.png", vwidth =
 
 ```{r}
 data <- data |> rename(Id = record_id)
-vslq8 <- data
+vlsq8 <- data
 path <- "../data/imported/"
 if(!dir.exists(path)) dir.create(path, recursive = TRUE)
-save(vslq8, file = "../data/imported/vlsq8.RData")
+save(vlsq8, file = "../data/imported/vlsq8.RData")
 ```
