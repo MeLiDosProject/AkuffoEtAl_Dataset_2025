@@ -102,17 +102,22 @@ data |> has_irregulars()
 data |> gg_gaps(group.by.days = TRUE, show.irregulars = TRUE, full.days = FALSE)
 ```
 
-Apparently, `KNUST_S003`, `KNUST_S004`, and `KNUST_S005` suffer from some kind of defect, where the data become irregular and show values around 10^4 lx, even at night. We first bin the irregular data into the next regular interval, and then convert implicit to explicit days. We will further remove unreasonably high values above 100.000 lx melanopic EDI
+Apparently, `KNUST_S003`, `KNUST_S004`, and `KNUST_S005` suffer from some kind of defect, where the data become irregular and show values around 10^4 lx, even at night. We first bin the irregular data into the next regular interval, and then convert implicit to explicit gaps. We will further remove unreasonably high values above 100.000 lx melanopic EDI
 
 ```{r}
 #| fig-height: 15
 #| fig-width: 5
 data_cleaned <-
   data |>
-  aggregate_Datetime() |> #remove irregular data
   filter(MEDI <= 10^5) |> #remove high values
+  group_modify( #regularize data
+    \(dat,key) if(key$Id %in% c("KNUST_S003", "KNUST_S004", "KNUST_S005")) {
+      dat |>  aggregate_Datetime()
+    } else dat
+  ) |> 
   gap_handler(full.days = TRUE) #remove implicit gaps
 
+data_cleaned |> count_difftime() |> filter(difftime == 0) #no duplicates
 data_cleaned |> has_gaps() #no more implicit gaps
 data_cleaned |> has_irregulars() #no more irregular data
 data_cleaned |> gap_table()
@@ -164,12 +169,17 @@ Spikes are detected for every Id. We will not remove the data, but rather replac
 #| warning: false
 data_cleaned <-
   data_cleaned |>
-  add_clusters(
-    MEDI > 2000 & MEDI < 30000,
-    cluster.duration = "20 secs",
-    duration.type = "max"
-  ) |>
-  mutate(MEDI = ifelse(!is.na(state), lag(MEDI, 2), MEDI))
+  group_modify( #regularize data
+    \(dat,key) if(key$Id %in% c("KNUST_S003", "KNUST_S004", "KNUST_S005")) {
+      dat |>  
+        add_clusters(
+         MEDI > 2000 & MEDI < 30000,
+         cluster.duration = "20 secs",
+         duration.type = "max"
+        ) |>
+        mutate(MEDI = ifelse(!is.na(state), lag(MEDI, 2), MEDI))
+    } else dat
+  ) 
 
 data_cleaned |>
   filter(Id %in% c("KNUST_S003", "KNUST_S004", "KNUST_S005")) |>
@@ -181,11 +191,6 @@ These data now look sensible enough for further visualization and processing.
 ```{r}
 #| fig-height: 15
 #| fig-width: 5
-data_cleaned <- 
-data |> 
-  cut_Datetime("10 secs", New.colname = Datetime) |> #remove irregular data
-  gap_handler(full.days = TRUE) #remove implicit gaps
-
 data_cleaned |> has_gaps() #no more implicit gaps
 data_cleaned |> has_irregulars() #no more irregular data
 data_cleaned |> gap_table(MEDI) |> cols_hide(ends_with("_n"))

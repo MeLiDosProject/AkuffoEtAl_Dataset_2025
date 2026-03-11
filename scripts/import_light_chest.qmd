@@ -95,21 +95,14 @@ data |> gg_overview()
 ## Regularizing data
 
 ```{r}
-#| fig-height: 15
+#| fig-height: 25
 #| fig-width: 5
 data |> has_gaps()
 data |> has_irregulars()
 data |> gg_gaps(group.by.days = TRUE, show.irregulars = TRUE, full.days = FALSE)
 ```
 
-Apparently, `KNUST_S007` has some unlikely high measurement values.
-
-```{r}
-data |> sample_groups(order.by = max(MEDI, na.rm = TRUE)) |> 
-  filter_Date(length = "2 days", end = "2024-11-21") |> 
-  mutate(too_high = MEDI > 10^5) |> 
-  gg_day(aes_col = too_high)
-```
+Apparently,`KNUST_S006`, `KNUST_S007`, `KNUST_S009` `KNUST_S013` has some unlikely high measurement values and irregular data. Additionally, `KNUST_S012`, `KNUST_S014`, and `KNUST_S015` show irregular behavior.
 
 We will remove those values
 
@@ -119,8 +112,14 @@ We will remove those values
 #| fig-width: 5
 data_cleaned <-
   data |>
-  cut_Datetime("10 secs", New.colname = Datetime) |> #remove irregular data
   filter(MEDI <= 10^5) |> #remove high values
+  group_modify( #regularize data
+    \(dat,key) if(key$Id %in% c("KNUST_S006", "KNUST_S007", "KNUST_S009",
+                                "KNUST_S012", "KNUST_S013", "KNUST_S014",
+                                "KNUST_S015")) {
+      dat |>  aggregate_Datetime("10 secs")
+    } else dat
+  ) |> 
   gap_handler(full.days = TRUE) #remove implicit gaps
 
 data_cleaned |> has_gaps() #no more implicit gaps
