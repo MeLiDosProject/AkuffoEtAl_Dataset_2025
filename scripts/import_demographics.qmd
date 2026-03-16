@@ -80,7 +80,8 @@ data <-
   data |> 
   dplyr::relocate(native_language, .before = language_specification) |> 
   relocate(record_id) |> 
-  select(-consent)
+  select(-consent) |> 
+  drop_na(age)
 ```
 
 ## Summarize results
