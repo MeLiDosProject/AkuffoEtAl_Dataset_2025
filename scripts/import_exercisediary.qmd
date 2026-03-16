@@ -49,7 +49,7 @@ data <-
   read_csv(files, show_col_types = FALSE) |> 
   drop_na(redcap_repeat_instance) |> 
   mutate(across(c(startdate_3, enddate_3),
-                \(x) parse_date_time(x, c("ymdHMS", "mdyHMS"))))
+                \(x) parse_date_time(x, c("ymdHMS", "mdyHMS", "mdyHM"))))
 #check column types
 coltype_check <- coltype_checker(codebook, data)
 coltype_check$details |> gt()
