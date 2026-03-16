@@ -1,0 +1,41 @@
+---
+title: "import_trial_times"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(readxl)
+library(melidosData)
+source("../project_globals.R")
+
+```
+
+```{r}
+path_study_dates <- paste0("../data/Study_dates_MeLiDos_", site, ".xlsx")
+
+#import table with study times
+Study_dates <- read_excel(path_study_dates)
+#gather the important information
+Study_dates <-
+  Study_dates |> 
+    rename(Id = subjectID_device, start = datetime_trial_start, end = datetime_trial_end) |> 
+    select(Id, start, end) |> 
+    mutate(across(c(start, end), \(x) force_tz(x, melidos_tzs[site])),
+           trial = TRUE) |> 
+    filter(str_detect(Id, "_w$")) |>
+    mutate(Id = str_remove(Id, "_w$")) |> 
+  group_by(Id)
+```
+
+## Exporting values
+
+```{r}
+trial_times <- Study_dates
+save(trial_times, file = "../data/imported/trial_times.RData")
+```
