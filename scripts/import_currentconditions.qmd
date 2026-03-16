@@ -64,6 +64,9 @@ data <-
   select(-c(scheduledate_4:serializedresult_4, 
             ema_light, currentmood, kss_instr, status_4)) |> 
   mutate(check_mixedlight = as.logical(check_mixedlight))
+data <- 
+  data |> 
+  mutate(record_id = sprintf("KNUST_S%03d", record_id))
 #label variables
 data <-
 data |> 
