@@ -202,6 +202,8 @@ data <-
 
 ```{r}
 data <- data |> rename(Id = record_id)
+attr(data$sleep, "label") <- "Sleep onset (calculated)"
+attr(data$sleep_duration, "label") <- "Sleep duration (calculated)"
 sleepdiary <- data
 path <- "../data/imported/continuous/"
 if(!dir.exists(path)) dir.create(path, recursive = TRUE)
