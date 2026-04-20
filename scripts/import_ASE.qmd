@@ -92,6 +92,24 @@ data <-
   attention_check(slypos_ase_attentioncheck, "Strongly disagree")
 ```
 
+## ASE score
+
+```{r}
+data <- 
+data |> 
+  rowwise() |> 
+  mutate(
+across(starts_with("slypos_ase_0"),
+       \(x) {x <- x |> as.numeric()
+       x-1
+       }, .names = "{.col}_num"),
+ASE = sum(c_across(ends_with("_num")), na.rm = TRUE),
+.after = record_id
+) |> select(-ends_with("_num"))
+
+data <- 
+add_labels(data, c(ASE = "ASE score"))
+```
 
 ## Summarize results
 
