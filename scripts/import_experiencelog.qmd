@@ -24,8 +24,9 @@ library(gtsummary)
 
 site <- "KNUST"
 
-remote <- 
-  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/"
+metadata_root <- Sys.getenv("MELIDOS_METADATA_ROOT", unset = "../metadata")
+stopifnot(dir.exists(file.path(metadata_root, "scripts")))
+remote <- paste0(normalizePath(file.path(metadata_root, "scripts")), "/")
 
 c("labeling",
   "radio_factors",
@@ -68,9 +69,11 @@ data |>
                          social_type___3 == 1 ~ 3,
                          social_type___4 == 1 ~ 4) |> as.character()
   ) |> 
-  select(-c(contains("identity__"), contains("social_type__"))) |> 
   mutate(feedback = as.logical(feedback),
          removal = as.logical(removal))
+
+#Keep all checkbox options alongside the legacy first-choice summaries
+checkbox_columns <- grep("^(identity|social_type)___", names(data), value = TRUE)
 
 #check column types
 coltype_check <- coltype_checker(codebook, data)
@@ -80,7 +83,7 @@ relevant_columns <-
   coltype_check$details |> 
   pull(col)
 #add specific character columns
-relevant_columns <- c("record_id", relevant_columns)
+relevant_columns <- c("record_id", relevant_columns, checkbox_columns)
 #select relevant columns
 data <- data |> select(any_of(relevant_columns))
 #label variables
@@ -180,9 +183,31 @@ data <-
                 ))
 ```
 
+The binary checkbox columns preserve every selected option. The original
+`identity` and `social_type` factors remain as explicitly labelled legacy
+first-choice summaries for compatibility.
+
+```{r}
+for (field in c("identity", "social_type")) {
+  attr(data[[field]], "label") <- paste0(
+    attr(data[[field]], "label"),
+    " [legacy first selected option; use ", field, "___* for all selections]"
+  )
+  for (column in grep(paste0("^", field, "___"), names(data), value = TRUE)) {
+    choice <- as.integer(sub(".*___", "", column))
+    data[[column]] <- as.integer(data[[column]])
+    attr(data[[column]], "label") <- paste0(
+      field, ": ", levels(data[[field]])[[choice]],
+      " (checkbox: 0 = unselected, 1 = selected)"
+    )
+  }
+}
+```
+
 ## Summarize results
 
 ```{r}
+#| purl: false
 table <- 
 table_general(
   data |> 
@@ -199,6 +224,8 @@ gtsave(table |> as_gt(), filename = "../output/tables/table_experiencelog.png", 
 
 ```{r}
 data <- data |> rename(Id = record_id)
+# Append restored checkbox options after all original export columns.
+data <- data |> relocate(all_of(checkbox_columns), .after = last_col())
 experiencelog <- data
 path <- "../data/imported/continuous/"
 if(!dir.exists(path)) dir.create(path, recursive = TRUE)

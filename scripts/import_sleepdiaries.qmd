@@ -22,8 +22,9 @@ library(readxl)
 library(gt)
 library(gtsummary)
 
-remote <- 
-  "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/scripts/"
+metadata_root <- Sys.getenv("MELIDOS_METADATA_ROOT", unset = "../metadata")
+stopifnot(dir.exists(file.path(metadata_root, "scripts")))
+remote <- paste0(normalizePath(file.path(metadata_root, "scripts")), "/")
 
 c("labeling",
   "radio_factors",
@@ -110,9 +111,28 @@ data <-
 ```
 
 
+### Apply the approved bedtime correction
+
+For KNUST_S012's night beginning 8 January 2025, move the bedtime date
+from 9 January to 8 January and retain 22:50. All other sleep fields are retained.
+
+```{r}
+correction_row <- which(
+  data$record_id == "KNUST_S012" &
+    data$sleepprep == as.POSIXct("2025-01-08 22:55:00", tz = tzs[[site]]) &
+    data$wake == as.POSIXct("2025-01-09 06:46:00", tz = tzs[[site]])
+)
+stopifnot(length(correction_row) == 1L)
+stopifnot(data$bedtime[correction_row] %in% as.POSIXct(
+  c("2025-01-09 22:50:00", "2025-01-08 22:50:00"), tz = tzs[[site]]
+))
+data$bedtime[correction_row] <- as.POSIXct("2025-01-08 22:50:00", tz = tzs[[site]])
+```
+
 ## Summarize results
 
 ```{r}
+#| purl: false
 table_sleepdiary(data)
 
 gtsave(table_sleepdiary(data) |> as_gt(), filename = "../output/tables/table_sleepdiary.png", vwidth = 800)

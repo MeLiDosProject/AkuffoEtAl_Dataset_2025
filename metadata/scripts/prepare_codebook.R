@@ -1,0 +1,42 @@
+#base path is https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/codebook/
+prepare_codebook <- function(codebook, form.filter = NULL) {
+  require(glue)
+  path <- glue(
+    "https://raw.githubusercontent.com/MeLiDosProject/Data_Metadata_Conventions/main/codebook/",
+    codebook
+  )
+  # Released datasets include their own verified metadata snapshot.
+  default_root <- if (dir.exists("../metadata/codebook")) {
+    "../metadata"
+  } else {
+    "../../Data_Metadata_Conventions"
+  }
+  metadata_root <- Sys.getenv(
+    "MELIDOS_METADATA_ROOT",
+    unset = default_root
+  )
+  local_path <- file.path(metadata_root, "codebook", codebook)
+  if (file.exists(local_path)) path <- local_path
+  strings_to_ignore <-
+    "<div class=\"rich-text-field-label\">|<span style=\"font-weight: normal;\">|<span style=\"font-weight: normal;\">|<span style=\"text-decoration: underline;\">|</span>|<p>|<br />|<em>|</em>|</p>|</div>|<span style=\"font-weight: normal;\">We need this so that we can contact you with further details about participation in the study. Please provide an e-mail address that you regularly check.</span>"
+  codebook <-
+    read_csv(
+      path,
+      show_col_types = FALSE
+    )
+
+  if (!is.null(form.filter)) {
+    #filter relevant columns
+    codebook <-
+      codebook |> filter(`Form Name` %in% form.filter)
+  }
+
+  #clean up labels
+  codebook <-
+    codebook |>
+    mutate(
+      `Field Label` = `Field Label` |>
+        str_remove_all(strings_to_ignore)
+    )
+  codebook
+}

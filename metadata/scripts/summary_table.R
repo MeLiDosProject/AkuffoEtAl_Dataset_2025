@@ -115,7 +115,7 @@ photoperiod_data <-
   summarize(
     type = "Overview",
     name = "Photoperiod",
-    mean = median(photoperiod, na.rm = TRUE),
+    mean = mean(photoperiod, na.rm = TRUE),
     sd = NA,
     min = min(photoperiod, na.rm = TRUE),
     max = max(photoperiod, na.rm = TRUE),
@@ -203,7 +203,7 @@ metrics_daily <-
     across(
       value,
       list(
-        mean = \(x) median(x, na.rm = TRUE),
+        mean = \(x) mean(x, na.rm = TRUE),
         sd = \(x) sd(x, na.rm = TRUE),
         min = \(x) min(x, na.rm = TRUE),
         max = \(x) max(x, na.rm = TRUE),
@@ -239,7 +239,7 @@ metrics_overall <-
     across(
       value,
       list(
-        mean = \(x) median(x, na.rm = TRUE),
+        mean = \(x) mean(x, na.rm = TRUE),
         sd = \(x) sd(x, na.rm = TRUE),
         min = \(x) min(x, na.rm = TRUE),
         max = \(x) max(x, na.rm = TRUE),
@@ -269,10 +269,10 @@ labels_vec <- c(
   first_above250 = md("FLiT<sub>250</sub>"),
   mean_above250 = md("MLiT<sub>250</sub>"),
   last_above250 = md("LLiT<sub>250</sub>"),
-  bright10_mean = md("M10<sub>mean</sub> (lx)"),
   bright10_mid = md("M10<sub>midpoint</sub>"),
-  dark5_mean = md("L5<sub>mean</sub> (lx)"),
   dark5_mid = md("L5<sub>midpoint</sub>"),
+  bright10_mean = md("M10<sub>mean</sub> (lx)"),
+  dark5_mean = md("L5<sub>mean</sub> (lx)"),
   IS = md("IS"),
   IV = md("IV")
 )

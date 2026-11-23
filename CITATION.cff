@@ -39,9 +39,6 @@ authors:
     orcid: 'https://orcid.org/0000-0002-8572-9268'
 identifiers:
   - type: doi
-    value: 10.5281/zenodo.15576732
-    description: Zenodo archive (V1.0.0)
-  - type: doi
     value: 10.5281/zenodo.15576731
     description: Zenodo Archive (latest version)
 repository-code: 'https://github.com/MeLiDosProject/AkuffoEtAl_Dataset_2025'
@@ -63,5 +60,5 @@ keywords:
   - naturalistic setting
 license: CC-BY-4.0
 commit: 321ea1806d9f266ecd8e87305be857861f7e4180
-version: 1.0.0
-date-released: '2025-06-02'
+version: 1.2.0
+date-released: '2026-11-23'

@@ -36,3 +36,8 @@ rsconnect/
 .DS_Store
 README_files
 .positai
+scripts/*.html
+scripts/*_files/
+scripts/.quarto/
+output/rebuild/
+README.html
